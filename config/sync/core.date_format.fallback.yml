@@ -1,0 +1,10 @@
+uuid: cddb9490-57a5-4f3b-a4c6-013b07663632
+langcode: en-gb
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: iIBLu1j9n6Oo5PW-wpu5gdyNs9Kvv4LMRqtQUdJjRz8
+id: fallback
+label: 'Fallback date format'
+locked: true
+pattern: 'D, j M Y - H:i'

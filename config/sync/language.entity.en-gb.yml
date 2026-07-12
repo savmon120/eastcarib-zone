@@ -1,0 +1,9 @@
+uuid: 6124c96b-5eb9-442f-97bf-189cbd361c9b
+langcode: en-gb
+status: true
+dependencies: {  }
+id: en-gb
+label: 'English, British'
+direction: ltr
+weight: 0
+locked: false
