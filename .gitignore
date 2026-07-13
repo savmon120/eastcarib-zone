@@ -15,6 +15,7 @@
 /.ddev/homeadditions
 /.ddev/ssh
 /.ddev/xdebug
+/.ddev/db_snapshots/
 
 # IDE/editor junk
 /.idea/
