@@ -1,0 +1,26 @@
+parameters:
+  level: 5
+  ignoreErrors:
+    - message: '#^Expression on left side of \?\? is not nullable.$#'
+      count: 1
+      path: src/Form/Oauth2ClientForm.php
+    - message: '#^Expression on left side of \?\? is not nullable.$#'
+      count: 1
+      path: src/Plugin/Oauth2GrantType/Oauth2GrantTypePluginBase.php
+    - message: '#^Instanceof between League\\OAuth2\\Client\\Token\\AccessTokenInterface and League\\OAuth2\\Client\\Token\\AccessTokenInterface will always evaluate to true\.$#'
+      identifier: instanceof.alwaysTrue
+      count: 1
+      path: src/Plugin/Oauth2GrantType/AuthorizationCode.php
+    - message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Symfony\\\\Component\\\\HttpFoundation\\\\RedirectResponse'' and Symfony\\Component\\HttpFoundation\\RedirectResponse will always evaluate to true\.$#'
+      identifier: method.alreadyNarrowedType
+      count: 1
+      path: tests/src/Kernel/Oauth2ClientEntityKernelTest.php
+    - message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''\\\\Drupal\\\\oauth2…'' and Drupal\\oauth2_client\\Plugin\\Oauth2Client\\Oauth2ClientPluginInterface will always evaluate to true\.$#'
+      identifier: method.alreadyNarrowedType
+      count: 2
+      path: tests/src/Kernel/Oauth2ClientEntityKernelTest.php
+    - message: '#^Instanceof between GuzzleHttp\\Psr7\\Request and GuzzleHttp\\Psr7\\Request will always evaluate to true\.$#'
+      identifier: instanceof.alwaysTrue
+      count: 2
+      path: tests/src/Kernel/Oauth2ClientEntityKernelTest.php
+

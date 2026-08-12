@@ -1,0 +1,4 @@
+/* Pygments requires a php start tag but we don't want to see it. */
+.language-php span.cp {
+  display: none;
+}

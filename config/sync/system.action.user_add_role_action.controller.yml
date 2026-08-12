@@ -1,0 +1,14 @@
+uuid: d20c3af7-aabb-4f8a-8788-5311512b75be
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - user.role.controller
+  module:
+    - user
+id: user_add_role_action.controller
+label: 'Add the Controller role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: controller

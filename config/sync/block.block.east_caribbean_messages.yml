@@ -1,0 +1,22 @@
+uuid: 28bb8e05-39fb-42cd-a73b-9c5c1647beaf
+langcode: en-gb
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - east_caribbean
+_core:
+  default_config_hash: 0sLtC9YgeguKY7XZ4i1RbxKEYbnOWWKpPIGu4GsrNPw
+id: east_caribbean_messages
+theme: east_caribbean
+region: header
+weight: -3
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  label_display: '0'
+  provider: system
+visibility: {  }

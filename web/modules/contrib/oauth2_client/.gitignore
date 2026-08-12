@@ -1,0 +1,9 @@
+/web/
+/vendor/
+/recipes/
+/.editorconfig
+/.gitattributes
+
+# IDE and OS files
+/.idea/
+.DS_Store

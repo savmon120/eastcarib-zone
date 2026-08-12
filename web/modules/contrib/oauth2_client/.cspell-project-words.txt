@@ -1,0 +1,6 @@
+authcode
+inlinehilite
+linenums
+pygments
+pymdownx
+superfences

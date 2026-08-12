@@ -1,0 +1,50 @@
+site_name: 'Oauth2 Clients'
+repo_url: https://git.drupalcode.org/project/oauth2_client
+repo_name: drupal/oauth2_client
+edit_uri: /-/edit/main/docs/
+theme:
+  name: material
+  favicon: oauth2_client_logo.svg
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+  features: {}
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - def_list
+  - attr_list
+nav:
+  - Home: 'index.md'
+  - Confidential Data: 'secrets.md'
+  - Plugins: 'creating-plugins.md'
+  - Using Tokens: 'tokens.md'
+  - Custom Clients: 'advanced.md'
+plugins:
+  - search
+  - privacy:
+      enabled: !ENV [CI, false]
+extra_css:
+  - stylesheets/extra.css

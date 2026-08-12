@@ -1,0 +1,27 @@
+uuid: d6fa4c35-dde6-4f0f-9717-f6b2ca744c2e
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - east_caribbean
+_core:
+  default_config_hash: DX_Yjz1VTE1uHEtwSXJ37IqXQII-WE4V8-gqpCfmpSc
+id: east_caribbean_main_menu
+theme: east_caribbean
+region: navbar_left
+weight: -5
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 2
+  expand_all_items: false
+visibility: {  }

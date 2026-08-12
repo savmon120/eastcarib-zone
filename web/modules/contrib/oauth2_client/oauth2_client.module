@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Holds hooks for the OAuth2 Client module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\oauth2_client\Hook\Oauth2ClientHooks;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help() for oauth2_client module.
+ */
+#[LegacyHook]
+function oauth2_client_help(string $route_name, RouteMatchInterface $route_match): array {
+  return \Drupal::service(Oauth2ClientHooks::class)->help($route_name, $route_match);
+}

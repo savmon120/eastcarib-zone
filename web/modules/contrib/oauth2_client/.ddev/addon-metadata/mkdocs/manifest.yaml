@@ -1,0 +1,8 @@
+name: mkdocs
+repository: nireneko/ddev-mkdocs
+version: "0.3"
+install_date: "2025-03-04T08:28:39-05:00"
+project_files:
+    - docker-compose.mkdocs.yaml
+global_files: []
+removal_actions: []

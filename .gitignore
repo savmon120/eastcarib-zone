@@ -1,34 +1,53 @@
-# Composer dependencies
+# Drupal 11
+
+# Ignore vendor directory (installed by Composer)
 /vendor/
 
-# Drupal public/private file storage
-/web/sites/default/files/
-/web/sites/default/private/
+# Ignore user-uploaded files and private files
+sites/*/files
+sites/*/private
 
-# Environment-specific settings
-/web/sites/default/settings.local.php
-/web/sites/default/settings.ddev.php
+# Ignore multi-site test environment
+sites/simpletest
 
-# DDEV noise
-/.ddev/.global_commands
-/.ddev/commands
-/.ddev/homeadditions
-/.ddev/ssh
-/.ddev/xdebug
-/.ddev/db_snapshots/
+# Ignore local settings (contains DB credentials)
+sites/*/*settings*.php
+!sites/*/default.settings.php
+sites/*/*services*.yml
+!sites/*/default.services.yml
 
-# IDE/editor junk
-/.idea/
-/.vscode/
+# Ignore Drush site aliases
+drush/sites/
+
+# -----------------------------------------------
+# DDEV local environment
+# -----------------------------------------------
+# Ignore everything in .ddev/ except config.yaml — DDEV regenerates everything
+# else on `ddev start`. The generated .ddev/.gitignore is also excluded here so
+# DDEV can manage it freely without git noise.
+.ddev/*
+!.ddev/config.yaml
+
+# -----------------------------------------------
+# OS / editor artifacts
+# -----------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
 *.swp
 *.swo
 
-# OS junk
-.DS_Store
-Thumbs.db
+# Windows Zone Identifier files (created when downloading on Windows)
+*:Zone.Identifier
 
-# Logs
-*.log
+# -----------------------------------------------
+# Composer
+# -----------------------------------------------
+.composer/
 
-# Config sync temp files
-/config/sync/*.yml~
+# -----------------------------------------------
+# SQL dumps
+# -----------------------------------------------   
+*.sql
+*.sql.gz
