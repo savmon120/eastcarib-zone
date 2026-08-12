@@ -1,4 +1,4 @@
-uuid: 616a7e0a-9327-4f90-b4cb-6d2781c419ee
+uuid: 470609fc-0081-4bbd-a568-c05e5aa923e2
 langcode: en
 status: true
 dependencies:
@@ -16,14 +16,79 @@ dependencies:
     - svg_image
     - user
 _core:
-  default_config_hash: SULWJMy7nHcntPqaIZ7FlQPf_XzIiC5tnUCKattDCEI
+  default_config_hash: 9VeLVRRd4EH-HKc2TsLPLfupi3LfCOZkBOqBjjza1TA
 id: user.user.default
 targetEntityType: user
 bundle: user
 mode: default
 content:
-  member_for:
+  field_vatsim_cid:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_vatsim_division:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_vatsim_first_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_vatsim_last_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_vatsim_rating:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_vatsim_region:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
     weight: 5
+    region: content
+  field_vatsim_subdivision:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  member_for:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
     region: content
   user_picture:
     type: image
@@ -33,15 +98,12 @@ content:
       image_style: thumbnail
       image_loading:
         attribute: lazy
+      svg_attributes:
+        width: null
+        height: null
+      svg_render_as_image: true
     third_party_settings: {  }
     weight: 0
     region: content
 hidden:
-  field_vatsim_cid: true
-  field_vatsim_division: true
-  field_vatsim_first_name: true
-  field_vatsim_last_name: true
-  field_vatsim_rating: true
-  field_vatsim_region: true
-  field_vatsim_subdivision: true
   langcode: true

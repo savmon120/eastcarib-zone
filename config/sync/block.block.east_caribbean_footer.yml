@@ -1,4 +1,4 @@
-uuid: 4c835fd3-f1d2-4dea-a15a-ca237094bb4d
+uuid: 538b9248-902e-461a-8487-714492190636
 langcode: en-gb
 status: true
 dependencies:
@@ -13,7 +13,7 @@ _core:
 id: east_caribbean_footer
 theme: east_caribbean
 region: footer
-weight: -5
+weight: -3
 provider: null
 plugin: 'system_menu_block:footer'
 settings:

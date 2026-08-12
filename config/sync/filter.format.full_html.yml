@@ -1,11 +1,15 @@
-uuid: 61decc3a-e8a3-474d-9021-b15ddf70cf6a
+uuid: cf529095-ccce-435a-9126-f3028a4a25cd
 langcode: en-gb
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.media.full
+    - core.entity_view_mode.media.uncropped
   module:
     - editor
+    - media
 _core:
-  default_config_hash: vpZysv3RHJjhYzq7O_q5q8mVlHdrSzKELmXyiX6RtV0
+  default_config_hash: ENBvOU9rRkKN6OaSd_TI6mbzwdZIHWTwaW3p00ccJ_8
 name: 'Full HTML'
 format: full_html
 weight: 2
@@ -28,6 +32,15 @@ filters:
     status: true
     weight: 9
     settings: {  }
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: false
+    weight: -10
+    settings:
+      allowed_html: ''
+      filter_html_help: true
+      filter_html_nofollow: false
   filter_htmlcorrector:
     id: filter_htmlcorrector
     provider: filter
@@ -40,3 +53,20 @@ filters:
     status: true
     weight: 15
     settings: {  }
+  media_embed:
+    id: media_embed
+    provider: media
+    status: true
+    weight: 100
+    settings:
+      default_view_mode: uncropped
+      allowed_view_modes:
+        default: default
+        full: full
+        uncropped: uncropped
+      allowed_media_types:
+        audio: audio
+        document: document
+        image: image
+        remote_video: remote_video
+        video: video

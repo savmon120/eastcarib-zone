@@ -1,11 +1,14 @@
-uuid: 8a8379eb-c103-46bd-a1cb-c88b126509c7
+uuid: edcaf5a5-8b5f-46d7-8134-f235f0cf1118
 langcode: en-gb
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.media.full
   module:
     - editor
+    - media
 _core:
-  default_config_hash: mclCbTlJwWJORez4Y1eX2MqA0aGjSMAoJb3TaBABcK8
+  default_config_hash: nNDQ4aygUxv7PcmxfQjnMbRl-L_aRw7SrBwe3nyGmzw
 name: 'Basic HTML'
 format: basic_html
 weight: 0
@@ -22,6 +25,12 @@ filters:
     status: true
     weight: 7
     settings: {  }
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: true
+    weight: 0
+    settings: {  }
   filter_caption:
     id: filter_caption
     provider: filter
@@ -34,7 +43,7 @@ filters:
     status: true
     weight: -10
     settings:
-      allowed_html: '<br> <p> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <cite> <dl> <dt> <dd> <a hreflang href> <blockquote cite> <ul type> <ol start type> <strong> <em> <code> <li> <img src alt data-entity-uuid data-entity-type height width data-caption data-align>'
+      allowed_html: '<br> <p> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <cite> <dl> <dt> <dd> <a hreflang href> <blockquote cite> <img src alt data-entity-type data-entity-uuid data-align data-caption width height loading> <drupal-media title data-entity-type data-entity-uuid alt data-view-mode data-caption data-align> <strong> <em> <ul type> <ol type start> <li>'
       filter_html_help: false
       filter_html_nofollow: false
   filter_html_image_secure:
@@ -49,3 +58,19 @@ filters:
     status: true
     weight: 15
     settings: {  }
+  media_embed:
+    id: media_embed
+    provider: media
+    status: true
+    weight: 100
+    settings:
+      default_view_mode: default
+      allowed_view_modes:
+        default: default
+        full: full
+      allowed_media_types:
+        audio: audio
+        document: document
+        image: image
+        remote_video: remote_video
+        video: video

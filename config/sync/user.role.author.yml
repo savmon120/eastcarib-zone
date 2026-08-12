@@ -1,0 +1,49 @@
+uuid: 8c77cc2a-6e5c-45f0-8c42-561968555b4b
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - core.entity_view_display.node.page.full
+    - node.type.page
+    - taxonomy.vocabulary.tags
+    - workflows.workflow.editorial
+  module:
+    - content_moderation
+    - contextual
+    - file
+    - layout_builder
+    - navigation
+    - node
+    - path
+    - system
+    - taxonomy
+_core:
+  default_config_hash: aCCyadCrtpuMcmEArhpwJGlkeIxEed7bg5v86heYqms
+id: author
+label: Author
+weight: 3
+is_admin: false
+permissions:
+  - 'access content overview'
+  - 'access contextual links'
+  - 'access files overview'
+  - 'access navigation'
+  - 'cancel account'
+  - 'change own username'
+  - 'configure editable page node layout overrides'
+  - 'create and edit custom blocks'
+  - 'create page content'
+  - 'create terms in tags'
+  - 'create url aliases'
+  - 'delete own files'
+  - 'delete own page content'
+  - 'delete page revisions'
+  - 'delete terms in tags'
+  - 'edit own page content'
+  - 'edit terms in tags'
+  - 'use editorial transition create_new_draft'
+  - 'view all revisions'
+  - 'view latest version'
+  - 'view own unpublished content'
+  - 'view page revisions'
+  - 'view the administration theme'

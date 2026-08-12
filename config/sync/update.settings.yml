@@ -9,5 +9,5 @@ fetch:
   timeout: 30
 notification:
   emails:
-    - wm@curacao.vatcar.net
+    - info@sazacmedia.uk
   threshold: all

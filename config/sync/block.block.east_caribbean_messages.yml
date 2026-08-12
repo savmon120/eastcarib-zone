@@ -1,6 +1,6 @@
-uuid: 28bb8e05-39fb-42cd-a73b-9c5c1647beaf
+uuid: e7253599-13e9-46d0-b974-d19f490e54af
 langcode: en-gb
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -11,7 +11,7 @@ _core:
 id: east_caribbean_messages
 theme: east_caribbean
 region: header
-weight: -3
+weight: -4
 provider: null
 plugin: system_messages_block
 settings:

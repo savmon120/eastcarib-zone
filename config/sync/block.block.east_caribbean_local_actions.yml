@@ -1,4 +1,4 @@
-uuid: 61debfbf-68a7-4d68-b368-397de6fe57fe
+uuid: 68b00b02-5984-4bd3-9aeb-61c7f294e5e2
 langcode: en-gb
 status: true
 dependencies:
@@ -9,7 +9,7 @@ _core:
 id: east_caribbean_local_actions
 theme: east_caribbean
 region: header
-weight: -4
+weight: -6
 provider: null
 plugin: local_actions_block
 settings:
