@@ -1,0 +1,11 @@
+name: 'Content filter'
+type: module
+description: "Filter the content page by content types"
+core_version_requirement: ^10.2 || ^11
+configure: content_filter.settings
+package: Administration
+
+# Information added by Drupal.org packaging script on 2026-05-01
+version: '1.0.1'
+project: 'content_filter'
+datestamp: 1777632755

@@ -1,0 +1,16 @@
+content_filter.settings:
+  title: 'Content filter'
+  description: 'Content filter settings.'
+  menu_name: admin
+  parent: system.admin_config_ui
+  route_name: content_filter.settings
+content_filter.main:
+  title: 'Content filtered'
+  description: 'Content filtered by content type.'
+  menu_name: admin
+  parent: system.admin_content
+  route_name: content_filter.main
+  weight: -99
+content_filter.content_menu:
+  deriver: '\Drupal\content_filter\Plugin\Derivative\MenuContentLinks'
+  weight: 100

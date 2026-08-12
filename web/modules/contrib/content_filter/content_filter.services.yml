@@ -1,0 +1,18 @@
+services:
+  Drupal\content_filter\CFService:
+    alias: 'content_filter.content_filter_service'
+  content_filter.content_filter_service:
+    class: Drupal\content_filter\CFService
+    autowire: true
+    arguments:
+      - '@entity_type.manager'
+      - '@request_stack'
+      - '@entity_field.manager'
+      - '@renderer'
+      - '@config.factory'
+  Drupal\content_filter\Hook\ContentFilterHooks:
+    arguments:
+      - '@current_route_match'
+      - '@path.current'
+      - '@config.factory'
+      - '@content_filter.content_filter_service'

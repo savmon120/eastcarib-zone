@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Content Filter module.
+ */
+
+use Drupal\Component\Utility\DeprecationHelper;
+use Drupal\Core\Extension\Requirement\RequirementSeverity;
+
+/**
+ * Implements hook_requirements().
+ *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ */
+function content_filter_requirements($phase): array {
+  $requirements = [];
+  // Check if the default content view is enabled.
+  $view_storage = \Drupal::entityTypeManager()->getStorage('view');
+  $view = $view_storage->load('content');
+
+  if (!$view || !$view->status()) {
+    $severity_error = DeprecationHelper::backwardsCompatibleCall(
+      \Drupal::VERSION,
+      '11.2',
+      fn () => RequirementSeverity::Error,
+      fn () => REQUIREMENT_ERROR,
+    );
+
+    $requirements['view'] = [
+      'title' => t('Content view'),
+      'description' => t('Your Drupal installation must have the default Content view enabled.'),
+      'severity' => $severity_error,
+    ];
+  }
+  return $requirements;
+}
