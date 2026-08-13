@@ -1,7 +1,7 @@
 # Drupal 11
 
 # Ignore vendor directory (installed by Composer)
-/vendor/
+#/vendor/
 
 # Ignore user-uploaded files and private files
 #sites/*/files
