@@ -48,9 +48,9 @@ module:
   path: 0
   path_alias: 0
   responsive_image: 0
+  standard: 0
   svg_image: 0
   system: 0
-  standard: 0
   taxonomy: 0
   text: 0
   token: 0

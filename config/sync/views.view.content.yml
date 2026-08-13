@@ -1,4 +1,5 @@
-langcode: en
+uuid: 3c167e21-78b0-4b48-bcc5-ac68c6c2fe2d
+langcode: en-gb
 status: true
 dependencies:
   module:
@@ -203,7 +204,7 @@ display:
           entity_type: node
           entity_field: langcode
           plugin_id: field_language
-          label: 'Language'
+          label: Language
           exclude: false
           alter:
             alter_text: false
