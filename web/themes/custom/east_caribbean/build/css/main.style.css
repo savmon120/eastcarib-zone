@@ -13642,7 +13642,7 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
   -o-object-fit: contain !important;
   object-fit: contain !important;
 }
-.block--hero-banner {
+.custom-hero-banner {
   width: 100vw !important;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
@@ -13655,14 +13655,7 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
   padding-bottom: 180px;
   overflow: hidden;
 }
-.block--hero-banner .block__content {
-  width: 100%;
-  max-width: 1320px;
-  margin: 0 auto;
-  padding-right: var(--bs-gutter-x, 0.75rem);
-  padding-left: var(--bs-gutter-x, 0.75rem);
-}
-.block--hero-banner .field--name-field-background-image {
+.custom-hero-banner .custom-hero-banner__bg {
   position: absolute;
   top: 0;
   left: 0;
@@ -13675,16 +13668,16 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
   user-select: none;
   -webkit-user-select: none;
 }
-.block--hero-banner .field--name-field-background-image .media,
-.block--hero-banner .field--name-field-background-image .field,
-.block--hero-banner .field--name-field-background-image .field__item,
-.block--hero-banner .field--name-field-background-image picture {
+.custom-hero-banner .custom-hero-banner__bg .media,
+.custom-hero-banner .custom-hero-banner__bg .field,
+.custom-hero-banner .custom-hero-banner__bg .field__item,
+.custom-hero-banner .custom-hero-banner__bg picture {
   width: 100%;
   height: 100%;
   display: block;
 }
-.block--hero-banner .field--name-field-background-image img,
-.block--hero-banner .field--name-field-background-image picture img {
+.custom-hero-banner .custom-hero-banner__bg img,
+.custom-hero-banner .custom-hero-banner__bg picture img {
   width: 100% !important;
   height: 100% !important;
   -o-object-fit: cover !important;
@@ -13698,15 +13691,20 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
   user-select: none;
   -webkit-user-drag: none;
 }
-.block--hero-banner .field--name-field-body {
+.custom-hero-banner {
+}
+.custom-hero-banner .custom-hero-banner__content {
   position: relative;
   z-index: 3;
   width: 100%;
-  max-width: 600px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.custom-hero-banner .custom-hero-banner__content .field--name-field-body {
   color: #ffffff;
   text-align: left;
 }
-.block--hero-banner .field--name-field-body p:nth-of-type(1) {
+.custom-hero-banner .custom-hero-banner__content .field--name-field-body p:nth-of-type(1) {
   font-size: 1.1rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -13714,7 +13712,7 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
   margin-bottom: 5px;
   color: #ffffff;
 }
-.block--hero-banner .field--name-field-body p:nth-of-type(2) {
+.custom-hero-banner .custom-hero-banner__content .field--name-field-body p:nth-of-type(2) {
   font-family: "Permanent Marker", cursive;
   font-size: 4.5rem;
   font-weight: 400;
@@ -13724,17 +13722,17 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
   text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 @media (max-width: 1200px) {
-  .block--hero-banner .field--name-field-body p:nth-of-type(2) {
+  .custom-hero-banner .custom-hero-banner__content .field--name-field-body p:nth-of-type(2) {
     font-size: 3.5rem;
   }
 }
-.block--hero-banner .field--name-field-body p:nth-of-type(3) {
+.custom-hero-banner .custom-hero-banner__content .field--name-field-body p:nth-of-type(3) {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
   margin-bottom: 0;
 }
-.block--hero-banner .field--name-field-body p:nth-of-type(3) a {
+.custom-hero-banner .custom-hero-banner__content .field--name-field-body p:nth-of-type(3) a {
   display: inline-block;
   text-decoration: none !important;
   text-align: center;
@@ -13761,12 +13759,12 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
     box-shadow 0.2s ease,
     -webkit-transform 0.2s ease;
 }
-.block--hero-banner .field--name-field-body p:nth-of-type(3) a:nth-of-type(1) {
+.custom-hero-banner .custom-hero-banner__content .field--name-field-body p:nth-of-type(3) a:nth-of-type(1) {
   background-color: #0a1b2a;
   color: #ffffff;
   border: 2px solid #0a1b2a;
 }
-.block--hero-banner .field--name-field-body p:nth-of-type(3) a:nth-of-type(1):hover {
+.custom-hero-banner .custom-hero-banner__content .field--name-field-body p:nth-of-type(3) a:nth-of-type(1):hover {
   -webkit-transform: translateY(-2px);
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
@@ -13774,19 +13772,21 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
   border-color: #004488;
   color: #ffffff;
 }
-.block--hero-banner .field--name-field-body p:nth-of-type(3) a:nth-of-type(2) {
+.custom-hero-banner .custom-hero-banner__content .field--name-field-body p:nth-of-type(3) a:nth-of-type(2) {
   background-color: transparent;
   color: #ffffff;
   border: 2px solid #ffffff;
 }
-.block--hero-banner .field--name-field-body p:nth-of-type(3) a:nth-of-type(2):hover {
+.custom-hero-banner .custom-hero-banner__content .field--name-field-body p:nth-of-type(3) a:nth-of-type(2):hover {
   background-color: #ffffff;
   color: #0a1b2a;
   -webkit-transform: translateY(-2px);
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
-.block--hero-banner .field--name-field-wave-graphic {
+.custom-hero-banner {
+}
+.custom-hero-banner .custom-hero-banner__wave {
   position: absolute;
   bottom: -5px;
   left: 0;
@@ -13799,17 +13799,17 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
   user-select: none;
   -webkit-user-select: none;
 }
-.block--hero-banner .field--name-field-wave-graphic .media,
-.block--hero-banner .field--name-field-wave-graphic .field,
-.block--hero-banner .field--name-field-wave-graphic .field__item,
-.block--hero-banner .field--name-field-wave-graphic picture {
+.custom-hero-banner .custom-hero-banner__wave .media,
+.custom-hero-banner .custom-hero-banner__wave .field,
+.custom-hero-banner .custom-hero-banner__wave .field__item,
+.custom-hero-banner .custom-hero-banner__wave picture {
   width: 100%;
   height: auto;
   display: block;
 }
-.block--hero-banner .field--name-field-wave-graphic img,
-.block--hero-banner .field--name-field-wave-graphic svg,
-.block--hero-banner .field--name-field-wave-graphic picture img {
+.custom-hero-banner .custom-hero-banner__wave img,
+.custom-hero-banner .custom-hero-banner__wave svg,
+.custom-hero-banner .custom-hero-banner__wave picture img {
   width: 100% !important;
   height: auto !important;
   min-height: 120px !important;
@@ -14703,6 +14703,81 @@ nav.navbar {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+@media (min-width: 992px) {
+  nav.navbar .navbar-collapse .ms-auto {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+  nav.navbar .block--east-caribbean-ecznavbarmenu {
+    position: static;
+    -webkit-transform: none;
+    transform: none;
+    margin: 0 auto !important;
+  }
+  nav.navbar .block--east-caribbean-ecznavbarmenu ul.nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+    gap: 15px;
+  }
+  nav.navbar .block--east-caribbean-vatsimusermenu {
+    margin-left: 0 !important;
+  }
+}
+nav.navbar .vatsim-nav-item {
+  margin-left: auto;
+}
+nav.navbar .vatsim-nav-item .vatsim-login-btn {
+  background-color: #0a1b2a !important;
+  color: #ffffff !important;
+  border-radius: 50px;
+  padding: 10px 28px !important;
+  margin-left: 20px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  display: inline-block;
+  transition: box-shadow 0.2s ease, -webkit-transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    -webkit-transform 0.2s ease;
+}
+nav.navbar .vatsim-nav-item .vatsim-login-btn:hover {
+  color: #ffffff !important;
+  -webkit-transform: translateY(-2px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+nav.navbar .vatsim-nav-item .vatsim-user-btn {
+  background-color: #0a1b2a !important;
+  color: #ffffff !important;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 22px !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: box-shadow 0.2s ease, -webkit-transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    -webkit-transform 0.2s ease;
+  cursor: pointer;
+}
+nav.navbar .vatsim-nav-item .vatsim-user-btn:hover {
+  color: #ffffff !important;
+  -webkit-transform: translateY(-2px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+nav.navbar .vatsim-nav-item .vatsim-user-btn::after {
+  vertical-align: middle;
+}
 nav.navbar .navbar-brand {
   color: #0a1b2a !important;
   font-weight: 700;
@@ -14738,26 +14813,6 @@ nav.navbar span.nav-link {
   cursor: pointer;
   display: block;
 }
-nav.navbar a[href="/login"].nav-link {
-  background-color: #0a1b2a !important;
-  color: #ffffff !important;
-  border-radius: 50px;
-  padding: 10px 28px !important;
-  margin-left: 20px;
-  font-weight: 700;
-  opacity: 1;
-  transition: box-shadow 0.2s ease, -webkit-transform 0.2s ease;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    -webkit-transform 0.2s ease;
-}
-nav.navbar a[href="/login"].nav-link:hover {
-  -webkit-transform: translateY(-2px);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
 nav.navbar .dropdown-menu {
   background-color: rgba(255, 255, 255, 0.9) !important;
   backdrop-filter: blur(10px);
@@ -14771,6 +14826,15 @@ nav.navbar .dropdown-menu {
   right: auto !important;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
+}
+nav.navbar .dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: transparent;
 }
 nav.navbar .dropdown-menu .dropdown-item {
   color: #0a1b2a !important;
@@ -14788,10 +14852,12 @@ nav.navbar .dropdown-menu .dropdown-item.is-active {
   color: #ffffff !important;
 }
 @media (min-width: 992px) {
-  nav.navbar .nav-item.dropdown {
+  nav.navbar .nav-item.dropdown,
+  nav.navbar .vatsim-nav-item .dropdown {
     position: relative;
   }
-  nav.navbar .nav-item.dropdown:hover .dropdown-menu {
+  nav.navbar .nav-item.dropdown:hover .dropdown-menu,
+  nav.navbar .vatsim-nav-item .dropdown:hover .dropdown-menu {
     display: block;
     -webkit-animation: fade-down 0.2s ease-out forwards;
     animation: fade-down 0.2s ease-out forwards;
