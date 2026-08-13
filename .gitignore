@@ -3,9 +3,13 @@
 # Ignore vendor directory (installed by Composer)
 #/vendor/
 
-# Ignore user-uploaded files and private files
-#sites/*/files
-#sites/*/private
+# Ignore generated/compiled files but keep uploaded media for local dev sync
+web/sites/*/files/php/
+web/sites/*/files/styles/
+web/sites/*/files/css/
+web/sites/*/files/js/
+web/sites/*/files/xmlsitemap/
+web/sites/*/private
 
 # Ignore multi-site test environment
 sites/simpletest
@@ -15,7 +19,7 @@ sites/*/*settings*.php
 !sites/*/default.settings.php
 sites/*/*services*.yml
 !sites/*/default.services.yml
-
+web/sites/default/settings.prod.php
 # Ignore Drush site aliases
 drush/sites/
 
