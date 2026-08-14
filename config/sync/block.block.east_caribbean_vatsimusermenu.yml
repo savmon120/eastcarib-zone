@@ -1,0 +1,20 @@
+uuid: 81ddbb4b-fbdd-4609-8526-e2dc5e9bbbfc
+langcode: en-gb
+status: true
+dependencies:
+  module:
+    - fir_sso
+  theme:
+    - east_caribbean
+id: east_caribbean_vatsimusermenu
+theme: east_caribbean
+region: navbar_right
+weight: 0
+provider: null
+plugin: fir_sso_user_menu
+settings:
+  id: fir_sso_user_menu
+  label: 'VATSIM User Menu'
+  label_display: '0'
+  provider: fir_sso
+visibility: {  }

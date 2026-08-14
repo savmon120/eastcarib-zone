@@ -27,7 +27,6 @@ class VatsimUserMenuBlock extends BlockBase {
         if ($current_user->isAuthenticated()) {
             $account = User::load($current_user->id());
 
-            // Pull data directly from the fields this new module created
             $firstName = $account->get('field_vatsim_first_name')->value ?? '';
             $lastName = $account->get('field_vatsim_last_name')->value ?? '';
             $cid = $account->get('field_vatsim_cid')->value ?? $account->getAccountName();
@@ -35,7 +34,7 @@ class VatsimUserMenuBlock extends BlockBase {
 
             $displayName = trim("$firstName $lastName");
             if (empty($displayName)) {
-                $displayName = $cid; // Fallback just in case
+                $displayName = $cid;
             }
 
             return [
