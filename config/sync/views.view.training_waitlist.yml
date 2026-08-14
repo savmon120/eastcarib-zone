@@ -280,7 +280,7 @@ display:
           admin_label: ''
           plugin_id: field
           label: 'Date of Request'
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
