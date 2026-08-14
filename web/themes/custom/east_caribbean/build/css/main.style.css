@@ -14619,6 +14619,10 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
     min-height: 200px;
   }
 }
+html,
+body {
+  overflow-x: hidden;
+}
 h1.page-title,
 .page-title.h1,
 .block-page-title-block h1,
@@ -14685,7 +14689,6 @@ header,
 .site-header,
 .region-header,
 nav.navbar {
-  position: absolute !important;
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
