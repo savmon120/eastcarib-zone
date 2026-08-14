@@ -25,6 +25,7 @@
         "drupal/core-recipe-unpack": "^11.4",
         "drupal/core-recommended": "^11.4",
         "drupal/ctools": "^4.1",
+        "drupal/easy_breadcrumb": "^2.0",
         "drupal/gin": "^5.0",
         "drupal/metatag": "^2.2",
         "drupal/oauth2_client": "^4.1",

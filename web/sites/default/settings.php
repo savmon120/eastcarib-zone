@@ -880,10 +880,10 @@ if (getenv('IS_DDEV_PROJECT') == 'true' && file_exists(__DIR__ . '/settings.ddev
   include __DIR__ . '/settings.ddev.php';
 }
 
-// Include for production settings if the file exists. This is useful for separatingproduction settings from development settings.
-if (file_exists(__DIR__ . '/settings.prod.php')) {
-  include __DIR__ . '/settings.prod.php';
-}
+// Include for production settings if the file exists. This is useful for separating production settings from development settings.
+//if (file_exists(__DIR__ . '/settings.prod.php')) {
+//  include __DIR__ . '/settings.prod.php';
+//}
 
 
 /**
