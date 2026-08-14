@@ -13646,7 +13646,6 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
   width: 100vw !important;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  max-width: 100vw;
   position: relative;
   min-height: 555px;
   display: flex;
@@ -14621,7 +14620,7 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
 }
 html,
 body {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 h1.page-title,
 .page-title.h1,
