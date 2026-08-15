@@ -1,0 +1,30 @@
+version: 2
+updates:
+  # Composer dependencies (Drupal project)
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+    # Only update things YOU explicitly added to composer.json
+    allow:
+      - dependency-type: "direct"
+
+    # Never touch Drupal core or its pinned libraries
+    ignore:
+      - dependency-name: "drupal/core"
+      - dependency-name: "drupal/core-recommended"
+      - dependency-name: "drupal/core-composer-scaffold"
+      - dependency-name: "drupal/core-dev"
+      - dependency-name: "symfony/*"
+      - dependency-name: "guzzlehttp/*"
+      - dependency-name: "doctrine/*"
+      - dependency-name: "twig/*"
+      - dependency-name: "laminas/*"
+      - dependency-name: "psr/*"
+
+  # NPM updates (Radix theme tooling)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
