@@ -1,21 +1,38 @@
 version: 2
-updates:
-  # Composer dependencies (Drupal project)
-  - package-ecosystem: "composer"
-    directory: "/"
-    schedule:
-      interval: "weekly"
 
-    # Only update things YOU explicitly added to composer.json
+updates:
+  ###########################################################################
+  # COMPOSER (PHP dependencies)
+  #
+  # We only scan the ROOT composer.json because:
+  # - Drupal core has its own composer.json we must NOT touch
+  # - Contrib modules/themes may have composer.json files we must NOT touch
+  # - Custom modules rely on root-level composer.json for external libraries
+  #
+  # This ensures Dependabot ONLY updates libraries YOU explicitly added.
+  ###########################################################################
+  - package-ecosystem: "composer"
+    directory: "/"            # Only scan the root composer.json / composer.lock
+    schedule:
+      interval: "weekly"      # Safe, low-noise update frequency
+
+    # Only update dependencies YOU added directly to composer.json.
+    # This prevents Dependabot from updating transitive dependencies
+    # (which Drupal core manages and pins).
     allow:
       - dependency-type: "direct"
 
-    # Never touch Drupal core or its pinned libraries
+    # Explicitly ignore Drupal core and all pinned libraries.
+    # These are managed by Drupal core maintainers and MUST NOT be updated
+    # independently or Dependabot will break your site.
     ignore:
       - dependency-name: "drupal/core"
       - dependency-name: "drupal/core-recommended"
       - dependency-name: "drupal/core-composer-scaffold"
       - dependency-name: "drupal/core-dev"
+
+      # Drupal core pins these upstream libraries.
+      # Updating them independently causes dependency conflicts.
       - dependency-name: "symfony/*"
       - dependency-name: "guzzlehttp/*"
       - dependency-name: "doctrine/*"
@@ -23,8 +40,28 @@ updates:
       - dependency-name: "laminas/*"
       - dependency-name: "psr/*"
 
-  # NPM updates (Radix theme tooling)
+
+  ###########################################################################
+  # NPM (JavaScript dependencies)
+  #
+  # We scan ONLY the root directory because:
+  # - Your custom theme (east_caribbean) has its own package.json inside
+  #   /web/themes/custom/east_caribbean — Dependabot WILL scan this because
+  #   npm scanning is recursive within the directory you specify.
+  #
+  # - Radix contrib theme is inside /web/themes/contrib/radix — Dependabot
+  #   WILL NOT scan this because contrib directories are not included.
+  #
+  # - Drupal core has npm tooling inside /web/core — Dependabot WILL NOT scan
+  #   this because we did NOT include /web/core as a directory.
+  #
+  # Result:
+  # ✔ Custom theme npm deps → updated
+  # ✔ Root-level tooling → updated
+  # ❌ Radix contrib theme → NOT touched
+  # ❌ Drupal core npm → NOT touched
+  ###########################################################################
   - package-ecosystem: "npm"
-    directory: "/"
+    directory: "/"            # Scan root package.json AND recursively scan custom theme
     schedule:
-      interval: "weekly"
+      interval: "weekly"      # Safe update frequency
