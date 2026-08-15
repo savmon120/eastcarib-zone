@@ -885,6 +885,7 @@ if (file_exists(__DIR__ . '/settings.prod.php')) {
   include __DIR__ . '/settings.prod.php';
 }
 
+$settings['enable_html5_validation'] = FALSE;
 
 /**
  * Load local development override configuration, if available.
