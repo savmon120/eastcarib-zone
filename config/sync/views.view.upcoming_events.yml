@@ -3,6 +3,7 @@ langcode: en-gb
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.teaser
     - field.storage.node.field_body
     - field.storage.node.field_event_category
     - field.storage.node.field_event_date
@@ -694,3 +695,61 @@ display:
         - 'config:field.storage.node.field_event_date'
         - 'config:field.storage.node.field_event_end_date'
         - 'config:field.storage.node.field_location_fir'
+  page_1:
+    id: page_1
+    display_title: Page
+    display_plugin: page
+    position: 2
+    display_options:
+      enabled: false
+      title: 'Upcoming Events Page'
+      fields: {  }
+      pager:
+        type: mini
+        options:
+          offset: 0
+          pagination_heading_level: h4
+          items_per_page: 12
+          total_pages: null
+          id: 0
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+      style:
+        type: default
+        options: {  }
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: teaser
+      defaults:
+        title: false
+        pager: false
+        style: false
+        row: false
+        fields: false
+        header: false
+      header: {  }
+      display_extenders:
+        metatag_display_extender:
+          metatags:
+            title: 'Upcoming Events | ECZ'
+          tokenize: false
+      path: events
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
