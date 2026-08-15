@@ -59,6 +59,7 @@ return array(
     'PhpTuf\\ComposerStager\\' => array($vendorDir . '/php-tuf/composer-stager/src'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'Peast\\' => array($vendorDir . '/mck89/peast/lib/Peast'),
+    'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
     'MabeEnum\\' => array($vendorDir . '/marc-mabe/php-enum/src'),
     'League\\OAuth2\\Client\\' => array($vendorDir . '/league/oauth2-client/src'),

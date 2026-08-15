@@ -27,12 +27,15 @@
         "drupal/ctools": "^4.1",
         "drupal/easy_breadcrumb": "^2.0",
         "drupal/gin": "^5.0",
+        "drupal/mailsystem": "^4.5",
         "drupal/metatag": "^2.2",
         "drupal/oauth2_client": "^4.1",
         "drupal/pathauto": "^1.15",
         "drupal/radix": "^6.0",
         "drupal/single_content_sync": "^1.4",
+        "drupal/smtp": "^1.4",
         "drupal/svg_image": "^3.2",
+        "drupal/webform": "^6.3",
         "drush/drush": "^13.7"
     },
     "conflict": {
