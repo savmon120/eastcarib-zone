@@ -1,0 +1,36 @@
+<div class="vatsim-events-card">
+  <div class="view-header">
+    <span>{{ 'Upcoming Events'|t|upper }}</span>
+  </div>
+  {% if show_view_all %}
+    <a class="vatsim-events-view-all" href="{{ view_all_url }}">{{ 'VIEW ALL'|t }} →</a>
+  {% endif %}
+  <ul class="events-list">
+    {% if events is empty %}
+      <li class="events-empty">{{ 'No upcoming events.'|t }}</li>
+    {% else %}
+      {% for event in events %}
+        <li>
+          {% if event.banner %}
+            <img class="event-banner" src="{{ event.banner }}" alt="{{ event.name }}" loading="lazy">
+          {% endif %}
+          <div class="event-info">
+            <span class="event-name">
+              {% if event.link %}
+                <a href="{{ event.link }}" target="_blank" rel="noopener">{{ event.name }}</a>
+              {% else %}
+                {{ event.name }}
+              {% endif %}
+            </span>
+            <span class="event-meta">
+              {{ event.start_time_formatted }}
+              {% if event.airports is not empty %} · {{ event.airports|join(', ') }}{% endif %}
+            </span>
+          </div>
+        </li>
+      {% endfor %}
+    {% endif %}
+  </ul>
+  
+</div>
+</div>

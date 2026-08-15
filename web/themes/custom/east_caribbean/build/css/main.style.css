@@ -14251,6 +14251,91 @@ body.node-type--wiki-article .layout__region--content .field--name-field-body .m
     opacity: 1;
   }
 }
+.vatsim-events-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  margin-bottom: 15px;
+}
+.vatsim-events-card .view-header {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  margin: 0 0 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.vatsim-events-card .events-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vatsim-events-card .events-list li {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background-color: #f8f9fa;
+  border: 1px solid #e2e6ea;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+.vatsim-events-card .event-banner {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.vatsim-events-card .event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.vatsim-events-card .event-name {
+  font-weight: 800;
+  color: #0548A3;
+  font-size: 0.9rem;
+}
+.vatsim-events-card .event-name a {
+  color: inherit;
+  text-decoration: none;
+}
+.vatsim-events-card .event-name a:hover {
+  text-decoration: underline;
+}
+.vatsim-events-card .event-meta {
+  font-weight: 500;
+  color: #666666;
+  font-size: 0.75rem;
+}
+.vatsim-events-card .events-list .events-empty {
+  background-color: transparent;
+  border: none;
+  justify-content: center;
+  color: #777777;
+  font-style: italic;
+  padding: 10px 0;
+}
+.vatsim-events-card .vatsim-events-view-all {
+  display: inline-block;
+  margin-top: 15px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0548A3;
+  text-decoration: none;
+}
+.vatsim-events-card .vatsim-events-view-all:hover {
+  text-decoration: underline;
+}
 .block-views-blocklatest-news-block-1 {
   background-color: #ffffff;
   border: 1px solid #e0e0e0;

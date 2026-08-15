@@ -32,6 +32,21 @@ class VatsimSettingsForm extends ConfigFormBase {
             '#default_value' => $config->get('bookings_url'),
         ];
 
+        $form['events_url'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Events API URL'),
+            '#description' => $this->t('VATSIM division events endpoint. Filtered against the FIR & Airport Prefixes below.'),
+            '#default_value' => $config->get('events_url') ?: 'https://my.vatsim.net/api/v2/events/view/division/CAR',
+            '#required' => TRUE,
+        ];
+
+        $form['events_sync'] = [
+            '#type' => 'link',
+            '#title' => $this->t('Sync events now'),
+            '#url' => \Drupal\Core\Url::fromRoute('ecz_vatsim.sync_events'),
+            '#attributes' => ['class' => ['button']],
+        ];
+
         $form['prefixes'] = [
             '#type' => 'textarea',
             '#title' => $this->t('FIR & Airport Prefixes'),
@@ -53,6 +68,7 @@ class VatsimSettingsForm extends ConfigFormBase {
         $this->config('ecz_vatsim.settings')
             ->set('feed_url', $form_state->getValue('feed_url'))
             ->set('bookings_url', $form_state->getValue('bookings_url'))
+            ->set('events_url', $form_state->getValue('events_url'))
             ->set('prefixes', $form_state->getValue('prefixes'))
             ->set('refresh_rate', $form_state->getValue('refresh_rate'))
             ->save();

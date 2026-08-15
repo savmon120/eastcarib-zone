@@ -9,7 +9,6 @@ dependencies:
     - field.storage.node.field_news_image
     - node.type.latest_news
   module:
-    - datetime
     - node
     - options
     - text
@@ -644,7 +643,10 @@ display:
     display_plugin: block
     position: 1
     display_options:
-      display_extenders: {  }
+      display_extenders:
+        metatag_display_extender:
+          metatags: {  }
+          tokenize: false
     cache_metadata:
       max-age: -1
       contexts:
@@ -663,7 +665,10 @@ display:
     display_plugin: page
     position: 2
     display_options:
-      display_extenders: {  }
+      display_extenders:
+        metatag_display_extender:
+          metatags: {  }
+          tokenize: false
       path: news
     cache_metadata:
       max-age: -1

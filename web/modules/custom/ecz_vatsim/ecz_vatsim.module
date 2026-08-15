@@ -13,3 +13,33 @@ function ecz_vatsim_page_attachments(array &$attachments) {
         'refreshRate' => $config->get('refresh_rate') ?: 60,
     ];
 }
+/**
+ * Implements hook_cron().
+ *
+ * Events only need to be pulled once a day; the actual "has 24h passed"
+ * check lives in EventsManager so it's reachable outside of a cron run too
+ */
+function ecz_vatsim_cron() {
+  /** @var \Drupal\ecz_vatsim\EventsManager $events_manager */
+  $events_manager = \Drupal::service('ecz_vatsim.events_manager');
+  if ($events_manager->needsSync()) {
+    $events_manager->sync();
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function ecz_vatsim_theme($existing, $type, $theme, $path) {
+  return [
+    'ecz_vatsim_events' => [
+        'variables' => [
+            'events' => [],
+            'show_view_all' => FALSE,
+            'view_all_url' => NULL,
+        ],
+        'path' => $path . '/templates',
+        'template' => 'ecz-vatsim-events',
+    ],
+  ];
+}

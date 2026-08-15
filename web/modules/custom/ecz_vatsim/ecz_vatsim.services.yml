@@ -1,0 +1,4 @@
+services:
+  ecz_vatsim.events_manager:
+    class: Drupal\ecz_vatsim\EventsManager
+    arguments: ['@http_client', '@config.factory', '@cache.default', '@state', '@logger.factory', '@datetime.time', '@date.formatter']

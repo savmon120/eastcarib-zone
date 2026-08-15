@@ -13,3 +13,19 @@ ecz_vatsim.live_data:
     _title: 'VATSIM Live Data'
   requirements:
     _permission: 'access content'
+
+ecz_vatsim.sync_events:
+  path: '/admin/config/services/vatsim/sync-events'
+  defaults:
+    _controller: '\Drupal\ecz_vatsim\Controller\VatsimEventsSyncController::sync'
+    _title: 'Sync VATSIM Events'
+  requirements:
+    _permission: 'administer site configuration'
+
+ecz_vatsim.events_page:
+  path: '/events'
+  defaults:
+    _controller: '\Drupal\ecz_vatsim\Controller\VatsimEventsPageController::viewAll'
+    _title: 'Upcoming Events'
+  requirements:
+    _permission: 'access content'
