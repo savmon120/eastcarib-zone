@@ -62,6 +62,9 @@ updates:
   # ❌ Drupal core npm → NOT touched
   ###########################################################################
   - package-ecosystem: "npm"
-    directory: "/"            # Scan root package.json AND recursively scan custom theme
+    directory: "/"
     schedule:
-      interval: "weekly"      # Safe update frequency
+      interval: "weekly"
+    ignore:
+      - dependency-name: "*"
+
