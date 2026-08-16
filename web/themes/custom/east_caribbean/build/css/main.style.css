@@ -14962,4 +14962,8 @@ footer.page__footer .block--east-caribbean-footerright .field--name-field-body .
 .layout--fourcol-section .layout__region .d-flex {
   justify-content: center;
 }
+span.simplei-indicator.top-bar__title {
+  order: -1 !important;
+  margin-right: 10rem;
+}
 /*# sourceMappingURL=main.style.css.map */

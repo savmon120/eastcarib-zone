@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * This module puts environment indicator in the toolbar.
+ */
+
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\simplei\Hook\SimpleiHooks;
+
+/**
+ * Implements hook_help().
+ */
+#[LegacyHook]
+function simplei_help($route_name, RouteMatchInterface $route_match) {
+  return \Drupal::service(SimpleiHooks::class)->help($route_name, $route_match);
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+#[LegacyHook]
+function simplei_page_attachments(array &$attachments): void {
+  \Drupal::service(SimpleiHooks::class)->pageAttachments($attachments);
+}

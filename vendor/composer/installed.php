@@ -3,7 +3,7 @@
         'name' => 'drupal/recommended-project',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '273414517ecd5ce5958c27fdaf854c59a547d9fa',
+        'reference' => '200befaf29c7b2b7c1091f872428ed1da0e8428d',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -463,7 +463,7 @@
         'drupal/recommended-project' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '273414517ecd5ce5958c27fdaf854c59a547d9fa',
+            'reference' => '200befaf29c7b2b7c1091f872428ed1da0e8428d',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -486,6 +486,15 @@
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'drupal/simplei' => array(
+            'pretty_version' => '3.0.4',
+            'version' => '3.0.4.0',
+            'reference' => '3.0.4',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/simplei',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'drupal/single_content_sync' => array(
             'pretty_version' => '1.4.16',
