@@ -21,8 +21,6 @@ module:
   easy_breadcrumb: 0
   ecz_vatsim: 0
   editor: 0
-  environment_indicator: 0
-  environment_indicator_ui: 0
   field: 0
   field_ui: 0
   file: 0
@@ -52,6 +50,7 @@ module:
   path: 0
   path_alias: 0
   responsive_image: 0
+  simplei: 0
   smtp: 0
   standard: 0
   svg_image: 0
@@ -59,6 +58,7 @@ module:
   taxonomy: 0
   text: 0
   token: 0
+  toolbar: 0
   update: 0
   user: 0
   views_ui: 0

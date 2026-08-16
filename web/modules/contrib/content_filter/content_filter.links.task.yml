@@ -1,3 +1,0 @@
-content_filter.local_tasks:
-  deriver: Drupal\content_filter\Plugin\Derivative\ContentFilterLocalTasks
-  weight: 100
