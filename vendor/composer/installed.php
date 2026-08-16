@@ -3,7 +3,7 @@
         'name' => 'drupal/recommended-project',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'd0a7c013a93b739754fc481b65225f7c79748e66',
+        'reference' => 'd627217d5ac2e6e5b1e624c01ee1f75422f96b93',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -379,6 +379,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/honeypot' => array(
+            'pretty_version' => '2.2.2',
+            'version' => '2.2.2.0',
+            'reference' => '2.2.2',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/honeypot',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/mailsystem' => array(
             'pretty_version' => '4.5.0',
             'version' => '4.5.0.0',
@@ -427,7 +436,7 @@
         'drupal/recommended-project' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'd0a7c013a93b739754fc481b65225f7c79748e66',
+            'reference' => 'd627217d5ac2e6e5b1e624c01ee1f75422f96b93',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
