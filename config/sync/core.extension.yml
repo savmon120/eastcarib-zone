@@ -21,11 +21,14 @@ module:
   easy_breadcrumb: 0
   ecz_vatsim: 0
   editor: 0
+  environment_indicator: 0
+  environment_indicator_ui: 0
   field: 0
   field_ui: 0
   file: 0
   filter: 0
   fir_sso: 0
+  gin_login: 0
   help: 0
   image: 0
   language: 0
