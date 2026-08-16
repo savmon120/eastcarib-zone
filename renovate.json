@@ -4,10 +4,30 @@
     "config:recommended",
     "github>drevops/renovate-drupal"
   ],
-  "enabledManagers": ["composer"],
-  "composerIgnorePlatformReqs": ["php", "ext-*", "lib-*"],
+  "enabledManagers": [
+    "composer"
+  ],
+  "composerIgnorePlatformReqs": [
+    "php",
+    "ext-*",
+    "lib-*"
+  ],
   "lockFileMaintenance": {
     "enabled": true
   },
-  "rangeStrategy": "bump"
+  "rangeStrategy": "bump",
+  "major": {
+    "dependencyDashboardApproval": true
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "php"
+      ],
+      "enabled": false
+    }
+  ]
 }
