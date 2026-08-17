@@ -12527,330 +12527,6 @@ body.path-wiki .view-content {
   -webkit-transform: translateY(-2px);
   transform: translateY(-2px);
 }
-.node--event--full .layout--twocol-section {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-@media (min-width: 992px) {
-  .node--event--full .layout--twocol-section {
-    grid-template-columns: 2fr 1fr;
-    gap: 3rem;
-  }
-}
-.node--event--full .block-field-blocknodeeventfield-event-image img {
-  width: 100%;
-  height: auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  -o-object-fit: cover;
-  object-fit: cover;
-  border-radius: 5px;
-}
-.node--event--full .layout__region--second::after {
-  display: table;
-  clear: both;
-}
-.node--event--full .block-field-blocknodeeventtitle {
-  float: left;
-  clear: both;
-  width: 100%;
-  margin-bottom: 1.5rem;
-}
-.node--event--full .block-field-blocknodeeventtitle .block__content span {
-  display: block;
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #0a1b2a;
-  line-height: 1.2;
-}
-.node--event--full .block-field-blocknodeeventfield-event-category {
-  float: left;
-  clear: left;
-  margin-right: 12px;
-  margin-bottom: 1.5rem;
-}
-.node--event--full .block-field-blocknodeeventfield-location-fir {
-  float: left;
-  clear: none;
-  margin-bottom: 1.5rem;
-}
-.node--event--full .block-field-blocknodeeventfield-location-fir .field--items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.node--event--full .block-field-blocknodeeventfield-event-category .field__label,
-.node--event--full .block-field-blocknodeeventfield-location-fir .field__label {
-  display: none;
-}
-.node--event--full .block-field-blocknodeeventfield-event-category .field__item,
-.node--event--full .block-field-blocknodeeventfield-event-category .field--item,
-.node--event--full .block-field-blocknodeeventfield-location-fir .field__item,
-.node--event--full .block-field-blocknodeeventfield-location-fir .field--item {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f8fafc;
-  color: #475569;
-  border: 1px solid #cbd5e1;
-  padding: 8px 18px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-.node--event--full .block-field-blocknodeeventfield-event-category .field__item,
-.node--event--full .block-field-blocknodeeventfield-event-category .field--item {
-  background-color: #0a1b2a;
-  color: #ffffff;
-  border-color: #0a1b2a;
-}
-.node--event--full .block-field-blocknodeeventfield-event-date {
-  float: left;
-  clear: left;
-  margin-bottom: 2rem;
-}
-.node--event--full .block-field-blocknodeeventfield-event-date .field--item,
-.node--event--full .block-field-blocknodeeventfield-event-date time {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #0548A3;
-}
-.node--event--full .block-field-blocknodeeventfield-event-date .field--item::after {
-  content: "\2013";
-  color: #4a5568;
-  margin: 0 10px;
-}
-.node--event--full .block-field-blocknodeeventfield-event-end-date {
-  float: left;
-  clear: none;
-  margin-bottom: 2rem;
-}
-.node--event--full .block-field-blocknodeeventfield-event-end-date .field--item,
-.node--event--full .block-field-blocknodeeventfield-event-end-date time {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #0548A3;
-}
-.node--event--full .block-field-blocknodeeventfield-event-end-date time::after {
-  content: "z";
-}
-.node--event--full .block-field-blocknodeeventfield-event-link {
-  float: left;
-  clear: left;
-  margin-right: 15px;
-  margin-bottom: 1rem;
-}
-.node--event--full .block-field-blocknodeeventfield-event-link a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 30px;
-  font-weight: 600;
-  font-size: 1.05rem;
-  border-radius: 8px;
-  text-decoration: none;
-  background-color: #0548A3;
-  color: #ffffff;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-.node--event--full .block-field-blocknodeeventfield-event-link a:hover {
-  background-color: #0a1b2a;
-  -webkit-transform: translateY(-2px);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(5, 72, 163, 0.3);
-  color: #ffffff;
-}
-.node--event--full .block-field-blocknodeeventfield-booking-link {
-  float: left;
-  clear: none;
-  margin-bottom: 1rem;
-}
-.node--event--full .block-field-blocknodeeventfield-booking-link a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 30px;
-  font-weight: 600;
-  font-size: 1.05rem;
-  border-radius: 8px;
-  text-decoration: none;
-  background-color: #28a745;
-  color: #ffffff;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-.node--event--full .block-field-blocknodeeventfield-booking-link a:hover {
-  background-color: #1e7e34;
-  -webkit-transform: translateY(-2px);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3);
-  color: #ffffff;
-}
-.node--event--full .block-field-blocknodeeventfield-event-description {
-  clear: both;
-  width: 100%;
-  margin-top: 2rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid #e2e8f0;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #2d3748;
-}
-.view-id-events .view-content {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2.5rem;
-  margin-top: 2rem;
-}
-@media (min-width: 768px) {
-  .view-id-events .view-content {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (min-width: 1200px) {
-  .view-id-events .view-content {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-.view-id-events .view-header {
-  margin-top: 1rem;
-}
-.view-id-events .view-header h1,
-.view-id-events .view-header .h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #0a1b2a;
-  line-height: 1.2;
-  margin: 0;
-}
-.node--event--teaser {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-  transition: box-shadow 0.2s ease, -webkit-transform 0.2s ease;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    -webkit-transform 0.2s ease;
-  height: 100%;
-  position: relative;
-  padding-top: 180px;
-  display: flex;
-  flex-direction: column;
-}
-.node--event--teaser:hover {
-  -webkit-transform: translateY(-5px);
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
-.node--event--teaser footer,
-.node--event--teaser .author {
-  display: none !important;
-}
-.node--event--teaser .field--name-field-event-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 180px;
-}
-.node--event--teaser .field--name-field-event-image img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-.node--event--teaser h2,
-.node--event--teaser .h2,
-.node--event--teaser .node__title {
-  font-size: 1.25rem;
-  font-weight: 800;
-  margin: 1.25rem 1.25rem 0.5rem 1.25rem;
-  line-height: 1.3;
-}
-.node--event--teaser h2 a,
-.node--event--teaser .h2 a,
-.node--event--teaser .node__title a {
-  color: #0a1b2a;
-  text-decoration: none;
-}
-.node--event--teaser h2 a:hover,
-.node--event--teaser .h2 a:hover,
-.node--event--teaser .node__title a:hover {
-  color: #0548A3;
-}
-.node--event--teaser .node__content {
-  flex-grow: 1;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-end;
-  padding: 0 1.25rem 1.5rem 1.25rem;
-}
-.node--event--teaser .node__content::before {
-  content: "";
-  order: 3;
-  width: 100%;
-  height: 0.5rem;
-}
-.node--event--teaser .field--name-field-event-category {
-  order: 1;
-  margin-right: 8px;
-  display: inline-flex;
-  background-color: #0a1b2a;
-  color: #ffffff;
-  border: 1px solid #0a1b2a;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.node--event--teaser .field--name-field-location-fir {
-  order: 2;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.node--event--teaser .field--name-field-location-fir .field__item {
-  display: inline-flex;
-  background-color: #f8fafc;
-  color: #475569;
-  border: 1px solid #cbd5e1;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.node--event--teaser .field--name-field-event-date {
-  order: 4;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #0548A3;
-}
-.node--event--teaser .field--name-field-event-date::after {
-  content: "\2013";
-  color: #4a5568;
-  margin: 0 6px;
-}
-.node--event--teaser .field--name-field-event-end-date {
-  order: 5;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #0548A3;
-}
-.node--event--teaser .field--name-field-event-end-date time::after {
-  content: "z";
-}
 .view-id-latest_news.view-display-id-page_1 {
   margin: 3rem auto;
   padding: 0 12px;
@@ -13473,6 +13149,71 @@ body.node-type--page:not(.path-frontpage) .node--page--full .field--name-field-b
   background-color: #2c6666;
   border-color: #2c6666;
   color: #ffffff;
+}
+.vatsim-events-page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+.vatsim-events-page__item {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+.vatsim-events-page__banner-wrap {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+.vatsim-events-page__banner {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+.vatsim-events-page__body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.vatsim-events-page__name {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0;
+}
+.vatsim-events-page__name a {
+  color: #0548A3;
+  text-decoration: none;
+}
+.vatsim-events-page__name a:hover {
+  text-decoration: underline;
+}
+.vatsim-events-page__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.8rem;
+  color: #666666;
+}
+.vatsim-events-page__airports {
+  font-weight: 700;
+  color: #333333;
+}
+.vatsim-events-page__desc {
+  font-size: 0.85rem;
+  color: #555555;
+  margin: 0;
+}
+.vatsim-events-page__empty {
+  color: #777777;
+  font-style: italic;
+  text-align: center;
+  padding: 40px 0;
 }
 .view-wiki-main-page .view-content {
   background-color: #ffffff !important;

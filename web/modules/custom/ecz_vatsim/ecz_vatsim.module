@@ -41,5 +41,12 @@ function ecz_vatsim_theme($existing, $type, $theme, $path) {
         'path' => $path . '/templates',
         'template' => 'ecz-vatsim-events',
     ],
+    'ecz_vatsim_events_page' => [
+      'variables' => [
+        'events' => [],
+      ],
+      'path' => $path . '/templates',
+      'template' => 'ecz-vatsim-events-page',
+    ],
   ];
 }
