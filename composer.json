@@ -23,6 +23,7 @@
         "drupal/core-recommended": "^11.4",
         "drupal/ctools": "^4.1",
         "drupal/easy_breadcrumb": "^2.0",
+        "drupal/extlink": "^3.0",
         "drupal/gin": "^5.0",
         "drupal/gin_login": "^2.1",
         "drupal/honeypot": "^2.2",
