@@ -6,6 +6,7 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.wiki_dashboard_card.field_body
     - field.field.node.wiki_dashboard_card.field_media_image
+    - field.field.node.wiki_dashboard_card.field_visibility
     - field.field.node.wiki_dashboard_card.field_weight
     - node.type.wiki_dashboard_card
   module:
@@ -39,5 +40,6 @@ content:
     weight: 100
     region: content
 hidden:
+  field_visibility: true
   field_weight: true
   langcode: true

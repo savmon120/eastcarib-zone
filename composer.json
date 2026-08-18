@@ -29,6 +29,7 @@
         "drupal/honeypot": "^2.2",
         "drupal/mailsystem": "^4.5",
         "drupal/metatag": "^2.2",
+        "drupal/node_access_by_field_role": "^1.0",
         "drupal/oauth2_client": "^4.1",
         "drupal/pathauto": "^1.15",
         "drupal/radix": "^6.0",

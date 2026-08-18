@@ -1,0 +1,21 @@
+uuid: 26932216-48f0-4a5a-acfd-2e9b199e6f2c
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_visibility
+    - node.type.wiki_dashboard_card
+  module:
+    - node_access_by_field_role
+id: node.wiki_dashboard_card.field_visibility
+field_name: field_visibility
+entity_type: node
+bundle: wiki_dashboard_card
+label: Visibility
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: role_reference

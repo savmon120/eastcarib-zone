@@ -1,0 +1,7 @@
+node_access_by_field.settings:
+  path: '/admin/config/people/node-access-by-field-role'
+  defaults:
+    _form: '\Drupal\node_access_by_field_role\Form\SettingsForm'
+    _title: 'Node access by field'
+  requirements:
+    _permission: 'administer node access by field'

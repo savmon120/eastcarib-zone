@@ -1,0 +1,16 @@
+{
+  "name": "drupal/node_access_by_field_role",
+  "description": "Controls node view access by role→user field mapping and optional per-node role reference.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=8.1",
+    "drupal/core": "^9.4 || ^10 || ^11"
+  },
+  "extra": {
+    "drupal": {
+      "type": "module",
+      "package": "Access control"
+    }
+  }
+}

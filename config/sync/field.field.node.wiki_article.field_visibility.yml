@@ -1,0 +1,21 @@
+uuid: 87bcc13c-b78f-4699-bbed-12be71cdb883
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_visibility
+    - node.type.wiki_article
+  module:
+    - node_access_by_field_role
+id: node.wiki_article.field_visibility
+field_name: field_visibility
+entity_type: node
+bundle: wiki_article
+label: Visibility
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: role_reference

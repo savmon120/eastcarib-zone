@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7fc3b89505839fb62c5653e6ac0c06a",
+    "content-hash": "8ddf59b9f62cba9adf1ac6e6d555f2e9",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2094,6 +2094,53 @@
                 "source": "https://git.drupalcode.org/project/metatag",
                 "issues": "https://www.drupal.org/project/issues/metatag",
                 "docs": "https://www.drupal.org/docs/8/modules/metatag"
+            }
+        },
+        {
+            "name": "drupal/node_access_by_field_role",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/node_access_by_field_role.git",
+                "reference": "1.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/node_access_by_field_role-1.0.1.zip",
+                "reference": "1.0.1",
+                "shasum": "495f61afa1aadd8f6c1cf8a93bebbf98f95a0a59"
+            },
+            "require": {
+                "drupal/core": "^9.4 || ^10 || ^11",
+                "php": ">=8.1"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.1",
+                    "datestamp": "1756797141",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    },
+                    "type": "module",
+                    "package": "Access control"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "kate_raquel",
+                    "homepage": "https://www.drupal.org/user/3476843"
+                }
+            ],
+            "description": "Controls node view access by role→user field mapping and optional per-node role reference.",
+            "homepage": "https://www.drupal.org/project/node_access_by_field_role",
+            "support": {
+                "source": "https://git.drupalcode.org/project/node_access_by_field_role"
             }
         },
         {

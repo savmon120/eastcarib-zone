@@ -43,6 +43,7 @@ module:
   mysql: 0
   navigation: 0
   node: 0
+  node_access_by_field_role: 0
   oauth2_client: 0
   options: 0
   page_cache: 0

@@ -3,7 +3,7 @@
         'name' => 'drupal/recommended-project',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '0e165a11965af0856f9b9b4c48c84468d7421abe',
+        'reference' => 'be60011f61844cfa39b1cd5a7dbaf907397edb91',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -415,6 +415,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/node_access_by_field_role' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'reference' => '1.0.1',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/node_access_by_field_role',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/oauth2_client' => array(
             'pretty_version' => '4.2.0',
             'version' => '4.2.0.0',
@@ -445,7 +454,7 @@
         'drupal/recommended-project' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '0e165a11965af0856f9b9b4c48c84468d7421abe',
+            'reference' => 'be60011f61844cfa39b1cd5a7dbaf907397edb91',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

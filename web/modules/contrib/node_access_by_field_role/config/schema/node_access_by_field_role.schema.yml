@@ -1,0 +1,39 @@
+node_access_by_field.settings:
+  type: mapping
+  label: 'Node Access by Field settings'
+  mapping:
+    debug:
+      type: boolean
+      label: 'Enable debug logging'
+    global_full_access_roles:
+      type: sequence
+      label: 'Global roles with full access'
+      sequence:
+        type: string
+    global_deny_roles:
+      type: sequence
+      label: 'Global roles denied'
+      sequence:
+        type: string
+    bundles:
+      type: mapping
+      label: 'Per-bundle configuration'
+      mapping:
+        '*':
+          type: mapping
+          mapping:
+            full_access_roles:
+              type: sequence
+              sequence:
+                type: string
+            deny_roles:
+              type: sequence
+              sequence:
+                type: string
+            role_field_map:
+              type: mapping
+              label: 'Role→user field mapping'
+              mapping:
+                '*':
+                  type: string
+                  label: 'User reference field machine name'

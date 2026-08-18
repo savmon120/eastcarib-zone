@@ -1,0 +1,4 @@
+services:
+  node_access_by_field_role.node_access:
+    class: Drupal\node_access_by_field_role\Access\NodeAccessByFieldRoleNodeAccess
+    arguments: ['@config.factory']

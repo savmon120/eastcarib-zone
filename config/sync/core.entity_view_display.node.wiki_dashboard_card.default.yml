@@ -5,10 +5,12 @@ dependencies:
   config:
     - field.field.node.wiki_dashboard_card.field_body
     - field.field.node.wiki_dashboard_card.field_media_image
+    - field.field.node.wiki_dashboard_card.field_visibility
     - field.field.node.wiki_dashboard_card.field_weight
     - node.type.wiki_dashboard_card
   module:
     - layout_builder
+    - node_access_by_field_role
     - user
 third_party_settings:
   layout_builder:
@@ -18,7 +20,14 @@ id: node.wiki_dashboard_card.default
 targetEntityType: node
 bundle: wiki_dashboard_card
 mode: default
-content: {  }
+content:
+  field_visibility:
+    type: role_reference_list
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
 hidden:
   field_body: true
   field_media_image: true

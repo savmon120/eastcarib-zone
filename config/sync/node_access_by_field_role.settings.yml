@@ -1,0 +1,44 @@
+debug: true
+global_full_access_roles: {  }
+global_deny_roles: {  }
+bundles:
+  controller:
+    full_access_roles: {  }
+    deny_roles: {  }
+    role_field_map: {  }
+  download_item:
+    full_access_roles: {  }
+    deny_roles: {  }
+    role_field_map: {  }
+  event:
+    full_access_roles: {  }
+    deny_roles: {  }
+    role_field_map: {  }
+  featured_airport:
+    full_access_roles: {  }
+    deny_roles: {  }
+    role_field_map: {  }
+  latest_news:
+    full_access_roles: {  }
+    deny_roles: {  }
+    role_field_map: {  }
+  page:
+    full_access_roles: {  }
+    deny_roles: {  }
+    role_field_map: {  }
+  staff_member:
+    full_access_roles: {  }
+    deny_roles: {  }
+    role_field_map: {  }
+  waitlist_entry:
+    full_access_roles: {  }
+    deny_roles: {  }
+    role_field_map: {  }
+  wiki_article:
+    full_access_roles: {  }
+    deny_roles: {  }
+    role_field_map: {  }
+  wiki_dashboard_card:
+    full_access_roles: {  }
+    deny_roles: {  }
+    role_field_map: {  }
