@@ -6,8 +6,10 @@ dependencies:
     - field.field.node.featured_airport.field_airport_image
     - field.field.node.featured_airport.field_airport_name
     - field.field.node.featured_airport.field_fir
+    - field.field.node.featured_airport.field_page_content
     - node.type.featured_airport
   module:
+    - entity_reference_revisions
     - user
 id: node.featured_airport.default
 targetEntityType: node
@@ -39,6 +41,15 @@ content:
       link: true
     third_party_settings: {  }
     weight: 103
+    region: content
+  field_page_content:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 0
     region: content
   links:
     settings: {  }
