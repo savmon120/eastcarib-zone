@@ -70,7 +70,6 @@ class VatsimUserManager {
         'name' => $cid,
         'mail' => $email,
         'status' => 1,
-        'roles' => ['controller'],
       ]);
       $this->logger->info('Created new Drupal account for VATSIM CID @cid.', ['@cid' => $cid]);
     }
@@ -88,9 +87,81 @@ class VatsimUserManager {
     $account->set('field_vatsim_division', $division);
     $account->set('field_vatsim_subdivision', $subdivision);
 
+
+  /**
+   * -------------------------------
+   * ROLE ASSIGNMENT LOGIC
+   * -------------------------------
+   */
+
+  // Base roles.
+  $roles = ['authenticated'];
+
+  // Rating map.
+  $ratingMap = [
+    'OBS' => 1,
+    'S1'  => 2,
+    'S2'  => 3,
+    'S3'  => 4,
+    'C1'  => 5,
+    'C3'  => 6,
+    'I1'  => 7,
+    'I3'  => 8,
+    'SUP' => 9,
+    'ADM' => 10,
+  ];
+
+  $ratingLevel = $ratingMap[$rating] ?? 0;
+
+  // Dectect https://vatsim.dev/services/connect/sandbox/#test-accounts accounts
+  $isSandbox = ((int)$cid >= 10000000 && (int)$cid <= 10000010);
+
+  // East Caribbean Zone = Piarco FIR + Curaçao FIR.
+  $allowedSubdivisions = ['CUR', 'PIA'];
+
+  // Zone membership.
+  $isInZone =
+    $division === 'CAR' &&
+    in_array($subdivision, $allowedSubdivisions, TRUE);
+
+  // Sandbox override for half the sandbox accounts to allow testing of controller roles.
+  if ($isSandbox) {
+    $sandboxOverrideCIDs = ['10000000', '10000001', '10000002', '10000003', '10000004'];
+    $isInZone = in_array($cid, $sandboxOverrideCIDs, TRUE);
+  }
+  // Learning controllers (OBS in zone).
+  $isLearningController = ($rating === 'OBS') && $isInZone;
+
+  // Rated controllers (S1+ in zone).
+  $isRatedController = ($ratingLevel >= 2) && $isInZone;
+
+  // Combined controller check.
+  $isController = $isLearningController || $isRatedController;
+
+  // Visitors override.
+  if ($account->hasRole('visiting_controller')) {
+    $isController = TRUE;
+  }
+
+  // Assign final role.
+  if ($isController) {
+    $roles[] = 'controller';
+  }
+  else {
+    $roles[] = 'pilot';
+  }
+
+  $account->set('roles', $roles);
+
+  /**
+   * -------------------------------
+   * END OF ROLE LOGIC
+   * -------------------------------
+   */
+
     $account->save();
 
     return $account;
-  }
+}
 
 }

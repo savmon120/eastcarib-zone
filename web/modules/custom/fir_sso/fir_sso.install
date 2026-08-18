@@ -15,6 +15,7 @@ use Drupal\user\Entity\Role;
  * to be pre-configured in the environment.
  */
 function fir_sso_install(): void {
+  // Create controller role if missing.
   if (Role::load('controller') === NULL) {
     Role::create([
       'id' => 'controller',
@@ -22,4 +23,14 @@ function fir_sso_install(): void {
       'weight' => 2,
     ])->save();
   }
+
+  // Visitor role
+  if (Role::load('visitor_controller') === NULL) {
+    Role::create([
+      'id' => 'visiting_controller',
+      'label' => 'Visiting Controller',
+      'weight' => 3,
+    ])->save();
+  }
 }
+
