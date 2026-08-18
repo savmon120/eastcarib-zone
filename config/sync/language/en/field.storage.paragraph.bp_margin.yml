@@ -1,0 +1,20 @@
+settings:
+  allowed_values:
+    -
+      label: 'Top and Bottom Small'
+    -
+      label: 'Top and Bottom Medium'
+    -
+      label: 'Top and Bottom Large'
+    -
+      label: 'Top Small'
+    -
+      label: 'Top Medium'
+    -
+      label: 'Top Large'
+    -
+      label: 'Bottom Small'
+    -
+      label: 'Bottom Medium'
+    -
+      label: 'Bottom Large'

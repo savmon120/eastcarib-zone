@@ -1,0 +1,23 @@
+uuid: a2580367-deab-441b-8c15-82961e6aa37a
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.bp_padding
+    - paragraphs.paragraphs_type.bp_blank
+  module:
+    - options
+_core:
+  default_config_hash: OWltkiGQDVp7Ksuq-32Sva2j25ZCoUoDAIZFLQLuEXI
+id: paragraph.bp_blank.bp_padding
+field_name: bp_padding
+entity_type: paragraph
+bundle: bp_blank
+label: Padding
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -6,6 +6,7 @@ module:
   big_pipe: 0
   block: 0
   block_content: 0
+  bootstrap_paragraphs: 0
   breakpoint: 0
   ckeditor5: 0
   components: 0
@@ -19,7 +20,9 @@ module:
   easy_breadcrumb: 0
   ecz_vatsim: 0
   editor: 0
+  entity_reference_revisions: 0
   field: 0
+  field_group: 0
   field_ui: 0
   file: 0
   filter: 0
@@ -47,6 +50,7 @@ module:
   oauth2_client: 0
   options: 0
   page_cache: 0
+  paragraphs_type_permissions: 0
   path: 0
   path_alias: 0
   responsive_image: 0
@@ -61,6 +65,7 @@ module:
   update: 0
   user: 0
   views_ui: 0
+  viewsreference: 0
   webform: 0
   webform_ui: 0
   workflows: 0
@@ -68,6 +73,7 @@ module:
   pathauto: 1
   content_translation: 10
   views: 10
+  paragraphs: 11
 theme:
   claro: 0
   gin: 0

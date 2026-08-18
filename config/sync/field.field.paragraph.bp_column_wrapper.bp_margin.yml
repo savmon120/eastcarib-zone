@@ -1,0 +1,23 @@
+uuid: ff90dfdb-f349-40cc-bb40-22cc6972bdcb
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.bp_margin
+    - paragraphs.paragraphs_type.bp_column_wrapper
+  module:
+    - options
+_core:
+  default_config_hash: 96d9YgyuRH3poYfOJel1mwxax4QL5WDhJ2JLsCPJk-I
+id: paragraph.bp_column_wrapper.bp_margin
+field_name: bp_margin
+entity_type: paragraph
+bundle: bp_column_wrapper
+label: Margin
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

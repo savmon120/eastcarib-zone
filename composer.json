@@ -16,6 +16,7 @@
     ],
     "require": {
         "composer/installers": "^2.3",
+        "drupal/bootstrap_paragraphs": "^5.0",
         "drupal/components": "^3.2",
         "drupal/core-composer-scaffold": "^11.4",
         "drupal/core-project-message": "^11.4",
@@ -31,11 +32,13 @@
         "drupal/metatag": "^2.2",
         "drupal/node_access_by_field_role": "^1.0",
         "drupal/oauth2_client": "^4.1",
+        "drupal/paragraphs": "^1.23",
         "drupal/pathauto": "^1.15",
         "drupal/radix": "^6.0",
         "drupal/simplei": "^3.0",
         "drupal/smtp": "^1.4",
         "drupal/svg_image": "^3.2",
+        "drupal/viewsreference": "^2.0@beta",
         "drupal/webform": "^6.3",
         "drush/drush": "^13.7"
     },

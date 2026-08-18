@@ -1,0 +1,23 @@
+uuid: cec1f69c-161c-48e4-8cff-bd5bb5689a6f
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.bp_padding
+    - paragraphs.paragraphs_type.bp_view
+  module:
+    - options
+_core:
+  default_config_hash: KQGMZC5hcsUZf5z0M9hAawwVEsR_gVoNUP0dP3kj37I
+id: paragraph.bp_view.bp_padding
+field_name: bp_padding
+entity_type: paragraph
+bundle: bp_view
+label: Padding
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

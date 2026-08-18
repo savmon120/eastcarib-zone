@@ -1,0 +1,23 @@
+uuid: ff42e8c1-3f72-4ba4-9578-f67c66684483
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.bp_margin
+    - paragraphs.paragraphs_type.bp_columns_two_uneven
+  module:
+    - options
+_core:
+  default_config_hash: IwEl62e6rm2DFN6Khkqn8tAfDooXGdmh86a36UANhZw
+id: paragraph.bp_columns_two_uneven.bp_margin
+field_name: bp_margin
+entity_type: paragraph
+bundle: bp_columns_two_uneven
+label: Margin
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,23 @@
+uuid: 5ce7c85c-159a-43f0-b684-d2a4b5159f33
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.bp_always_show
+    - paragraphs.paragraphs_type.bp_accordion
+_core:
+  default_config_hash: PKgneAtGoYM8FRPdYb2fXerbyWZ7rz4-qU6sjkinIlY
+id: paragraph.bp_accordion.bp_always_show
+field_name: bp_always_show
+entity_type: paragraph
+bundle: bp_accordion
+label: 'Always Open'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean
