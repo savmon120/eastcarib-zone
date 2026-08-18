@@ -885,6 +885,11 @@ if (file_exists(__DIR__ . '/settings.prod.php')) {
   include __DIR__ . '/settings.prod.php';
 }
 
+//Setting to include settings.local.php if it exists for local development overrides.
+if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+  include $app_root . '/' . $site_path . '/settings.local.php';
+}
+
 $settings['enable_html5_validation'] = FALSE;
 
 /**
