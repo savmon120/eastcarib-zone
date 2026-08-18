@@ -2,6 +2,10 @@ html, body {
     overflow-x: clip;
 }
 
+.py-5 {
+    padding-top: 1rem !important;
+}
+
 h1.page-title,
 .block-page-title-block h1,
 .view-header h1,
@@ -10,7 +14,6 @@ h1.page-title,
     color: black;
     text-transform: uppercase;
     font-weight: 700;
-    margin-top: 4rem;
     margin-bottom: 1rem;
     letter-spacing: 0.5px;
     text-align: center;

@@ -12261,7 +12261,6 @@ body.path-wiki .view-content {
   color: #0a1b2a;
   font-weight: 700;
   font-size: 1.8rem;
-  margin: 20px 0 0 0;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -12659,7 +12658,6 @@ body.path-wiki .view-content {
 }
 .node--latest-news--full {
   margin: 0 auto;
-  padding: 2rem 15px;
 }
 .node--latest-news--full .block-field-blocknodelatest-newstitle,
 .node--latest-news--full h1.page-title,
@@ -12687,6 +12685,12 @@ body.path-wiki .view-content {
   color: #0a1b2a;
   line-height: 1.2;
   margin: 0;
+  text-align: center;
+}
+.node--latest-news--full .block-field-blocknodelatest-newscreated,
+.node--latest-news--full h1,
+.node--latest-news--full .h1 {
+  text-align: center;
 }
 .node--latest-news--full footer {
   display: block;
@@ -12728,10 +12732,6 @@ body.path-wiki .view-content {
   line-height: 1.8;
   color: #334155;
 }
-.node--latest-news--full .field--name-field-description p,
-.node--latest-news--full .field--name-body p {
-  margin-bottom: 1.5rem;
-}
 .node--latest-news--full .field--name-field-description h2,
 .node--latest-news--full .field--name-field-description .h2,
 .node--latest-news--full .field--name-field-description h3,
@@ -12742,7 +12742,6 @@ body.path-wiki .view-content {
 .node--latest-news--full .field--name-body .h3 {
   color: #0a1b2a;
   font-weight: 700;
-  margin-top: 2.5rem;
   margin-bottom: 1rem;
 }
 .node--latest-news--full .field--name-field-description ul,
@@ -12797,11 +12796,6 @@ body.node-type--page:not(.path-frontpage) .node--page--full .field--name-field-b
 body.node-type--page:not(.path-frontpage) .node--page--full .field--name-field-body .h3 {
   color: #0a1b2a;
   font-weight: 700;
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-}
-body.node-type--page:not(.path-frontpage) .node--page--full .field--name-field-body p {
-  margin-bottom: 1.5rem;
 }
 body.node-type--page:not(.path-frontpage) .node--page--full .field--name-field-body ul,
 body.node-type--page:not(.path-frontpage) .node--page--full .field--name-field-body ol {
@@ -13078,7 +13072,7 @@ body.node-type--page:not(.path-frontpage) .node--page--full .field--name-field-b
 .join-page-wrapper .step-card {
   background-color: #ffffff;
   border-radius: 8px;
-  padding: 30px 15px 0;
+  padding: 30px 15px;
   height: 100%;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
@@ -14312,6 +14306,9 @@ html,
 body {
   overflow-x: clip;
 }
+.py-5 {
+  padding-top: 1rem !important;
+}
 h1.page-title,
 .page-title.h1,
 .block-page-title-block h1,
@@ -14324,7 +14321,6 @@ h1.page-title,
   color: black;
   text-transform: uppercase;
   font-weight: 700;
-  margin-top: 4rem;
   margin-bottom: 1rem;
   letter-spacing: 0.5px;
   text-align: center;

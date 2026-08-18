@@ -1,6 +1,5 @@
 .node--latest-news--full {
     margin: 0 auto;
-    padding: 2rem 15px;
 
     .block-field-blocknodelatest-newstitle,
     h1.page-title {
@@ -14,7 +13,13 @@
             color: #0a1b2a;
             line-height: 1.2;
             margin: 0;
+            text-align: center;
         }
+    }
+
+    .block-field-blocknodelatest-newscreated,
+    h1 {
+        text-align: center ;
     }
 
     footer {
@@ -63,14 +68,9 @@
         line-height: 1.8;
         color: #334155;
 
-        p {
-            margin-bottom: 1.5rem;
-        }
-
         h2, h3 {
             color: #0a1b2a;
             font-weight: 700;
-            margin-top: 2.5rem;
             margin-bottom: 1rem;
         }
 
