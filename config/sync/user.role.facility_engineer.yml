@@ -1,0 +1,41 @@
+uuid: a6924ab7-605c-43a0-86cd-639eff09d106
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+    - filter.format.restricted_html
+    - node.type.download_item
+    - node.type.featured_airport
+  module:
+    - file
+    - filter
+    - media
+    - node
+    - path
+    - system
+id: facility_engineer
+label: 'Facility Engineer'
+weight: 3
+is_admin: false
+permissions:
+  - 'access content overview'
+  - 'access files overview'
+  - 'access media overview'
+  - 'create download_item content'
+  - 'create featured_airport content'
+  - 'create url aliases'
+  - 'delete any download_item content'
+  - 'delete own download_item content'
+  - 'delete own featured_airport content'
+  - 'edit any download_item content'
+  - 'edit any featured_airport content'
+  - 'edit own download_item content'
+  - 'edit own featured_airport content'
+  - 'revert download_item revisions'
+  - 'revert featured_airport revisions'
+  - 'use text format full_html'
+  - 'use text format restricted_html'
+  - 'view download_item revisions'
+  - 'view featured_airport revisions'
+  - 'view the administration theme'

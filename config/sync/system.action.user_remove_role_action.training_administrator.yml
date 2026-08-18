@@ -1,0 +1,14 @@
+uuid: 34522849-1892-42ba-b601-14cd4877bbf1
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - user.role.training_administrator
+  module:
+    - user
+id: user_remove_role_action.training_administrator
+label: 'Remove the Training Administrator role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: training_administrator

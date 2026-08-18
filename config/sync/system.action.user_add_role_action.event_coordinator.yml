@@ -1,0 +1,14 @@
+uuid: 13c41a40-30b6-40dc-8264-c03295294b22
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - user.role.event_coordinator
+  module:
+    - user
+id: user_add_role_action.event_coordinator
+label: 'Add the Event Coordinator role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: event_coordinator

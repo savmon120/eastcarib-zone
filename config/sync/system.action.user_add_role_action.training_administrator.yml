@@ -1,0 +1,14 @@
+uuid: b96bf0a3-b800-4fdb-bdd9-1ba7f494e79a
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - user.role.training_administrator
+  module:
+    - user
+id: user_add_role_action.training_administrator
+label: 'Add the Training Administrator role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: training_administrator

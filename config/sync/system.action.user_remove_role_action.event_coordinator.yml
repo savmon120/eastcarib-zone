@@ -1,0 +1,14 @@
+uuid: 27ac7c0b-2aa9-408c-8204-e5a662c41e11
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - user.role.event_coordinator
+  module:
+    - user
+id: user_remove_role_action.event_coordinator
+label: 'Remove the Event Coordinator role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: event_coordinator

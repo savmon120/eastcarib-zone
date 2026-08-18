@@ -1,0 +1,14 @@
+uuid: a0352a10-a989-497b-85b4-578002f8769c
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - user.role.zone_manager
+  module:
+    - user
+id: user_remove_role_action.zone_manager
+label: 'Remove the Zone Manager role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: zone_manager
