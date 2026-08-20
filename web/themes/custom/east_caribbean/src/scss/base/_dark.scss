@@ -1,0 +1,50 @@
+/* ------------------------------------------
+   DARK MODE — Bootstrap + Radix overrides
+   Using Palette 1 variables
+   ------------------------------------------ */
+
+html[data-theme="dark"] {
+  /* Core body */
+  --bs-body-bg: #{$dark-bg};
+  --bs-body-color: #{$dark-text};
+
+  /* Borders */
+  --bs-border-color: #{$dark-border};
+
+  /* Cards */
+  --bs-card-bg: #{$dark-surface};
+  --bs-card-color: #{$dark-text};
+
+  /* Navbar */
+  --bs-navbar-bg: #{$dark-bg-alt};
+  --bs-navbar-color: #{$dark-text};
+
+  /* Buttons */
+  --bs-btn-bg: #{$dark-surface-alt};
+  --bs-btn-color: #{$dark-text};
+  --bs-btn-border-color: #{$dark-border};
+
+  /* Forms */
+  --bs-form-control-bg: #{$dark-surface};
+  --bs-form-control-color: #{$dark-text};
+  --bs-form-control-border-color: #{$dark-border};
+
+  /* Links */
+  --bs-link-color: #{$brand-blue-soft};
+  --bs-link-hover-color: #{$brand-blue-hover};
+
+  /* Alerts */
+  --bs-alert-bg: #{$dark-surface};
+  --bs-alert-color: #{$dark-text};
+  --bs-alert-border-color: #{$dark-border};
+
+  /* Tables */
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: #{$dark-surface-alt};
+  --bs-table-hover-bg: #{$dark-surface};
+
+  /* Radix-specific tokens */
+  --radix-header-bg: #{$dark-bg-alt};
+  --radix-footer-bg: #{$dark-bg-alt};
+  --radix-sidebar-bg: #{$dark-bg};
+}

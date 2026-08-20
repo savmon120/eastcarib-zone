@@ -19,3 +19,39 @@
         }
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES FOR HOMEPAGE FEATURES
+   ------------------------------------------ */
+
+html[data-theme="dark"] .layout--fourcol-section {
+
+  .card {
+    background-color: $dark-surface !important;
+    border-color: $dark-border !important;
+    color: $dark-text !important;
+  }
+
+  .card-title,
+  .card-text {
+    color: $dark-text !important;
+  }
+
+  span {
+    color: $dark-text-muted !important;
+  }
+
+  strong {
+    color: $dark-text !important;
+  }
+
+  .btn {
+    background-color: $dark-border !important;
+    border-color: $dark-surface-alt !important;
+    color: $dark-text !important;
+
+    &:hover {
+      background-color: $dark-surface-alt !important;
+      border-color: $dark-bg-alt !important;
+    }
+  }
+}

@@ -13,3 +13,10 @@ live_operations:
     js/live-operations.js: {}
   dependencies:
     - core/drupal
+
+theme-toggle:
+  js:
+    js/theme-toggle.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery

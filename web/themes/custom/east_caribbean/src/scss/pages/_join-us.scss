@@ -84,3 +84,59 @@
         }
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — JOIN PAGE
+   ------------------------------------------ */
+
+html[data-theme="dark"] .join-page-wrapper {
+
+  /* Step cards */
+  .step-card {
+    background-color: $dark-surface !important;
+    border-color: $dark-border !important;
+    box-shadow: 0 4px 12px $dark-shadow !important;
+
+    .step-icon {
+      background-color: $dark-border !important;
+      color: $brand-blue-soft !important;
+      border-color: $brand-blue-hover !important;
+    }
+
+    h4 {
+      color: $dark-text !important;
+    }
+
+    p {
+      color: $dark-text-muted !important;
+    }
+  }
+
+  /* FAQ cards */
+  .faq-card {
+    background-color: $dark-surface !important;
+    border-color: $dark-border !important;
+    box-shadow: 0 4px 12px $dark-shadow !important;
+
+    h5 {
+      background-color: $brand-blue-hover !important; /* ECZ brand turquoise */
+      color: $dark-text !important;
+    }
+
+    p {
+      color: $dark-text-muted !important;
+    }
+  }
+
+  /* Join button */
+  .btn-join-apply {
+    background-color: $brand-blue-hover !important;
+    color: $dark-text !important;
+    border-color: $brand-blue-hover !important;
+
+    &:hover {
+      background-color: $brand-blue-soft !important;
+      border-color: $brand-blue-soft !important;
+    }
+  }
+}
+

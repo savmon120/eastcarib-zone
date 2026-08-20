@@ -150,3 +150,45 @@
         .field--name-field-content-link { grid-column: 1; grid-row: 5; }
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES FOR OPERATE CARD
+   ------------------------------------------ */
+
+html[data-theme="dark"] .block-inline-blockdashboard-operate-card {
+  background-color: $dark-surface !important;
+  border-color: $dark-border !important;
+  box-shadow: 0 2px 10px $dark-shadow !important;
+
+  .block__title {
+    color: $dark-text !important;
+  }
+
+  .field--name-field-body p {
+    color: $dark-text-muted !important;
+  }
+
+  .field--name-field-stats {
+    .stat-icon {
+      color: $dark-text-subtle !important;
+    }
+
+    .stat-value {
+      color: $dark-text !important;
+    }
+
+    .stat-label {
+      color: $dark-text-muted !important;
+    }
+  }
+
+  .field--name-field-content-link a {
+    background-color: $brand-blue-hover !important;
+    color: $dark-text !important;
+
+    &:hover {
+      background-color: $brand-blue-soft !important;
+      transform: translateY(-2px);
+    }
+  }
+}
+

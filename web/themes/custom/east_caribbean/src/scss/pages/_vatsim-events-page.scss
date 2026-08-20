@@ -75,3 +75,52 @@
     padding: 40px 0;
   }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — VATSIM EVENTS PAGE
+   ------------------------------------------ */
+
+html[data-theme="dark"] .vatsim-events-page {
+
+  &__item {
+    background-color: $dark-surface !important;
+    border-color: $dark-border !important;
+    box-shadow: 0 4px 20px $dark-shadow !important;
+  }
+
+  &__banner-wrap {
+    background-color: $dark-border !important;
+  }
+
+  &__banner {
+    box-shadow: 0 4px 12px $dark-shadow !important;
+  }
+
+  &__body {
+    color: $dark-text !important;
+  }
+
+  &__name a {
+    color: $brand-blue-soft !important;
+
+    &:hover {
+      color: $brand-blue-hover !important;
+    }
+  }
+
+  &__meta {
+    color: $dark-text-muted !important;
+  }
+
+  &__airports {
+    color: $dark-text !important;
+  }
+
+  &__desc {
+    color: $dark-text-muted !important;
+  }
+
+  &__empty {
+    color: $dark-text-subtle !important;
+  }
+}
+

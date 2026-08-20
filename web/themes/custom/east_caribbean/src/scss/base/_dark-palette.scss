@@ -1,0 +1,33 @@
+/* ------------------------------------------
+   DARK MODE PALETTE — PALETTE 1 (Deep Navy / Curaçao Blue)
+   ------------------------------------------ */
+
+/* Backgrounds */
+$dark-bg: #0E1B2E;          // deep navy
+$dark-bg-alt: #1E2A3A;      // slightly lighter navy
+$dark-surface: #1E2A3A;     // card backgrounds
+$dark-surface-alt: #286CB0; // raised / highlight surfaces
+
+/* Borders */
+$dark-border: #1E2A3A;
+
+/* Text */
+$dark-text: #E2E6F0;        // main text
+$dark-text-muted: #94A3B8;  // secondary text
+$dark-text-subtle: #94A3B8; // subtle / tertiary
+
+/* Brand accents */
+$brand-blue: #286CB0;       // Curaçao blue
+$brand-blue-soft: #E2E6F0;  // soft highlight
+$brand-blue-hover: #1FA4A6; // turquoise hover
+
+/* Accent red (available for alerts, etc.) */
+$brand-red: #C84A4A;
+
+/* Shadows */
+$dark-shadow: rgba(0, 0, 0, 0.45);
+
+/* Status colours (unchanged) */
+$status-auth: #7FBE48;  // green - authorised
+$status-solo: #F59E0B;  // amber - solo
+$status-tier2: #6366F1; // indigo - tier 2

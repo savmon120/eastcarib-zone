@@ -19,6 +19,7 @@ regions:
 libraries:
   - east_caribbean/style
   - east_caribbean/live_operations
+  - east_caribbean/theme-toggle
 ckeditor5-stylesheets:
   - build/css/main.style.css
 version: 6.0.8

@@ -1,0 +1,8 @@
+uuid: fe82d0aa-51de-42ac-b69e-4a06248d32c7
+langcode: en-gb
+status: true
+dependencies: {  }
+id: footer_wave
+label: 'Footer wave'
+revision: false
+description: null

@@ -105,3 +105,71 @@
         }
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — WAITLIST TABS + TRAINING WAITLIST
+   ------------------------------------------ */
+
+html[data-theme="dark"] {
+
+  /* ------------------------------
+     TABS
+     ------------------------------ */
+  .custom-waitlist-tabs {
+    border-bottom-color: $dark-border !important;
+
+    li a {
+      background-color: $dark-border !important;
+      color: $dark-text-muted !important;
+
+      &:hover {
+        background-color: $dark-surface-alt !important;
+        color: $dark-text !important;
+      }
+
+      &.is-active,
+      &.active {
+        background-color: $brand-blue-hover !important;
+        color: $dark-text !important;
+      }
+    }
+  }
+
+  /* ------------------------------
+     TABLE
+     ------------------------------ */
+  .view-id-training_waitlist {
+
+    table {
+      background-color: $dark-surface !important;
+      border-color: $dark-border !important;
+    }
+
+    thead th {
+      background-color: $brand-blue-hover !important; /* ECZ brand turquoise */
+      color: $dark-text !important;
+      border: none !important;
+    }
+
+    tbody tr:hover {
+      background-color: $dark-surface-alt !important;
+    }
+
+    tbody td {
+      color: $dark-text !important;
+      border: none !important;
+
+      &.views-field-title {
+        color: $dark-text !important;
+      }
+    }
+
+    /* Counter badge */
+    .views-field-counter span,
+    .views-field-counter .field-content {
+      background-color: $dark-border !important;
+      color: $brand-blue-soft !important;
+      border: 1px solid $dark-surface-alt !important;
+    }
+  }
+}
+

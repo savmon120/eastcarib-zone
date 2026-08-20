@@ -199,3 +199,61 @@ nav.navbar {
         transform: translate(-50%, 0);
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES
+   ------------------------------------------ */
+
+html[data-theme="dark"] nav.navbar {
+  background-color: rgba($dark-bg, 0.8) !important;
+  border-bottom: 1px solid rgba($dark-border, 0.8) !important;
+  box-shadow: 0 4px 20px $dark-shadow !important;
+
+  .navbar-brand,
+  .navbar-brand span {
+    color: $dark-text !important;
+  }
+
+  .nav-link {
+    color: $dark-text !important;
+
+    &:hover,
+    &.is-active {
+      opacity: 0.7;
+    }
+  }
+
+  .dropdown-menu {
+    background-color: rgba($dark-surface, 0.95) !important;
+    border: 1px solid rgba($dark-border, 0.4) !important;
+    box-shadow: 0 8px 25px $dark-shadow !important;
+
+    .dropdown-item {
+      color: $dark-text !important;
+
+      &:hover,
+      &:focus,
+      &.is-active {
+        background-color: $brand-blue !important;
+        color: $dark-text !important;
+      }
+    }
+  }
+
+  .vatsim-login-btn,
+  .vatsim-user-btn {
+    background-color: $brand-blue !important;
+    color: $dark-text !important;
+  }
+}
+
+/* Animation */
+@keyframes fade-down {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}

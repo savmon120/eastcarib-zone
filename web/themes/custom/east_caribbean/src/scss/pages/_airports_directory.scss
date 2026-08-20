@@ -110,3 +110,44 @@
         font-size: 1.3rem;
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — AIRPORTS DIRECTORY
+   ------------------------------------------ */
+
+html[data-theme="dark"] .view-airports-directory {
+
+  h3 {
+    color: $dark-text !important;
+  }
+
+  .views-row {
+    background: $dark-surface !important;
+    border-color: $dark-border !important;
+    box-shadow: 0 4px 15px $dark-shadow !important;
+
+    &:hover {
+      box-shadow: 0 10px 25px $dark-shadow !important;
+
+      .airport-card__img-wrapper img {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .airport-card__img-wrapper {
+    background-color: $dark-border !important;
+  }
+
+  .airport-card__name,
+  .airport-card__code {
+    color: $dark-text !important;
+
+    a {
+      color: $brand-blue-soft !important;
+
+      &:hover {
+        color: $brand-blue-hover !important;
+      }
+    }
+  }
+}

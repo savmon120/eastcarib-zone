@@ -110,3 +110,70 @@
         }
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — STAFF DIRECTORY
+   ------------------------------------------ */
+
+html[data-theme="dark"] .view-staff-directory {
+
+  /* Card wrapper */
+  .views-row {
+    background: $dark-surface !important;
+    border-color: $dark-border !important;
+    box-shadow: 0 4px 15px $dark-shadow !important;
+
+    &:hover {
+      box-shadow: 0 10px 25px $dark-shadow !important;
+      transform: translateY(-5px);
+    }
+  }
+
+  /* Image wrapper */
+  .staff-card__img-wrapper {
+    background-color: $dark-border !important;
+
+    img {
+      object-position: top;
+    }
+  }
+
+  /* Name */
+  .staff-card__name {
+    color: $dark-text !important;
+
+    a {
+      color: $dark-text !important;
+    }
+  }
+
+  /* Role */
+  .staff-card__role {
+    color: $brand-blue-soft !important;
+
+    a {
+      color: $brand-blue-soft !important;
+
+      &:hover {
+        color: $brand-blue-hover !important;
+      }
+    }
+
+    &[href] {
+      color: $brand-blue-soft !important;
+
+      &:hover {
+        color: $brand-blue-hover !important;
+      }
+    }
+  }
+
+  /* Description */
+  .staff-card__desc {
+    color: $dark-text-muted !important;
+
+    p {
+      color: $dark-text-muted !important;
+    }
+  }
+}
+

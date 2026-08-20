@@ -97,3 +97,46 @@
 .vatsim-events-card .vatsim-events-view-all:hover {
     text-decoration: underline;
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — VATSIM EVENTS CARD
+   ------------------------------------------ */
+
+html[data-theme="dark"] .vatsim-events-card {
+  background-color: $dark-surface !important;
+  border-color: $dark-border !important;
+  box-shadow: 0 4px 20px $dark-shadow !important;
+
+  .view-header {
+    color: $dark-text !important;
+
+    .vatsim-events-view-all {
+      color: $dark-text !important;
+
+      &:hover {
+        color: $brand-blue-hover !important;
+      }
+    }
+  }
+
+  .events-list li {
+    background-color: $dark-surface !important;
+    border-color: $dark-border !important;
+  }
+
+  .event-name {
+    color: $brand-blue-soft !important; /* soft blue highlight */
+  }
+
+  .event-name a {
+    color: inherit !important;
+  }
+
+  .event-meta {
+    color: $dark-text-muted !important;
+  }
+
+  .events-empty {
+    color: $dark-text-subtle !important;
+  }
+}
+

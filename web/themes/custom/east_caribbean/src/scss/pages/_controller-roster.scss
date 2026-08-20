@@ -154,3 +154,93 @@
         letter-spacing: 0.5px;
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — ROSTER VIEW
+   ------------------------------------------ */
+
+html[data-theme="dark"] .view-id-roster {
+
+  /* Legend panel */
+  .roster-legend {
+    background-color: $dark-surface !important;
+    border-color: $dark-border !important;
+    box-shadow: 0 2px 10px $dark-shadow !important;
+
+    .legend-item {
+      color: $dark-text !important;
+    }
+  }
+
+  /* Table wrapper */
+  table {
+    background-color: $dark-surface !important;
+  }
+
+  /* Header */
+  thead th {
+    background-color: $brand-blue !important; /* keep ECZ brand */
+    color: $dark-text !important;
+    border-color: $brand-blue !important;
+
+    &.views-field-field-del-status,
+    &.views-field-field-gnd-status,
+    &.views-field-field-twr-status,
+    &.views-field-field-app-status,
+    &.views-field-field-ctr-status {
+      border-left-color: rgba($dark-text, 0.2) !important;
+    }
+  }
+
+  /* Body rows */
+  tbody tr {
+    &:hover {
+      background-color: $dark-surface-alt !important;
+    }
+  }
+
+  /* Body cells */
+  tbody td {
+    color: $dark-text !important;
+    background-color: $dark-surface !important;
+
+    &.views-field-title {
+      a {
+        color: $brand-blue-soft !important;
+
+        &:hover {
+          color: $brand-blue-hover !important;
+        }
+      }
+    }
+
+    /* Status cells */
+    &.views-field-field-del-status,
+    &.views-field-field-gnd-status,
+    &.views-field-field-twr-status,
+    &.views-field-field-app-status,
+    &.views-field-field-ctr-status {
+      background-color: $dark-surface-alt !important;
+      border-color: $dark-surface-alt !important;
+
+      &:has([class*="auth"]) {
+        background-color: $status-auth !important;
+        color: $dark-text !important;
+      }
+
+      &:has([class*="solo"]) {
+        background-color: $status-solo !important;
+        color: $dark-text !important;
+      }
+
+      &:has([class*="tier2"]) {
+        background-color: $status-tier2 !important;
+        color: $dark-text !important;
+      }
+    }
+  }
+
+  .badge-pos {
+    color: $dark-text !important;
+  }
+}
+

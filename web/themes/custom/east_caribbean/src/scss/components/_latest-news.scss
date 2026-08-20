@@ -162,3 +162,66 @@
         }
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — LATEST NEWS BLOCK
+   ------------------------------------------ */
+
+html[data-theme="dark"] .block-views-blocklatest-news-block-1 {
+  background-color: $dark-surface !important;
+  border-color: $dark-border !important;
+  box-shadow: 0 4px 20px $dark-shadow !important;
+
+  .block__title,
+  .view-header {
+    color: $dark-text !important;
+
+    a {
+      color: $dark-text !important;
+
+      &:hover {
+        color: $brand-blue-hover !important;
+      }
+    }
+  }
+
+  .views-row {
+    background-color: $dark-surface !important;
+    border-color: $dark-border !important;
+
+    &:hover {
+      box-shadow: 0 6px 15px $dark-shadow !important;
+      transform: translateY(-2px);
+    }
+  }
+
+  .views-field-field-category {
+    background-color: $dark-border !important;
+    color: $dark-text !important;
+    border-color: $dark-surface-alt !important;
+  }
+
+  .views-field-created {
+    color: $dark-text-muted !important;
+
+    time {
+      color: $dark-text-muted !important;
+    }
+  }
+
+  .views-field-title a {
+    color: $brand-blue-soft !important; /* soft highlight */
+
+    &:hover {
+      color: $brand-blue-hover !important; /* turquoise brand */
+    }
+  }
+
+  .views-field-field-body,
+  .views-field-field-description {
+    color: $dark-text-muted !important;
+
+    p {
+      color: $dark-text-muted !important;
+    }
+  }
+}

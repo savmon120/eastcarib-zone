@@ -17,3 +17,27 @@ body.node-type--wiki-article {
         }
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — WIKI ARTICLE
+   ------------------------------------------ */
+
+html[data-theme="dark"] body.node-type--wiki-article {
+  .layout__region--content {
+    .field--name-field-body {
+      color: $dark-text !important;
+
+      p,
+      li,
+      span,
+      strong,
+      em {
+        color: $dark-text !important;
+      }
+
+      .media.media--type-image {
+        background-color: transparent !important;
+      }
+    }
+  }
+}
+

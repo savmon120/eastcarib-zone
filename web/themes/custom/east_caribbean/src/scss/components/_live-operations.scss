@@ -151,3 +151,70 @@
         max-height: 500px;
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES FOR LIVE OPERATIONS CARD
+   ------------------------------------------ */
+
+html[data-theme="dark"] .live-operations-card {
+  background-color: $dark-surface !important;
+  border-color: $dark-border !important;
+  box-shadow: 0 4px 20px $dark-shadow !important;
+
+  .view-header {
+    color: $dark-text !important;
+
+    .pulse-indicator {
+      color: #ff6b6b !important; /* keep alert red */
+    }
+  }
+
+  .ops-section .ops-title {
+    color: $dark-text-muted !important;
+    border-bottom-color: $dark-border !important;
+  }
+
+  .ops-list li {
+    background-color: $dark-surface !important;
+    border-color: $dark-border !important;
+    color: $dark-text !important;
+
+    .ops-controller-info {
+      .ops-station {
+        color: $brand-blue-soft !important; /* soft blue highlight */
+      }
+
+      .ops-name {
+        color: $dark-text-subtle !important;
+      }
+    }
+
+    .ops-freq {
+      background-color: $dark-border !important;
+      color: $dark-text !important;
+      border-radius: 4px;
+    }
+  }
+
+  .ops-loading,
+  .ops-empty,
+  .ops-error {
+    background-color: transparent !important;
+    color: $dark-text-muted !important;
+  }
+
+  .ops-error {
+    color: #ff6b6b !important;
+  }
+
+  .ops-pagination button {
+    background-color: $dark-border !important;
+    border-color: $dark-surface-alt !important;
+    color: $dark-text !important;
+
+    &:hover {
+      background-color: $dark-surface-alt !important;
+      border-color: $dark-bg-alt !important;
+      color: $dark-text !important;
+    }
+  }
+}

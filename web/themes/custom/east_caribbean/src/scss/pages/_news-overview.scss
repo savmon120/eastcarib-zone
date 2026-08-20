@@ -142,3 +142,70 @@
         }
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — LATEST NEWS LISTING PAGE
+   ------------------------------------------ */
+
+html[data-theme="dark"] .view-id-latest_news.view-display-id-page_1 {
+
+  /* Header */
+  .view-header span {
+    color: $dark-text !important;
+  }
+
+  /* Card wrapper */
+  .views-row {
+    background-color: $dark-surface !important;
+    border-color: $dark-border !important;
+    box-shadow: 0 4px 15px $dark-shadow !important;
+
+    &:hover {
+      box-shadow: 0 8px 25px $dark-shadow !important;
+      transform: translateY(-4px);
+    }
+  }
+
+  /* Image wrapper */
+  .views-field-field-news-image {
+    img {
+      border-radius: 8px;
+      box-shadow: 0 4px 15px $dark-shadow !important;
+    }
+  }
+
+  /* Category pill */
+  .views-field-field-category {
+    background-color: $dark-border !important;
+    color: $dark-text !important;
+    border-color: $dark-surface-alt !important;
+  }
+
+  /* Date */
+  .views-field-created {
+    color: $dark-text-muted !important;
+
+    time {
+      color: $dark-text-muted !important;
+    }
+  }
+
+  /* Title */
+  .views-field-title a {
+    color: $brand-blue-soft !important;
+
+    &:hover {
+      color: $brand-blue-hover !important;
+    }
+  }
+
+  /* Description */
+  .views-field-field-description,
+  .views-field-field-body {
+    color: $dark-text-muted !important;
+
+    p {
+      color: $dark-text-muted !important;
+    }
+  }
+}
+

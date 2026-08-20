@@ -1,9 +1,9 @@
-uuid: 29b0acd5-1370-484e-a1c8-a21cc147c4ff
+uuid: f96eb9d2-fd6e-463a-86b2-cc6880127846
 langcode: en-gb
 status: true
 dependencies:
   content:
-    - 'block_content:basic:4df12ec1-0d76-4864-ab65-3b523770eb23'
+    - 'block_content:footer_wave:16bd41a7-f051-4950-9312-2696763baeba'
   module:
     - block_content
   theme:
@@ -11,11 +11,11 @@ dependencies:
 id: east_caribbean_footerwave
 theme: east_caribbean
 region: footer
-weight: -5
+weight: -6
 provider: null
-plugin: 'block_content:4df12ec1-0d76-4864-ab65-3b523770eb23'
+plugin: 'block_content:16bd41a7-f051-4950-9312-2696763baeba'
 settings:
-  id: 'block_content:4df12ec1-0d76-4864-ab65-3b523770eb23'
+  id: 'block_content:16bd41a7-f051-4950-9312-2696763baeba'
   label: 'Footer Wave'
   label_display: '0'
   provider: block_content

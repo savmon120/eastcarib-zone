@@ -1,6 +1,9 @@
 @import "init";
 @import "bootstrap";
 
+@import "base/dark-palette";
+@import "base/dark";
+
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
@@ -31,7 +34,7 @@
 @import "components/upcoming-events";
 @import "components/live-operations";
 @import "components/latest-news";
-@import "components/live-flights";
+
 @import "components/featured_airports";
 
 @import "layout/layout";
@@ -39,4 +42,7 @@
 @import "layout/navbar";
 @import "layout/footer";
 @import "layout/homepage-features";
+@import "layout/breadcrumbs";
 @import "components/env-indicator";
+
+@import "components/live-flights";

@@ -49,3 +49,47 @@ body.node-type--page:not(.path-frontpage) {
         }
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — GENERIC PAGE NODE
+   ------------------------------------------ */
+
+html[data-theme="dark"] body.node-type--page:not(.path-frontpage) {
+
+  .node--page--full {
+    background-color: $dark-surface !important;
+    border-color: $dark-border !important;
+
+    .block-field-blocknodepagetitle span,
+    h1.page-title {
+      color: $dark-text !important;
+    }
+
+    .field--name-field-body {
+      color: $dark-text !important;
+
+      h2, h3 {
+        color: $brand-blue-soft !important;
+      }
+
+      p {
+        color: $dark-text-muted !important;
+      }
+
+      ul, ol {
+        li {
+          color: $dark-text-muted !important;
+        }
+      }
+
+      a {
+        color: $brand-blue-soft !important;
+        border-bottom-color: transparent !important;
+
+        &:hover {
+          border-bottom-color: $brand-blue-hover !important;
+        }
+      }
+    }
+  }
+}
+

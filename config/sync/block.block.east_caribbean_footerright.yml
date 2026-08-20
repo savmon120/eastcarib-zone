@@ -11,7 +11,7 @@ dependencies:
 id: east_caribbean_footerright
 theme: east_caribbean
 region: footer
-weight: -2
+weight: -3
 provider: null
 plugin: 'block_content:2c50ee57-efa5-4be9-8567-affc83dab082'
 settings:

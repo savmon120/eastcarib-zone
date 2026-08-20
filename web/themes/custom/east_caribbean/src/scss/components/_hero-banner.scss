@@ -151,3 +151,62 @@
         }
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — HERO BANNER
+   ------------------------------------------ */
+
+html[data-theme="dark"] .custom-hero-banner {
+
+  /* Darken the background image slightly for readability */
+  .custom-hero-banner__bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35); /* subtle dark overlay */
+    z-index: 1;
+  }
+
+  .custom-hero-banner__content {
+    position: relative;
+    z-index: 3;
+
+    .field--name-field-body {
+      p:nth-of-type(1),
+      p:nth-of-type(2),
+      p:nth-of-type(3) {
+        color: $dark-text !important;
+        text-shadow: 0 4px 20px $dark-shadow !important;
+      }
+
+      /* First button (brand navy) */
+      p:nth-of-type(3) a:nth-of-type(1) {
+        background-color: $dark-bg !important;
+        border-color: $dark-bg !important;
+        color: $dark-text !important;
+
+        &:hover {
+          background-color: $brand-blue !important;
+          border-color: $brand-blue !important;
+        }
+      }
+
+      /* Second button (transparent white) */
+      p:nth-of-type(3) a:nth-of-type(2) {
+        background-color: transparent !important;
+        border-color: $dark-text !important;
+        color: $dark-text !important;
+
+        &:hover {
+          background-color: $dark-text !important;
+          color: $dark-bg !important;
+        }
+      }
+    }
+  }
+}
+
+//Hero Banner Wave Graphic theme toggle
+.wave-dark { display: none; }
+
+html[data-theme="dark"] .wave-light { display: none; }
+html[data-theme="dark"] .wave-dark { display: block; }

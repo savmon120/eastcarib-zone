@@ -1,0 +1,17 @@
+<div class="footer-wave">
+
+    {# Light mode wave = first SVG #}
+    {% if content.field_footer_wave_graphic.0 %}
+        <div class="footer-wave-light">
+            {{ content.field_footer_wave_graphic.0 }}
+        </div>
+    {% endif %}
+
+    {# Dark mode wave = second SVG #}
+    {% if content.field_footer_wave_graphic.1 %}
+        <div class="footer-wave-dark">
+            {{ content.field_footer_wave_graphic.1 }}
+        </div>
+    {% endif %}
+
+</div>

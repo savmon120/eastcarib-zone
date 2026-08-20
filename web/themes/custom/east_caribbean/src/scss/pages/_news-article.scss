@@ -95,3 +95,61 @@
         }
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — LATEST NEWS FULL NODE
+   ------------------------------------------ */
+
+html[data-theme="dark"] .node--latest-news--full {
+
+  /* Title */
+  .block-field-blocknodelatest-newstitle,
+  h1.page-title {
+    .block__content span,
+    h1, h2 {
+      color: $dark-text !important;
+    }
+  }
+
+  /* Author / date footer */
+  footer .author {
+    border-bottom-color: $dark-border !important;
+
+    time {
+      color: $dark-text-muted !important;
+    }
+  }
+
+  /* News image */
+  .field--name-field-news-image img {
+    box-shadow: 0 4px 15px $dark-shadow !important;
+  }
+
+  /* Body text */
+  .field--name-field-description,
+  .field--name-body {
+    color: $dark-text !important;
+
+    h2, h3 {
+      color: $brand-blue-soft !important;
+    }
+
+    p {
+      color: $dark-text-muted !important;
+    }
+
+    ul, ol {
+      li {
+        color: $dark-text-muted !important;
+      }
+    }
+
+    a {
+      color: $brand-blue-soft !important;
+      border-bottom-color: transparent !important;
+
+      &:hover {
+        border-bottom-color: $brand-blue-hover !important;
+      }
+    }
+  }
+}

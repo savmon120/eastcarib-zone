@@ -67,3 +67,42 @@
         }
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES — CATEGORY DOCUMENTS TABLE
+   ------------------------------------------ */
+
+html[data-theme="dark"] .view-category-documents-table {
+
+  table.table {
+    border-bottom-color: $dark-border !important;
+
+    thead th {
+      background-color: $dark-border !important;
+      color: $dark-text !important;
+      border: none !important;
+    }
+
+    tbody tr td {
+      background-color: $dark-surface !important;
+      color: $dark-text !important;
+      border-bottom-color: $dark-border !important;
+
+      &.views-field-title a {
+        color: $brand-blue-soft !important;
+
+        &:hover {
+          color: $brand-blue-hover !important;
+        }
+      }
+
+      &.views-field-changed {
+        color: $dark-text-muted !important;
+      }
+    }
+
+    tbody tr:hover td {
+      background-color: $dark-surface-alt !important;
+    }
+  }
+}
+

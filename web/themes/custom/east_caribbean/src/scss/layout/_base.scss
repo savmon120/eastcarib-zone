@@ -21,3 +21,28 @@ body.path-frontpage {
         display: none !important;
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES
+   ------------------------------------------ */
+
+html[data-theme="dark"] {
+  /* Global background + text */
+  --bs-body-bg: #{$dark-bg};
+  --bs-body-color: #{$dark-text};
+
+  /* Radix page wrapper */
+  .page {
+    background-color: $dark-bg !important;
+    color: $dark-text !important;
+  }
+
+  /* Containers */
+  main .container {
+    background-color: transparent !important;
+  }
+
+  /* Frontpage adjustments */
+  body.path-frontpage .page main {
+    background-color: transparent !important;
+  }
+}

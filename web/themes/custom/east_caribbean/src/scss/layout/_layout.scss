@@ -45,3 +45,26 @@ body.path-node {
         animation: pulse-red 2s infinite;
     }
 }
+/* ------------------------------------------
+   DARK MODE OVERRIDES
+   ------------------------------------------ */
+
+html[data-theme="dark"] {
+  /* Page titles */
+  h1.page-title,
+  .block-page-title-block h1,
+  .view-header h1,
+  .page__header h1 {
+    color: $dark-text !important;
+  }
+
+  /* View header text */
+  .view-header {
+    color: $dark-text !important;
+  }
+
+  /* Pulse indicator stays red but brighter */
+  .view-header .pulse-indicator {
+    color: #ff6b6b !important;
+  }
+}
