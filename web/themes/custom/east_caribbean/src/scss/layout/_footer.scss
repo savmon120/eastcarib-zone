@@ -149,7 +149,25 @@ html[data-theme="dark"] footer.page__footer {
 }
 
 // Footer Wave Graphic theme toggle
-.footer-wave-dark { display: none; }
+/* Hide both by default */
+.footer-wave-light img,
+.footer-wave-dark img {
+  display: none !important;
+}
 
-html[data-theme="dark"] .footer-wave-light { display: none; }
-html[data-theme="dark"] .footer-wave-dark { display: block; }
+/* Light mode */
+html[data-theme="light"] .footer-wave-light img {
+  display: block !important;
+}
+html[data-theme="light"] .footer-wave-dark img {
+  display: none !important;
+}
+
+/* Dark mode */
+html[data-theme="dark"] .footer-wave-dark img {
+  display: block !important;
+}
+html[data-theme="dark"] .footer-wave-light img {
+  display: none !important;
+}
+
