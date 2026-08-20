@@ -13,3 +13,10 @@ live_operations:
     js/live-operations.js: {}
   dependencies:
     - core/drupal
+
+lucide:
+  js:
+    https://unpkg.com/lucide@latest: { type: external, minified: true }
+    js/lucide-init.js: {}
+  dependencies:
+    - core/drupal
