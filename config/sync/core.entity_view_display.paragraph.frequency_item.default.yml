@@ -1,0 +1,42 @@
+uuid: 29d280a3-a650-4788-9444-ed4c811052ab
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.frequency_item.field_frequency
+    - field.field.paragraph.frequency_item.field_identifier
+    - field.field.paragraph.frequency_item.field_name
+    - paragraphs.paragraphs_type.frequency_item
+id: paragraph.frequency_item.default
+targetEntityType: paragraph
+bundle: frequency_item
+mode: default
+content:
+  field_frequency:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_identifier:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

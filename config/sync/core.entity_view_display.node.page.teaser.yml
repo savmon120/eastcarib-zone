@@ -1,11 +1,12 @@
 uuid: 44dd84b4-5b6f-41f9-b230-ba1a98cd533a
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.page.field_body
     - field.field.node.page.field_meta_tags
+    - field.field.node.page.field_page_content
     - field.field.node.page.layout_builder__layout
     - node.type.page
   module:
@@ -32,5 +33,6 @@ content:
 hidden:
   content_moderation_control: true
   field_meta_tags: true
+  field_page_content: true
   langcode: true
   layout_builder__layout: true

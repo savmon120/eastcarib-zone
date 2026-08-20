@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.field.paragraph.bp_tab_section.bp_tab_section_body
     - field.field.paragraph.bp_tab_section.bp_tab_section_title
-    - field.field.paragraph.bp_tab_section.field_nested_content
     - paragraphs.paragraphs_type.bp_tab_section
   module:
     - paragraphs
@@ -35,18 +34,6 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  field_nested_content:
-    type: entity_reference_paragraphs
-    weight: 2
-    region: content
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: ''
     third_party_settings: {  }
 hidden:
   created: true
