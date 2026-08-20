@@ -1,77 +1,79 @@
-uuid: 913a7b05-d3cb-44bb-9fd1-599a1816f43c
+uuid: e443d068-b7bd-41b2-b2c0-a69d1c8f250b
 langcode: en-gb
 status: true
 dependencies:
   config:
-    - field.storage.node.field_page_content
-    - node.type.featured_airport
+    - field.storage.paragraph.field_frequencies
+    - paragraphs.paragraphs_type.frequency_grid
+    - paragraphs.paragraphs_type.frequency_item
   module:
     - entity_reference_revisions
-id: node.featured_airport.field_page_content
-field_name: field_page_content
-entity_type: node
-bundle: featured_airport
-label: 'Page Content'
+id: paragraph.frequency_grid.field_frequencies
+field_name: field_frequencies
+entity_type: paragraph
+bundle: frequency_grid
+label: Frequencies
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
-    target_bundles: null
-    negate: 1
+    target_bundles:
+      frequency_item: frequency_item
+    negate: 0
     target_bundles_drag_drop:
       bp_accordion:
-        weight: 16
-        enabled: false
-      bp_accordion_section:
-        weight: 17
-        enabled: false
-      bp_blank:
-        weight: 18
-        enabled: false
-      bp_block:
         weight: 19
         enabled: false
-      bp_carousel:
+      bp_accordion_section:
         weight: 20
+        enabled: false
+      bp_blank:
+        weight: 21
+        enabled: false
+      bp_block:
+        weight: 22
+        enabled: false
+      bp_carousel:
+        weight: 23
         enabled: false
       bp_column_wrapper:
         weight: 24
         enabled: false
       bp_columns:
-        weight: 21
-        enabled: false
-      bp_columns_three_uneven:
-        weight: 22
-        enabled: false
-      bp_columns_two_uneven:
-        weight: 23
-        enabled: false
-      bp_image:
         weight: 25
         enabled: false
-      bp_modal:
+      bp_columns_three_uneven:
         weight: 26
         enabled: false
-      bp_simple:
+      bp_columns_two_uneven:
         weight: 27
         enabled: false
-      bp_tab_section:
-        weight: 29
-        enabled: false
-      bp_tabs:
+      bp_image:
         weight: 28
         enabled: false
-      bp_view:
+      bp_modal:
+        weight: 29
+        enabled: false
+      bp_simple:
         weight: 30
+        enabled: false
+      bp_tab_section:
+        weight: 31
+        enabled: false
+      bp_tabs:
+        weight: 32
+        enabled: false
+      bp_view:
+        weight: 33
         enabled: false
       frequency_grid:
         weight: 18
         enabled: false
       frequency_item:
         weight: 34
-        enabled: false
+        enabled: true
 field_type: entity_reference_revisions

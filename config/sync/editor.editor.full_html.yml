@@ -28,6 +28,7 @@ settings:
       - blockQuote
       - drupalMedia
       - insertTable
+      - code
       - horizontalLine
       - '|'
       - heading
@@ -48,7 +49,15 @@ settings:
         styles: true
       multiBlock: true
     ckeditor5_sourceEditing:
-      allowed_tags: {  }
+      allowed_tags:
+        - '<i class data-lucide>'
+        - '<svg width height viewBox fill stroke stroke-width stroke-linecap stroke-linejoin class>'
+        - '<path d fill-rule clip-rule>'
+        - '<circle cx cy r>'
+        - '<line x1 y1 x2 y2>'
+        - '<rect x y width height rx ry>'
+        - '<polyline points>'
+        - '<polygon points>'
     media_media:
       allow_view_mode_override: true
 image_upload:

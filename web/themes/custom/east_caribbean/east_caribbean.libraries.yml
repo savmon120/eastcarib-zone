@@ -20,3 +20,10 @@ theme-toggle:
   dependencies:
     - core/drupal
     - core/jquery
+
+lucide:
+  js:
+    https://unpkg.com/lucide@latest: { type: external, minified: true }
+    js/lucide-init.js: {}
+  dependencies:
+    - core/drupal
