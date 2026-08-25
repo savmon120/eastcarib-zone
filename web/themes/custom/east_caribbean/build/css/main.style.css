@@ -13282,8 +13282,10 @@ body.node-type--page:not(.path-frontpage) .node--page--full .field--name-field-b
 body.node-type--page:not(.path-frontpage) .node--page--full .field--name-field-body a:hover {
   border-color: #0548A3;
 }
+html[data-theme=dark] body.node-type--page:not(.path-frontpage) {
+}
 html[data-theme=dark] body.node-type--page:not(.path-frontpage) .node--page--full {
-  background-color: #1E2A3A !important;
+  background-color: transparent !important;
   border-color: #1E2A3A !important;
 }
 html[data-theme=dark] body.node-type--page:not(.path-frontpage) .node--page--full .block-field-blocknodepagetitle span,

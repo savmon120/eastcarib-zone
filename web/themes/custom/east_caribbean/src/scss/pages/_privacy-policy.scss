@@ -54,9 +54,9 @@ body.node-type--page:not(.path-frontpage) {
    ------------------------------------------ */
 
 html[data-theme="dark"] body.node-type--page:not(.path-frontpage) {
-
+/* .node--page--ful controls the main content area of the basic page content type. */
   .node--page--full {
-    background-color: $dark-surface !important;
+    background-color: transparent !important;
     border-color: $dark-border !important;
 
     .block-field-blocknodepagetitle span,
