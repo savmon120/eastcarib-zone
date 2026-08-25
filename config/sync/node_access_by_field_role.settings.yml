@@ -2,8 +2,14 @@ debug: true
 global_full_access_roles: {  }
 global_deny_roles: {  }
 bundles:
-  controller:
+  featured_airport:
     full_access_roles: {  }
+    deny_roles: {  }
+    role_field_map: {  }
+  controller:
+    full_access_roles:
+      zone_manager: zone_manager
+      training_administrator: training_administrator
     deny_roles: {  }
     role_field_map: {  }
   download_item:
@@ -14,12 +20,10 @@ bundles:
     full_access_roles: {  }
     deny_roles: {  }
     role_field_map: {  }
-  featured_airport:
-    full_access_roles: {  }
-    deny_roles: {  }
-    role_field_map: {  }
   latest_news:
-    full_access_roles: {  }
+    full_access_roles:
+      anonymous: anonymous
+      authenticated: authenticated
     deny_roles: {  }
     role_field_map: {  }
   page:

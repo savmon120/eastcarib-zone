@@ -8,6 +8,7 @@ dependencies:
   module:
     - filter
     - media
+    - paragraphs_type_permissions
     - system
 _core:
   default_config_hash: NIdXIuy50QW5gU-_FT12WB2kl-dperteQ4Q02YHgRG4
@@ -20,3 +21,20 @@ permissions:
   - 'use text format basic_html'
   - 'use text format webform_default'
   - 'view media'
+  - 'view paragraph content bp_accordion'
+  - 'view paragraph content bp_accordion_section'
+  - 'view paragraph content bp_blank'
+  - 'view paragraph content bp_block'
+  - 'view paragraph content bp_carousel'
+  - 'view paragraph content bp_column_wrapper'
+  - 'view paragraph content bp_columns'
+  - 'view paragraph content bp_columns_three_uneven'
+  - 'view paragraph content bp_columns_two_uneven'
+  - 'view paragraph content bp_image'
+  - 'view paragraph content bp_modal'
+  - 'view paragraph content bp_simple'
+  - 'view paragraph content bp_tab_section'
+  - 'view paragraph content bp_tabs'
+  - 'view paragraph content bp_view'
+  - 'view paragraph content frequency_grid'
+  - 'view paragraph content frequency_item'
