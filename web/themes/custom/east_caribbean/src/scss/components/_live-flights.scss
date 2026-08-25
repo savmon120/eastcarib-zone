@@ -116,63 +116,73 @@
         }
     }
 }
+
 /* ------------------------------------------
    DARK MODE OVERRIDES FOR LIVE FLIGHTS CARD
    ------------------------------------------ */
 
 html[data-theme="dark"] .live-flights-card {
-  background-color: $dark-surface !important;
-  border-color: $dark-border !important;
-  box-shadow: 0 4px 20px $dark-shadow !important;
-
-  .flight-section .flight-title {
-    color: $dark-text-muted !important;
-  }
-
-  .flight-table {
-    background-color: $dark-bg-alt !important;
-    border-color: $dark-border !important;
-  }
-
-  .flight-table-header {
-    background-color: $dark-border !important;
-    color: $dark-text !important;
-    border-bottom-color: $dark-surface-alt !important;
-  }
-
-  .flight-list li {
     background-color: $dark-surface !important;
-    border-bottom-color: $dark-border !important;
-    color: $dark-text !important;
+    border: 1px solid $dark-border !important;
+    box-shadow: 0 4px 20px $dark-shadow !important;
 
-    .f-callsign {
-      color: $brand-blue-soft !important; /* soft highlight */
+    .view-header {
+        color: $dark-text !important;
+
+        .pulse-indicator {
+            color: #ff6b6b !important;
+        }
     }
 
-    .f-pilot {
-      color: $dark-text-muted !important;
+    .flight-section .flight-title {
+        color: $dark-text-muted !important;
     }
 
-    .f-acft {
-      color: $dark-text-subtle !important;
+    .flight-table {
+        background-color: $dark-bg !important;
+        border: 1px solid $dark-border !important;
     }
 
-    .f-dep,
-    .f-arr {
-      background-color: $dark-border !important;
-      color: $dark-text !important;
-      border-radius: 4px;
+    .flight-table-header {
+        background-color: $dark-surface-alt !important;
+        color: $dark-text !important;
+        border-bottom: 1px solid $dark-border !important;
     }
-  }
 
-  .flight-loading,
-  .flight-empty,
-  .flight-error {
-    background-color: $dark-surface !important;
-    color: $dark-text-muted !important;
-  }
+    .flight-list li {
+        background-color: $dark-bg !important;
+        border-bottom: 1px solid $dark-border !important;
+        color: $dark-text !important;
 
-  .flight-error {
-    color: #ff6b6b !important; /* keep alert red */
-  }
+        .f-callsign {
+            color: $brand-blue-soft !important;
+        }
+
+        .f-pilot {
+            color: $dark-text-muted !important;
+        }
+
+        .f-acft {
+            color: $dark-text-subtle !important;
+        }
+
+        .f-dep,
+        .f-arr {
+            background-color: $dark-surface-alt !important;
+            border: 1px solid $dark-border !important;
+            color: $dark-text !important;
+            border-radius: 4px;
+        }
+    }
+
+    .flight-loading,
+    .flight-empty,
+    .flight-error {
+        background-color: transparent !important;
+        color: $dark-text-muted !important;
+    }
+
+    .flight-error {
+        color: #ff6b6b !important;
+    }
 }

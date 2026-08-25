@@ -45,26 +45,66 @@ body.path-node {
         animation: pulse-red 2s infinite;
     }
 }
+
 /* ------------------------------------------
    DARK MODE OVERRIDES
    ------------------------------------------ */
 
 html[data-theme="dark"] {
-  /* Page titles */
-  h1.page-title,
-  .block-page-title-block h1,
-  .view-header h1,
-  .page__header h1 {
-    color: $dark-text !important;
-  }
+    h1.page-title,
+    .block-page-title-block h1,
+    .view-header h1,
+    .page__header h1 {
+        color: $dark-text !important;
+    }
 
-  /* View header text */
-  .view-header {
-    color: $dark-text !important;
-  }
+    .view-header {
+        color: $dark-text !important;
 
-  /* Pulse indicator stays red but brighter */
-  .view-header .pulse-indicator {
-    color: #ff6b6b !important;
-  }
+        .pulse-indicator {
+            color: #ff6b6b !important;
+        }
+    }
+
+    #main-content {
+        color: $dark-text-muted !important;
+
+        h1, h2, h3, h4, h5, h6 {
+            color: $dark-text !important;
+        }
+
+        p, li, td, th {
+            color: $dark-text-muted !important;
+        }
+    }
+
+    .paragraph--type--bp-simple {
+        h2 {
+            color: $dark-text !important;
+        }
+
+        .table td,
+        .table th {
+            color: $dark-text-muted !important;
+            border-color: $dark-border !important;
+        }
+    }
+
+    .paragraph--type--bp-tabs > .paragraph__column > nav > .nav-tabs {
+        border-bottom-color: $dark-border !important;
+
+        .nav-link {
+            color: $dark-text-subtle !important;
+
+            &:hover {
+                color: $brand-blue-hover !important;
+                border-bottom-color: $brand-blue-hover !important;
+            }
+
+            &.active {
+                color: $brand-blue-soft !important;
+                border-bottom-color: $brand-blue-soft !important;
+            }
+        }
+    }
 }
