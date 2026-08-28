@@ -7,6 +7,9 @@
   "enabledManagers": [
     "composer"
   ],
+  "managerFilePatterns": [
+  "/^composer\\.json$/"
+  ],
   "composerIgnorePlatformReqs": [
     "php",
     "ext-*",
