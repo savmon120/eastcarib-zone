@@ -7,8 +7,10 @@
   "enabledManagers": [
     "composer"
   ],
-  "managerFilePatterns": [
-  "/^composer\\.json$/"
+  "ignorePaths": [
+    "web/core/**",
+    "web/modules/contrib/**",
+    "web/themes/contrib/**"
   ],
   "composerIgnorePlatformReqs": [
     "php",
