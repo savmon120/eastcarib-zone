@@ -73,8 +73,8 @@ html[data-theme="dark"] {
             color: $dark-text !important;
         }
 
-        p, li, td, th {
-            color: $dark-text-muted !important;
+        li, td, th {
+            color: $dark-text !important;
         }
     }
 
@@ -85,7 +85,7 @@ html[data-theme="dark"] {
 
         .table td,
         .table th {
-            color: $dark-text-muted !important;
+            color: $dark-text !important;
             border-color: $dark-border !important;
         }
     }

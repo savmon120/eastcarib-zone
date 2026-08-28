@@ -19,7 +19,7 @@ main,
 
 footer.page__footer {
   position: relative;
-  background-color: #f3f6fa; /* Light mode default */
+  background-color: #f3f6fa;
   margin-top: 5dvh;
   padding-bottom: 20px;
   flex-shrink: 0;
@@ -60,7 +60,7 @@ footer.page__footer {
       p {
         margin-bottom: 0;
         white-space: nowrap;
-        color: #000000; /* Light mode */
+        color: #000000;
       }
     }
   }
@@ -84,17 +84,17 @@ footer.page__footer {
         &:not(:last-child)::after {
           content: "•";
           margin-left: 15px;
-          color: #000000; /* Light mode */
+          color: #000000;
           font-size: 1.2rem;
         }
 
         .nav-link {
           text-decoration: none !important;
-          color: #000000 !important; /* Light mode */
+          color: #000000 !important;
           padding: 0 !important;
 
           &:hover {
-            color: #0548A3 !important; /* Light mode hover */
+            color: #0548A3 !important;
           }
         }
       }
@@ -108,6 +108,30 @@ footer.page__footer {
       align-items: center;
       justify-content: flex-end;
       gap: 15px;
+
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ffffff;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        text-decoration: none;
+
+        svg {
+          width: 24px;
+          height: 24px;
+          display: block;
+        }
+
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+      }
 
       .media {
         display: block !important;
@@ -126,7 +150,7 @@ footer.page__footer {
    ------------------------------------------ */
 
 html[data-theme="dark"] footer.page__footer {
-  background-color: $dark-bg !important;
+  background-color: $dark-bg-alt !important;
   border-top: 1px solid $dark-border;
 
   .block--east-caribbean-footerleft p {
@@ -170,4 +194,3 @@ html[data-theme="dark"] .footer-wave-dark img {
 html[data-theme="dark"] .footer-wave-light img {
   display: none !important;
 }
-

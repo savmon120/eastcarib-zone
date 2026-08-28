@@ -15,6 +15,14 @@ dependencies:
     - field.storage.node.field_roster_role
     - field.storage.node.field_twr_status
     - node.type.controller
+    - user.role.administrator
+    - user.role.controller
+    - user.role.event_coordinator
+    - user.role.facility_engineer
+    - user.role.mentor
+    - user.role.training_administrator
+    - user.role.visiting_controller
+    - user.role.zone_manager
   module:
     - node
     - options
@@ -639,9 +647,17 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
+        type: role
         options:
-          perm: 'access content'
+          role:
+            administrator: administrator
+            controller: controller
+            visiting_controller: visiting_controller
+            zone_manager: zone_manager
+            event_coordinator: event_coordinator
+            training_administrator: training_administrator
+            facility_engineer: facility_engineer
+            mentor: mentor
       cache:
         type: tag
         options: {  }
@@ -760,7 +776,7 @@ display:
           plugin_id: text
           empty: false
           content:
-            value: "<div class=\"roster-legend\">\r\n  <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-auth\"></span>\r\n    <span>Authorized</span>\r\n  </div>\r\n  <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-solo\"></span>\r\n    <span>Solo Endorsement</span>\r\n  </div>\r\n  <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-tier2\"></span>\r\n    <span>Tier 2 Endorsement</span>\r\n  </div>\r\n</div>"
+            value: "<div class=\"roster-legend\">\r\n  <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-auth\"></span>\r\n    <span>Authorized (Home FIR)</span>\r\n  </div>\r\n <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-both\"></span>\r\n    <span>Authorized (Both FIR's)</span>\r\n  </div>\r\n  <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-solo\"></span>\r\n    <span>Solo Endorsement</span>\r\n  </div>\r\n  <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-tier2\"></span>\r\n    <span>Tier 2 Endorsement</span>\r\n  </div>\r\n</div>"
             format: full_html
           tokenize: false
       footer: {  }
@@ -772,7 +788,7 @@ display:
         - 'languages:language_interface'
         - url.query_args
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_app_status'
         - 'config:field.storage.node.field_cid'
@@ -803,7 +819,7 @@ display:
         - 'languages:language_interface'
         - url.query_args
         - 'user.node_grants:view'
-        - user.permissions
+        - user.roles
       tags:
         - 'config:field.storage.node.field_app_status'
         - 'config:field.storage.node.field_cid'

@@ -13353,10 +13353,19 @@ html[data-theme=dark] body.node-type--page:not(.path-frontpage) .node--page--ful
   background-color: #7FBE48;
 }
 .view-id-roster .roster-legend .legend-solo {
-  background-color: #f59e0b;
+  background-color: #F59E0B;
 }
 .view-id-roster .roster-legend .legend-tier2 {
-  background-color: #6366f1;
+  background-color: #6366F1;
+}
+.view-id-roster .roster-legend .legend-both {
+  background:
+    repeating-linear-gradient(
+      -40deg,
+      #7FBE48,
+      #7FBE48 8px,
+      #b42966 8px,
+      #b42966 16px);
 }
 .view-id-roster table {
   width: 100%;
@@ -13441,7 +13450,7 @@ html[data-theme=dark] body.node-type--page:not(.path-frontpage) .node--page--ful
 .view-id-roster tbody td.views-field-field-twr-status:has([class*=solo]),
 .view-id-roster tbody td.views-field-field-app-status:has([class*=solo]),
 .view-id-roster tbody td.views-field-field-ctr-status:has([class*=solo]) {
-  background-color: #f59e0b;
+  background-color: #F59E0B;
   color: #ffffff;
 }
 .view-id-roster tbody td.views-field-field-del-status:has([class*=tier2]),
@@ -13449,7 +13458,21 @@ html[data-theme=dark] body.node-type--page:not(.path-frontpage) .node--page--ful
 .view-id-roster tbody td.views-field-field-twr-status:has([class*=tier2]),
 .view-id-roster tbody td.views-field-field-app-status:has([class*=tier2]),
 .view-id-roster tbody td.views-field-field-ctr-status:has([class*=tier2]) {
-  background-color: #6366f1;
+  background-color: #6366F1;
+  color: #ffffff;
+}
+.view-id-roster tbody td.views-field-field-del-status:has([class*=both]),
+.view-id-roster tbody td.views-field-field-gnd-status:has([class*=both]),
+.view-id-roster tbody td.views-field-field-twr-status:has([class*=both]),
+.view-id-roster tbody td.views-field-field-app-status:has([class*=both]),
+.view-id-roster tbody td.views-field-field-ctr-status:has([class*=both]) {
+  background:
+    repeating-linear-gradient(
+      -40deg,
+      #7FBE48,
+      #7FBE48 12px,
+      #b42966 12px,
+      #b42966 24px) !important;
   color: #ffffff;
 }
 .view-id-roster .views-field-title a {
@@ -13464,8 +13487,6 @@ html[data-theme=dark] body.node-type--page:not(.path-frontpage) .node--page--ful
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-html[data-theme=dark] .view-id-roster {
-}
 html[data-theme=dark] .view-id-roster .roster-legend {
   background-color: #1E2A3A !important;
   border-color: #1E2A3A !important;
@@ -13474,12 +13495,8 @@ html[data-theme=dark] .view-id-roster .roster-legend {
 html[data-theme=dark] .view-id-roster .roster-legend .legend-item {
   color: #E2E6F0 !important;
 }
-html[data-theme=dark] .view-id-roster {
-}
 html[data-theme=dark] .view-id-roster table {
   background-color: #1E2A3A !important;
-}
-html[data-theme=dark] .view-id-roster {
 }
 html[data-theme=dark] .view-id-roster thead th {
   background-color: #286CB0 !important;
@@ -13493,12 +13510,8 @@ html[data-theme=dark] .view-id-roster thead th.views-field-field-app-status,
 html[data-theme=dark] .view-id-roster thead th.views-field-field-ctr-status {
   border-left-color: rgba(226, 230, 240, 0.2) !important;
 }
-html[data-theme=dark] .view-id-roster {
-}
 html[data-theme=dark] .view-id-roster tbody tr:hover {
   background-color: #286CB0 !important;
-}
-html[data-theme=dark] .view-id-roster {
 }
 html[data-theme=dark] .view-id-roster tbody td {
   color: #E2E6F0 !important;
@@ -13510,14 +13523,12 @@ html[data-theme=dark] .view-id-roster tbody td.views-field-title a {
 html[data-theme=dark] .view-id-roster tbody td.views-field-title a:hover {
   color: #1FA4A6 !important;
 }
-html[data-theme=dark] .view-id-roster tbody td {
-}
 html[data-theme=dark] .view-id-roster tbody td.views-field-field-del-status,
 html[data-theme=dark] .view-id-roster tbody td.views-field-field-gnd-status,
 html[data-theme=dark] .view-id-roster tbody td.views-field-field-twr-status,
 html[data-theme=dark] .view-id-roster tbody td.views-field-field-app-status,
 html[data-theme=dark] .view-id-roster tbody td.views-field-field-ctr-status {
-  background-color: #286CB0 !important;
+  background-color: #1E2A3A !important;
   border-color: #286CB0 !important;
 }
 html[data-theme=dark] .view-id-roster tbody td.views-field-field-del-status:has([class*=auth]),
@@ -13543,6 +13554,20 @@ html[data-theme=dark] .view-id-roster tbody td.views-field-field-app-status:has(
 html[data-theme=dark] .view-id-roster tbody td.views-field-field-ctr-status:has([class*=tier2]) {
   background-color: #6366F1 !important;
   color: #E2E6F0 !important;
+}
+html[data-theme=dark] .view-id-roster tbody td.views-field-field-del-status:has([class*=both]),
+html[data-theme=dark] .view-id-roster tbody td.views-field-field-gnd-status:has([class*=both]),
+html[data-theme=dark] .view-id-roster tbody td.views-field-field-twr-status:has([class*=both]),
+html[data-theme=dark] .view-id-roster tbody td.views-field-field-app-status:has([class*=both]),
+html[data-theme=dark] .view-id-roster tbody td.views-field-field-ctr-status:has([class*=both]) {
+  background:
+    repeating-linear-gradient(
+      -40deg,
+      #7FBE48,
+      #7FBE48 12px,
+      #b42966 12px,
+      #b42966 24px) !important;
+  color: #ffffff !important;
 }
 html[data-theme=dark] .view-id-roster .badge-pos {
   color: #E2E6F0 !important;
@@ -14392,7 +14417,7 @@ html[data-theme=dark] .wave-dark {
   grid-template-rows: auto auto auto auto;
   gap: 15px 40px;
   align-items: center;
-  height: 300px;
+  min-height: 300px;
   margin-bottom: 15px;
   margin-right: 15px;
 }
@@ -14411,15 +14436,18 @@ html[data-theme=dark] .wave-dark {
 }
 .block-inline-blockdashboard-operate-card .field--name-field-media-image {
   grid-column: 2;
-  grid-row: 1/span 4;
+  grid-row: 1/span 5;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 .block-inline-blockdashboard-operate-card .field--name-field-media-image img {
-  max-width: 450px;
+  width: 100%;
   height: auto;
+  max-height: 100%;
   -o-object-fit: contain;
   object-fit: contain;
+  aspect-ratio: 3/2;
 }
 .block-inline-blockdashboard-operate-card .field--name-field-body {
   grid-column: 1;
@@ -14682,7 +14710,6 @@ html[data-theme=dark] .vatsim-events-card .events-list .events-empty {
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   padding: 12px;
-  max-height: 300px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   margin-bottom: 15px;
   display: grid;
@@ -15266,11 +15293,10 @@ html[data-theme=dark] #main-content h6,
 html[data-theme=dark] #main-content .h6 {
   color: #E2E6F0 !important;
 }
-html[data-theme=dark] #main-content p,
 html[data-theme=dark] #main-content li,
 html[data-theme=dark] #main-content td,
 html[data-theme=dark] #main-content th {
-  color: #94A3B8 !important;
+  color: #E2E6F0 !important;
 }
 html[data-theme=dark] .paragraph--type--bp-simple h2,
 html[data-theme=dark] .paragraph--type--bp-simple .h2 {
@@ -15278,7 +15304,7 @@ html[data-theme=dark] .paragraph--type--bp-simple .h2 {
 }
 html[data-theme=dark] .paragraph--type--bp-simple .table td,
 html[data-theme=dark] .paragraph--type--bp-simple .table th {
-  color: #94A3B8 !important;
+  color: #E2E6F0 !important;
   border-color: #1E2A3A !important;
 }
 html[data-theme=dark] .paragraph--type--bp-tabs > .paragraph__column > nav > .nav-tabs {
@@ -15682,6 +15708,33 @@ footer.page__footer .block--east-caribbean-footerright .field--name-field-body {
   justify-content: flex-end;
   gap: 15px;
 }
+footer.page__footer .block--east-caribbean-footerright .field--name-field-body a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease, -webkit-transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    -webkit-transform 0.2s ease;
+  text-decoration: none;
+}
+footer.page__footer .block--east-caribbean-footerright .field--name-field-body a svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+footer.page__footer .block--east-caribbean-footerright .field--name-field-body a:hover {
+  -webkit-transform: translateY(-3px);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
 footer.page__footer .block--east-caribbean-footerright .field--name-field-body .media {
   display: block !important;
   margin: 0 !important;
@@ -15690,7 +15743,7 @@ footer.page__footer .block--east-caribbean-footerright .field--name-field-body .
   border-radius: 50%;
 }
 html[data-theme=dark] footer.page__footer {
-  background-color: #0E1B2E !important;
+  background-color: #1E2A3A !important;
   border-top: 1px solid #1E2A3A;
 }
 html[data-theme=dark] footer.page__footer .block--east-caribbean-footerleft p {

@@ -1,4 +1,4 @@
-uuid: 30725bd1-34f9-45a3-94f2-0cc32680fdf3
+uuid: c9ddb827-23b3-41b7-9bb1-38a5182426d0
 langcode: en-gb
 status: true
 dependencies:
@@ -8,10 +8,10 @@ dependencies:
     - block_content
   theme:
     - east_caribbean
-id: east_caribbean_footerwave_2
+id: east_caribbean_footerwave
 theme: east_caribbean
 region: footer
-weight: -6
+weight: 0
 provider: null
 plugin: 'block_content:848a8b04-76c9-4bb4-be12-4a696e94c9c5'
 settings:

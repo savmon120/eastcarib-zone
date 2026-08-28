@@ -31,5 +31,6 @@ content:
     region: content
 hidden:
   field_parent_category: true
+  field_visibility: true
   langcode: true
   layout_builder__layout: true

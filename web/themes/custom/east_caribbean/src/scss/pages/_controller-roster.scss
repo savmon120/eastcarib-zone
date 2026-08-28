@@ -31,9 +31,18 @@
             display: inline-block;
         }
 
-        .legend-auth { background-color: #7FBE48; }
-        .legend-solo { background-color: #f59e0b; }
-        .legend-tier2 { background-color: #6366f1; }
+        .legend-auth { background-color: $status-auth; }
+        .legend-solo { background-color: $status-solo; }
+        .legend-tier2 { background-color: $status-tier2; }
+        .legend-both {
+            background: repeating-linear-gradient(
+                    -40deg,
+                    $status-auth,
+                    $status-auth 8px,
+                    #b42966 8px,
+                    #b42966 16px
+            );
+        }
     }
 
     table {
@@ -122,17 +131,28 @@
                 border: 1px solid #ffffff;
 
                 &:has([class*="auth"]) {
-                    background-color: #7FBE48;
+                    background-color: $status-auth;
                     color: #ffffff;
                 }
 
                 &:has([class*="solo"]) {
-                    background-color: #f59e0b;
+                    background-color: $status-solo;
                     color: #ffffff;
                 }
 
                 &:has([class*="tier2"]) {
-                    background-color: #6366f1;
+                    background-color: $status-tier2;
+                    color: #ffffff;
+                }
+
+                &:has([class*="both"]) {
+                    background: repeating-linear-gradient(
+                            -40deg,
+                            $status-auth,
+                            $status-auth 12px,
+                            #b42966 12px,
+                            #b42966 24px
+                    ) !important;
                     color: #ffffff;
                 }
             }
@@ -154,93 +174,98 @@
         letter-spacing: 0.5px;
     }
 }
+
 /* ------------------------------------------
    DARK MODE OVERRIDES — ROSTER VIEW
    ------------------------------------------ */
 
 html[data-theme="dark"] .view-id-roster {
 
-  /* Legend panel */
-  .roster-legend {
-    background-color: $dark-surface !important;
-    border-color: $dark-border !important;
-    box-shadow: 0 2px 10px $dark-shadow !important;
+    .roster-legend {
+        background-color: $dark-surface !important;
+        border-color: $dark-border !important;
+        box-shadow: 0 2px 10px $dark-shadow !important;
 
-    .legend-item {
-      color: $dark-text !important;
-    }
-  }
-
-  /* Table wrapper */
-  table {
-    background-color: $dark-surface !important;
-  }
-
-  /* Header */
-  thead th {
-    background-color: $brand-blue !important; /* keep ECZ brand */
-    color: $dark-text !important;
-    border-color: $brand-blue !important;
-
-    &.views-field-field-del-status,
-    &.views-field-field-gnd-status,
-    &.views-field-field-twr-status,
-    &.views-field-field-app-status,
-    &.views-field-field-ctr-status {
-      border-left-color: rgba($dark-text, 0.2) !important;
-    }
-  }
-
-  /* Body rows */
-  tbody tr {
-    &:hover {
-      background-color: $dark-surface-alt !important;
-    }
-  }
-
-  /* Body cells */
-  tbody td {
-    color: $dark-text !important;
-    background-color: $dark-surface !important;
-
-    &.views-field-title {
-      a {
-        color: $brand-blue-soft !important;
-
-        &:hover {
-          color: $brand-blue-hover !important;
+        .legend-item {
+            color: $dark-text !important;
         }
-      }
     }
 
-    /* Status cells */
-    &.views-field-field-del-status,
-    &.views-field-field-gnd-status,
-    &.views-field-field-twr-status,
-    &.views-field-field-app-status,
-    &.views-field-field-ctr-status {
-      background-color: $dark-surface-alt !important;
-      border-color: $dark-surface-alt !important;
-
-      &:has([class*="auth"]) {
-        background-color: $status-auth !important;
-        color: $dark-text !important;
-      }
-
-      &:has([class*="solo"]) {
-        background-color: $status-solo !important;
-        color: $dark-text !important;
-      }
-
-      &:has([class*="tier2"]) {
-        background-color: $status-tier2 !important;
-        color: $dark-text !important;
-      }
+    table {
+        background-color: $dark-surface !important;
     }
-  }
 
-  .badge-pos {
-    color: $dark-text !important;
-  }
+    thead th {
+        background-color: $brand-blue !important;
+        color: $dark-text !important;
+        border-color: $brand-blue !important;
+
+        &.views-field-field-del-status,
+        &.views-field-field-gnd-status,
+        &.views-field-field-twr-status,
+        &.views-field-field-app-status,
+        &.views-field-field-ctr-status {
+            border-left-color: rgba($dark-text, 0.2) !important;
+        }
+    }
+
+    tbody tr {
+        &:hover {
+            background-color: $dark-surface-alt !important;
+        }
+    }
+
+    tbody td {
+        color: $dark-text !important;
+        background-color: $dark-surface !important;
+
+        &.views-field-title {
+            a {
+                color: $brand-blue-soft !important;
+
+                &:hover {
+                    color: $brand-blue-hover !important;
+                }
+            }
+        }
+
+        &.views-field-field-del-status,
+        &.views-field-field-gnd-status,
+        &.views-field-field-twr-status,
+        &.views-field-field-app-status,
+        &.views-field-field-ctr-status {
+            background-color: $dark-border !important;
+            border-color: $dark-surface-alt !important;
+
+            &:has([class*="auth"]) {
+                background-color: $status-auth !important;
+                color: $dark-text !important;
+            }
+
+            &:has([class*="solo"]) {
+                background-color: $status-solo !important;
+                color: $dark-text !important;
+            }
+
+            &:has([class*="tier2"]) {
+                background-color: $status-tier2 !important;
+                color: $dark-text !important;
+            }
+
+            &:has([class*="both"]) {
+                background: repeating-linear-gradient(
+                        -40deg,
+                        $status-auth,
+                        $status-auth 12px,
+                        #b42966 12px,
+                        #b42966 24px
+                ) !important;
+                color: #ffffff !important;
+            }
+        }
+    }
+
+    .badge-pos {
+        color: $dark-text !important;
+    }
 }
-

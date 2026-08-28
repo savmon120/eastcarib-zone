@@ -39,7 +39,7 @@ content:
     type: entity_reference_entity_view
     label: hidden
     settings:
-      view_mode: scale_crop_7_3_large
+      view_mode: default
       link: false
     third_party_settings: {  }
     weight: 1
