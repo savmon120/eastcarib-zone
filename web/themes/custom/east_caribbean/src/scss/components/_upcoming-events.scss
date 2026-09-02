@@ -35,6 +35,12 @@
     border: 1px solid #e2e6ea;
     border-radius: 6px;
     padding: 10px 12px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
+        transform: translateY(-2px);
+    }
 }
 
 .vatsim-events-card .event-banner {
@@ -64,7 +70,7 @@
 }
 
 .vatsim-events-card .event-name a:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .vatsim-events-card .event-meta {

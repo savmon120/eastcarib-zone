@@ -115,12 +115,12 @@
 html[data-theme="dark"] .view-wiki-main-page {
 
   .view-content {
-    background-color: $dark-surface !important;
+    background-color: $dark-bg !important;
     box-shadow: none !important;
   }
 
   .wiki-card {
-    background-color: $dark-surface !important;
+    background-color: $dark-bg-alt !important;
     box-shadow: inset 0 0 5px 0 $dark-shadow,
                 6px 6px 4px -3px $dark-shadow,
                 0 6px 4px -3px $dark-shadow !important;

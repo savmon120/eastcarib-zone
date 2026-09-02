@@ -1,0 +1,113 @@
+.paragraph--type--frequency-grid {
+
+    > .paragraph__column {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+
+        > .field--label {
+            width: 100%;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            padding-bottom: 10px;
+        }
+
+        > div {
+            flex: 1 1 calc(25% - 15px);
+            min-width: 220px;
+        }
+    }
+}
+
+.paragraph--type--frequency-item {
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px 20px;
+    height: 100%;
+
+    .field__label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #6c757d;
+        margin-bottom: 2px;
+    }
+
+    .field__item {
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: #212529;
+        margin-bottom: 10px;
+    }
+
+    .field--name-field-frequency .field__item {
+        color: #0548A3;
+        font-family: monospace;
+        font-size: 1.3rem;
+        font-weight: 800;
+        margin-bottom: 0;
+    }
+}
+
+/* ------------------------------------------
+   DARK MODE OVERRIDES — BRIEFING PAGES
+   ------------------------------------------ */
+
+html[data-theme="dark"] {
+
+    .node--featured-airport--full {
+        background-color: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .node--featured-airport--full .paragraph--type--bp-simple,
+    .node--featured-airport--full .paragraph--type--bp-text {
+        color: $dark-text-muted !important;
+
+        p {
+            color: $dark-text-muted !important;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: $dark-text !important;
+        }
+
+        strong, b {
+            color: $dark-text !important;
+        }
+
+        .table td,
+        .table th {
+            color: $dark-text-muted !important;
+            border-color: $dark-border !important;
+        }
+    }
+
+    .paragraph--type--frequency-grid {
+
+        > .paragraph__column > .field--label {
+            color: $dark-text !important;
+        }
+
+        .paragraph--type--frequency-item {
+            background-color: $dark-surface !important;
+            border-color: $dark-border !important;
+
+            .field__label {
+                color: $dark-text-muted !important;
+            }
+
+            .field__item {
+                color: $dark-text !important;
+            }
+
+            .field--name-field-frequency .field__item {
+                color: $dark-text !important;
+            }
+        }
+    }
+}

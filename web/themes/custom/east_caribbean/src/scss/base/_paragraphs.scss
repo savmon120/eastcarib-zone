@@ -129,3 +129,52 @@
     font-weight: bold;
     text-align: left;
 }
+
+
+/* ------------------------------------------
+   DARK MODE OVERRIDES
+   ------------------------------------------ */
+
+html[data-theme="dark"] {
+    .node--featured-airport--full {
+        background-color: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .paragraph--type--frequency-grid > .paragraph__column > .field--label {
+        color: $dark-text;
+    }
+
+    .paragraph--type--frequency-item {
+        background-color: $dark-surface;
+        border-color: $dark-border;
+
+        .field--name-field-identifier .field__item,
+        .field--name-field-name .field__item {
+            color: $dark-text-muted;
+        }
+
+        .field--name-field-frequency .field__item {
+            color: $dark-text;
+            background-color: $dark-bg-alt-2;
+        }
+    }
+
+    .paragraph--type--bp-simple {
+        color: $dark-text-muted;
+
+        h2 {
+            color: $dark-text;
+        }
+
+        hr {
+            border-top-color: $dark-border;
+        }
+
+        .table td,
+        .table th {
+            color: $dark-text-muted;
+        }
+    }
+}

@@ -2,24 +2,18 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-
-    /* Scales perfectly: 35px on 1080p -> 140px on 1440p */
     gap: clamp(20px, calc(16.4vw - 280px), 140px) !important;
-
-    /* Margin scales perfectly with the wave: -60px at 1080p, -80px at 1440p */
     margin: clamp(-100px, -3.125vw, -30px) auto 3rem auto;
-
     padding: 0 15px;
     position: relative;
     z-index: 10;
-
-    /* Container grows dynamically with the screen but stops before getting ridiculously wide */
     max-width: clamp(1200px, 80vw, 1600px);
 
     .layout__region {
         flex: 1 1 220px !important;
         width: 100%;
-        max-width: 250px !important;
+        max-width: 260px !important;
+        transform: translateX(10px);
 
         .d-flex {
             justify-content: flex-start;
