@@ -235,7 +235,7 @@ html[data-theme="dark"] .view-id-roster {
         &.views-field-field-app-status,
         &.views-field-field-ctr-status {
             background-color: $dark-border !important;
-            border-color: $dark-surface-alt !important;
+            border-color: $dark-border-subtle-dark !important;
 
             &:has([class*="auth"]) {
                 background-color: $status-auth !important;

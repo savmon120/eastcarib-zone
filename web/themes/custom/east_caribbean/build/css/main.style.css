@@ -13675,7 +13675,7 @@ html[data-theme=dark] .view-id-roster tbody td.views-field-field-twr-status,
 html[data-theme=dark] .view-id-roster tbody td.views-field-field-app-status,
 html[data-theme=dark] .view-id-roster tbody td.views-field-field-ctr-status {
   background-color: #1E2A3A !important;
-  border-color: #286CB0 !important;
+  border-color: #343a40 !important;
 }
 html[data-theme=dark] .view-id-roster tbody td.views-field-field-del-status:has([class*=auth]),
 html[data-theme=dark] .view-id-roster tbody td.views-field-field-gnd-status:has([class*=auth]),
@@ -13964,8 +13964,6 @@ html[data-theme=dark] .join-page-wrapper .step-card .h4 {
 html[data-theme=dark] .join-page-wrapper .step-card p {
   color: #94A3B8 !important;
 }
-html[data-theme=dark] .join-page-wrapper {
-}
 html[data-theme=dark] .join-page-wrapper .faq-card {
   background-color: #1E2A3A !important;
   border-color: #1E2A3A !important;
@@ -13978,8 +13976,6 @@ html[data-theme=dark] .join-page-wrapper .faq-card .h5 {
 }
 html[data-theme=dark] .join-page-wrapper .faq-card p {
   color: #94A3B8 !important;
-}
-html[data-theme=dark] .join-page-wrapper {
 }
 html[data-theme=dark] .join-page-wrapper .btn-join-apply {
   background-color: #1FA4A6 !important;

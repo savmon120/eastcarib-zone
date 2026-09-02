@@ -111,14 +111,13 @@ html[data-theme="dark"] .join-page-wrapper {
     }
   }
 
-  /* FAQ cards */
   .faq-card {
     background-color: $dark-surface !important;
     border-color: $dark-border !important;
     box-shadow: 0 4px 12px $dark-shadow !important;
 
     h5 {
-      background-color: $brand-blue-hover !important; /* ECZ brand turquoise */
+      background-color: $brand-blue-hover !important;
       color: $dark-text !important;
     }
 
@@ -127,7 +126,6 @@ html[data-theme="dark"] .join-page-wrapper {
     }
   }
 
-  /* Join button */
   .btn-join-apply {
     background-color: $brand-blue-hover !important;
     color: $dark-text !important;
