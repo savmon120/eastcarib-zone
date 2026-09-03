@@ -51,7 +51,7 @@ nav.navbar {
         margin-left: auto;
         display: flex;
         align-items: center;
-        gap: 15px; /* Adds space between user button and theme toggle */
+        gap: 15px;
 
         .vatsim-login-btn {
             background-color: #0a1b2a !important;
@@ -263,6 +263,15 @@ html[data-theme="dark"] nav.navbar {
         border: 1px solid rgba($dark-border, 0.4) !important;
         box-shadow: 0 8px 25px $dark-shadow !important;
 
+        li.text-muted.border-bottom {
+            color: $dark-text-muted !important;
+            border-bottom-color: rgba($dark-border, 0.4) !important;
+        }
+
+        .dropdown-divider {
+            border-top-color: rgba($dark-border, 0.4) !important;
+        }
+
         .dropdown-item {
             color: $dark-text !important;
 
@@ -271,6 +280,10 @@ html[data-theme="dark"] nav.navbar {
             &.is-active {
                 background-color: $brand-blue !important;
                 color: $dark-text !important;
+            }
+
+            &.text-danger {
+                color: #ff6b6b !important;
             }
         }
     }

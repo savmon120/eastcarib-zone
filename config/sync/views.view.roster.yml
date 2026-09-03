@@ -663,6 +663,19 @@ display:
         options: {  }
       empty: {  }
       sorts:
+        field_roster_role_value:
+          id: field_roster_role_value
+          table: node__field_roster_role
+          field: field_roster_role_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         field_ctr_status_value:
           id: field_ctr_status_value
           table: node__field_ctr_status
@@ -776,7 +789,7 @@ display:
           plugin_id: text
           empty: false
           content:
-            value: "<div class=\"roster-legend\">\r\n  <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-auth\"></span>\r\n    <span>Authorized (Home FIR)</span>\r\n  </div>\r\n <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-both\"></span>\r\n    <span>Authorized (Both FIR's)</span>\r\n  </div>\r\n  <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-solo\"></span>\r\n    <span>Solo Endorsement</span>\r\n  </div>\r\n  <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-tier2\"></span>\r\n    <span>Tier 2 Endorsement</span>\r\n  </div>\r\n</div>"
+            value: "<div class=\"roster-filters\">\r\n  <button class=\"btn btn-primary filter-btn active\" data-filter=\"all\">All</button>\r\n  <button class=\"btn btn-outline-primary filter-btn\" data-filter=\"CUR\">Curaçao (CUR)</button>\r\n  <button class=\"btn btn-outline-primary filter-btn\" data-filter=\"PCO\">Piarco (PCO)</button>\r\n</div>\r\n\r\n<div class=\"roster-legend\">\r\n  <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-auth\"></span>\r\n    <span>Authorized (Home FIR)</span>\r\n  </div>\r\n <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-both\"></span>\r\n    <span>Authorized (Both FIR's)</span>\r\n  </div>\r\n  <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-solo\"></span>\r\n    <span>Solo Endorsement</span>\r\n  </div>\r\n  <div class=\"legend-item\">\r\n    <span class=\"legend-color legend-tier2\"></span>\r\n    <span>Tier 2 Endorsement</span>\r\n  </div>\r\n</div>"
             format: full_html
           tokenize: false
       footer: {  }

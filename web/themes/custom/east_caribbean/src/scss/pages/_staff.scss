@@ -28,11 +28,6 @@
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         border: 1px solid rgba(0,0,0,0.2);
         height: 100%;
-
-        &:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
     }
 
     .staff-card__img-wrapper {
@@ -115,20 +110,12 @@
    ------------------------------------------ */
 
 html[data-theme="dark"] .view-staff-directory {
-
-  /* Card wrapper */
   .views-row {
     background: $dark-surface !important;
     border-color: $dark-border !important;
     box-shadow: 0 4px 15px $dark-shadow !important;
-
-    &:hover {
-      box-shadow: 0 10px 25px $dark-shadow !important;
-      transform: translateY(-5px);
-    }
   }
 
-  /* Image wrapper */
   .staff-card__img-wrapper {
     background-color: $dark-border !important;
 
@@ -137,7 +124,6 @@ html[data-theme="dark"] .view-staff-directory {
     }
   }
 
-  /* Name */
   .staff-card__name {
     color: $dark-text !important;
 
@@ -146,7 +132,6 @@ html[data-theme="dark"] .view-staff-directory {
     }
   }
 
-  /* Role */
   .staff-card__role {
     color: $brand-blue-soft !important;
 
@@ -167,7 +152,6 @@ html[data-theme="dark"] .view-staff-directory {
     }
   }
 
-  /* Description */
   .staff-card__desc {
     color: $dark-text-muted !important;
 

@@ -13,10 +13,8 @@ body.node-type--wiki-article {
                     max-width: 100% !important;
                     height: auto !important;
                     object-fit: contain !important;
-
-                    /* NEW: Cap the height for overly tall portrait charts */
                     max-height: 1000px !important;
-                    object-position: top center; /* Keeps the top of the chart centered/visible if scaled down */
+                    object-position: top center;
                 }
             }
         }
@@ -28,9 +26,7 @@ body.node-type--wiki-article {
    ------------------------------------------ */
 
 html[data-theme="dark"] body.node-type--wiki-article {
-
     .node__content {
-
         .field--name-field-body,
         .field--name-bp-text {
             color: $dark-text !important;

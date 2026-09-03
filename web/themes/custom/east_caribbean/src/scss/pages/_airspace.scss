@@ -2,6 +2,10 @@
     margin-bottom: 2.5rem !important;
 }
 
+.nav-tabs {
+    border-bottom: none !important;
+}
+
 .tab-pane .paragraph:last-child {
     margin-bottom: 0 !important;
 }
@@ -35,4 +39,96 @@
 
 .paragraph--type--bp-tabs > .paragraph__column > .tab-content {
     margin-top: 2rem;
+}
+
+.paragraph--type--bp-tabs > .paragraph__column > .tab-content > .tab-pane {
+    opacity: 0;
+}
+
+.paragraph--type--bp-tabs > .paragraph__column > .tab-content > .tab-pane.active {
+    animation: fadeInTab 0.4s ease-out forwards;
+}
+
+@keyframes fadeInTab {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ------------------------------------------
+   DARK MODE OVERRIDES — TABS & BASIC PARAGRAPHS
+   ------------------------------------------ */
+
+html[data-theme="dark"] {
+    .node--page--full,
+    .node--featured-airport--full,
+    .node--wiki-article--full {
+        background-color: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .paragraph--type--bp-simple,
+    .paragraph--type--bp-text {
+        color: $dark-text-muted !important;
+
+        p {
+            color: $dark-text-muted !important;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: $dark-text !important;
+        }
+
+        strong, b {
+            color: $dark-text !important;
+        }
+
+        .table td,
+        .table th {
+            color: $dark-text-muted !important;
+            border-color: $dark-border !important;
+        }
+    }
+
+    body.node-type--wiki-article,
+    body.node-type--page {
+        .paragraph--type--bp-simple,
+        .paragraph--type--bp-text {
+            .media--type-image img {
+                filter: invert(1) hue-rotate(180deg) brightness(0.9) !important;
+                transition: filter 0.3s ease;
+                background-color: transparent !important;
+            }
+
+            .media--type-image img.no-invert {
+                filter: none !important;
+            }
+        }
+    }
+
+    .paragraph--type--bp-tabs > .paragraph__column > nav > .nav-tabs {
+        border-bottom-color: $dark-border !important;
+
+        .nav-link {
+            color: $dark-text-muted !important;
+
+            &:hover {
+                color: $brand-blue-hover !important;
+                border-bottom-color: $brand-blue-hover !important;
+            }
+
+            &.active {
+                color: $brand-blue-soft !important;
+                border-bottom-color: $brand-blue-soft !important;
+                background-color: transparent !important;
+            }
+        }
+    }
 }

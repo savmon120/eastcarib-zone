@@ -60,7 +60,7 @@
 
 .vatsim-events-card .event-name {
     font-weight: 800;
-    color: #0548A3;
+    color: #000000;
     font-size: 0.9rem;
 }
 
@@ -71,6 +71,7 @@
 
 .vatsim-events-card .event-name a:hover {
     text-decoration: none;
+    color: $brand-blue
 }
 
 .vatsim-events-card .event-meta {
@@ -96,7 +97,7 @@
     color: #1a1a1a;
 
     &:hover {
-        color: #4fb2b2;
+        color: $brand-blue;
     }
 }
 
@@ -130,7 +131,11 @@ html[data-theme="dark"] .vatsim-events-card {
     }
 
     .event-name {
-        color: $brand-blue-soft !important;
+        color: $dark-text !important;
+
+        &:hover {
+            color: $brand-blue-soft !important;
+        }
     }
 
     .event-name a {

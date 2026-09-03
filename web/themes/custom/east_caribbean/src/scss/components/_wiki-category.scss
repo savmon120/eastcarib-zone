@@ -30,8 +30,11 @@
 
         tbody {
             tr {
+                background-color: #ffffff;
+                transition: background-color 0.2s ease;
+
                 td {
-                    background-color: #ffffff;
+                    background-color: transparent;
                     padding: 10px 16px;
                     vertical-align: middle;
                     border-top: none !important;
@@ -39,7 +42,6 @@
                     border-right: none !important;
                     border-bottom: 1px solid #f0f0f0 !important;
                     text-align: left !important;
-                    transition: background-color 0.2s ease;
 
                     &.views-field-title {
                         a {
@@ -60,49 +62,53 @@
                     }
                 }
 
-                &:hover td {
+                &:hover {
                     background-color: #fafafa !important;
                 }
             }
         }
     }
 }
+
 /* ------------------------------------------
    DARK MODE OVERRIDES — CATEGORY DOCUMENTS TABLE
    ------------------------------------------ */
 
 html[data-theme="dark"] .view-category-documents-table {
 
-  table.table {
-    border-bottom-color: $dark-border !important;
+    table.table {
+        border-bottom-color: $dark-border !important;
 
-    thead th {
-      background-color: $dark-border !important;
-      color: $dark-text !important;
-      border: none !important;
-    }
-
-    tbody tr td {
-      background-color: $dark-bg !important;
-      color: $dark-text !important;
-      border-bottom-color: $dark-border !important;
-
-      &.views-field-title a {
-        color: $brand-blue-soft !important;
-
-        &:hover {
-          color: $brand-blue-hover !important;
+        thead th {
+            background-color: $dark-surface !important;
+            color: $dark-text !important;
+            border: none !important;
         }
-      }
 
-      &.views-field-changed {
-        color: $dark-text-muted !important;
-      }
-    }
+        tbody tr {
+            background-color: $dark-bg !important;
 
-    tbody tr:hover td {
-      background-color: $dark-surface-alt !important;
+            &:hover {
+                background-color: $dark-surface-alt !important;
+            }
+
+            td {
+                background-color: transparent !important;
+                color: $dark-text !important;
+                border-bottom-color: $dark-border !important;
+
+                &.views-field-title a {
+                    color: $dark-text !important;
+
+                    //&:hover {
+                    //    color: $brand-blue-hover !important;
+                    //}
+                }
+
+                &.views-field-changed {
+                    color: $dark-text-muted !important;
+                }
+            }
+        }
     }
-  }
 }
-

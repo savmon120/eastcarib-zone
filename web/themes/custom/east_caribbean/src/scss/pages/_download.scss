@@ -43,6 +43,7 @@
                     color: #212529;
                     font-size: 1.05rem;
                     border-top: 1px solid #e9ecef;
+                    background-color: inherit; /* Inherits row color */
                 }
             }
         }
@@ -75,55 +76,60 @@
         }
     }
 }
+
 /* ------------------------------------------
    DARK MODE OVERRIDES — DOWNLOADS VIEW
    ------------------------------------------ */
 
 html[data-theme="dark"] .view-downloads {
 
-  table.table {
-    background: $dark-surface !important;
-    border-color: $dark-border !important;
-    box-shadow: 0 4px 15px $dark-shadow !important;
+    table.table {
+        background: transparent !important; /* Let row colors show through */
+        border-color: $dark-border !important;
+        box-shadow: 0 4px 15px $dark-shadow !important;
 
-    thead {
-      background-color: $brand-blue !important; /* ECZ brand */
-      color: $dark-text !important;
+        thead {
+            background-color: $brand-blue !important;
 
-      th {
-        border: none !important;
-      }
+            th {
+                color: $dark-text !important;
+                border: none !important;
+                background-color: transparent !important;
+            }
+        }
+
+        tbody tr {
+            background-color: $dark-surface !important;
+
+            &:nth-child(even) {
+                background-color: rgba($dark-text, 0.03) !important;
+            }
+
+            &:hover {
+                background-color: rgba($brand-blue-soft, 0.15) !important;
+            }
+
+            td {
+                color: $dark-text !important;
+                border-top-color: $dark-border !important;
+                background-color: transparent !important;
+            }
+        }
+
+        th.views-field-field-media-document,
+        td.views-field-field-media-document {
+            text-align: right;
+            white-space: nowrap;
+        }
     }
 
-    tbody tr {
-      &:nth-child(even) {
-        background-color: $dark-surface-alt !important;
-      }
-
-      &:hover {
-        background-color: $dark-bg-alt !important;
-      }
-
-      td {
+    a.btn-download {
+        background-color: $brand-blue !important;
         color: $dark-text !important;
-        border-top-color: $dark-border !important;
-      }
-    }
 
-    th.views-field-field-media-document,
-    td.views-field-field-media-document {
-      text-align: right;
-      white-space: nowrap;
+        &:hover {
+            background-color: $brand-blue-hover !important;
+            transform: translateY(-2px);
+        }
     }
-  }
-
-  a.btn-download {
-    background-color: $brand-blue !important;
-    color: $dark-text !important;
-
-    &:hover {
-      background-color: $brand-blue-hover !important;
-      transform: translateY(-2px);
-    }
-  }
 }

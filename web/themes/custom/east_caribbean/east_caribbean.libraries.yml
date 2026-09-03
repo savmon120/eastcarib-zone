@@ -5,6 +5,7 @@ style:
   js:
     build/js/main.script.js: {}
     js/waitlist.js: {}
+    js/roster.js: {}
   dependencies:
     - core/drupal
 

@@ -41,7 +41,7 @@ html[data-theme="dark"] [data-component-id="radix:breadcrumb"] .breadcrumb-item 
   color: $dark-text-muted !important;
 
   a {
-    color: $brand-blue-soft !important;
+    color: $dark-text !important;
 
     &:hover {
       color: $brand-blue-hover !important;

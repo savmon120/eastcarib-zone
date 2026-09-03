@@ -35,7 +35,7 @@ body.node-type--page:not(.path-frontpage) {
                 }
             }
 
-            a {
+            .ng-star-inserted .ext {
                 color: #0548A3;
                 text-decoration: none;
                 font-weight: 600;
@@ -81,8 +81,8 @@ html[data-theme="dark"] body.node-type--page:not(.path-frontpage) {
         }
       }
 
-      a {
-        color: $brand-blue-soft !important;
+        .ng-star-inserted .ext {
+        color: $dark-text !important;
         border-bottom-color: transparent !important;
 
         &:hover {
