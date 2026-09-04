@@ -59,6 +59,10 @@
         a {
             color: #0548A3;
             text-decoration: none;
+
+            &:hover {
+                color: $brand-blue-hover;
+            }
         }
     }
 

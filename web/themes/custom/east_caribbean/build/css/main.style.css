@@ -14307,6 +14307,9 @@ html[data-theme=dark] .vatsim-events-page__empty {
   color: #0548A3;
   text-decoration: none;
 }
+.view-wiki-main-page .views-field-title a:hover {
+  color: #1FA4A6;
+}
 .view-wiki-main-page .views-field-field-body {
   font-size: 1rem;
   padding: 0 0.5em 0 2em;
@@ -14441,15 +14444,18 @@ html[data-theme=dark] .view-category-documents-table table.table {
   border-bottom-color: #1E2A3A !important;
 }
 html[data-theme=dark] .view-category-documents-table table.table thead th {
-  background-color: #1E2A3A !important;
+  background-color: #286CB0 !important;
   color: #E2E6F0 !important;
   border: none !important;
 }
 html[data-theme=dark] .view-category-documents-table table.table tbody tr {
   background-color: #0E1B2E !important;
 }
+html[data-theme=dark] .view-category-documents-table table.table tbody tr:nth-child(even) {
+  background-color: rgba(226, 230, 240, 0.03) !important;
+}
 html[data-theme=dark] .view-category-documents-table table.table tbody tr:hover {
-  background-color: #286CB0 !important;
+  background-color: rgba(47, 188, 190, 0.15) !important;
 }
 html[data-theme=dark] .view-category-documents-table table.table tbody tr td {
   background-color: transparent !important;
@@ -14458,6 +14464,9 @@ html[data-theme=dark] .view-category-documents-table table.table tbody tr td {
 }
 html[data-theme=dark] .view-category-documents-table table.table tbody tr td.views-field-title a {
   color: #E2E6F0 !important;
+}
+html[data-theme=dark] .view-category-documents-table table.table tbody tr td.views-field-title a:hover {
+  color: #1FA4A6 !important;
 }
 html[data-theme=dark] .view-category-documents-table table.table tbody tr td.views-field-changed {
   color: #94A3B8 !important;

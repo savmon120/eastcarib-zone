@@ -71,7 +71,7 @@
 }
 
 /* ------------------------------------------
-   DARK MODE OVERRIDES — CATEGORY DOCUMENTS TABLE
+   DARK Mode OVERRIDES — CATEGORY DOCUMENTS TABLE
    ------------------------------------------ */
 
 html[data-theme="dark"] .view-category-documents-table {
@@ -80,29 +80,34 @@ html[data-theme="dark"] .view-category-documents-table {
         border-bottom-color: $dark-border !important;
 
         thead th {
-            background-color: $dark-surface !important;
+            background-color: $brand-blue !important; /* Slightly distinct header color */
             color: $dark-text !important;
             border: none !important;
         }
 
         tbody tr {
-            background-color: $dark-bg !important;
+            background-color: $dark-bg !important; /* Default row color */
+
+            /* STRIPED ROW EFFECT */
+            &:nth-child(even) {
+                background-color: rgba($dark-text, 0.03) !important; /* Subtle stripe color */
+            }
 
             &:hover {
-                background-color: $dark-surface-alt !important;
+                background-color: rgba($brand-blue-soft, 0.15) !important;
             }
 
             td {
-                background-color: transparent !important;
+                background-color: transparent !important; /* Keep cells transparent to show row color */
                 color: $dark-text !important;
                 border-bottom-color: $dark-border !important;
 
                 &.views-field-title a {
                     color: $dark-text !important;
 
-                    //&:hover {
-                    //    color: $brand-blue-hover !important;
-                    //}
+                    &:hover {
+                        color: $brand-blue-hover !important;
+                    }
                 }
 
                 &.views-field-changed {
