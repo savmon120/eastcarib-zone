@@ -50,3 +50,38 @@ function ecz_vatsim_theme($existing, $type, $theme, $path) {
     ],
   ];
 }
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function ecz_vatsim_preprocess_page(&$variables) {
+    $account = \Drupal::currentUser();
+    if ($account->isAuthenticated()) {
+        $user = User::load($account->id());
+
+        if ($user->hasField('field_vatsim_cid') && !$user->get('field_vatsim_cid')->isEmpty()) {
+            $cid = $user->get('field_vatsim_cid')->value;
+
+            // Expose CID to JS
+            $variables['#attached']['drupalSettings']['eczUser']['cid'] = $cid;
+        }
+    }
+}
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\node\NodeInterface;
+use Drupal\Core\Session\AccountInterface;
+
+function ecz_vatsim_node_access(NodeInterface $node, $op, AccountInterface $account) {
+    // Replace 123 with your profile page node ID
+    if ($node->bundle() === 'page' && $node->id() == 122) {
+        if ($op === 'view') {
+            return $account->hasRole('controller')
+                ? AccessResult::allowed()
+                : AccessResult::forbidden();
+        }
+    }
+
+    return AccessResult::neutral();
+}

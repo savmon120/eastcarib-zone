@@ -15,6 +15,12 @@ live_operations:
   dependencies:
     - core/drupal
 
+stats:
+  js:
+    js/stats.js: {}
+  dependencies:
+    - core/drupal
+
 theme-toggle:
   js:
     js/theme-toggle.js: {}

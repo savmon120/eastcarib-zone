@@ -29,3 +29,17 @@ ecz_vatsim.events_page:
     _title: 'Upcoming Events'
   requirements:
     _permission: 'access content'
+
+ecz_vatsim.stats:
+  path: '/api/vatsim/stats/{cid}'
+  defaults:
+    _controller: '\Drupal\ecz_vatsim\Controller\VatsimStatsController::getStats'
+  requirements:
+    _permission: 'access content'
+
+ecz_vatsim.atc:
+  path: '/api/vatsim/atc/{cid}'
+  defaults:
+    _controller: '\Drupal\ecz_vatsim\Controller\VatsimStatsController::getAtc'
+  requirements:
+    _permission: 'access content'
