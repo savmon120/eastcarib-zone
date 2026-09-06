@@ -17,7 +17,7 @@
     }],
     "license": "BSD-3-Clause",
     "require": {
-        "php":            "^7.1 | ^8.0",
+        "php":            "7.4.33",
         "ext-reflection": "*"
     },
     "require-dev": {
