@@ -14570,6 +14570,106 @@ html[data-theme=dark] body.node-122 .layout__region--second iframe {
   border-color: #1E2A3A !important;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45);
 }
+body.path-webform {
+  background-color: #f4f6f9;
+}
+body.path-webform .page__content > .container {
+  max-width: 800px !important;
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+}
+body.path-webform form.webform-submission-form {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 3rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+body.path-webform form.webform-submission-form .form-label {
+  font-weight: 600;
+  color: #0a1b2a;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+body.path-webform form.webform-submission-form .form-control,
+body.path-webform form.webform-submission-form .form-select {
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  background-color: #f8fafc;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+body.path-webform form.webform-submission-form .form-control:focus,
+body.path-webform form.webform-submission-form .form-select:focus {
+  border-color: #347efe;
+  box-shadow: 0 0 0 4px rgba(52, 126, 254, 0.15);
+  background-color: #ffffff;
+  outline: none;
+}
+body.path-webform form.webform-submission-form textarea.form-control {
+  min-height: 180px;
+}
+body.path-webform form.webform-submission-form .form-group {
+  margin-bottom: 1.75rem;
+}
+body.path-webform form.webform-submission-form .form-actions {
+  margin-top: 2.5rem;
+  margin-bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+body.path-webform form.webform-submission-form .form-actions .btn-primary {
+  background-color: #347efe;
+  color: #ffffff;
+  border: none;
+  padding: 0.85rem 2.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.2s, -webkit-transform 0.1s;
+  transition: background-color 0.2s, transform 0.1s;
+  transition:
+    background-color 0.2s,
+    transform 0.1s,
+    -webkit-transform 0.1s;
+}
+body.path-webform form.webform-submission-form .form-actions .btn-primary:hover {
+  background-color: #2563eb;
+  -webkit-transform: translateY(-2px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 126, 254, 0.3);
+}
+body.path-webform form.webform-submission-form .form-actions .btn-primary:active {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+html[data-theme=dark] body.path-webform {
+  background-color: #0E1B2E;
+}
+html[data-theme=dark] body.path-webform form.webform-submission-form {
+  background: #1E2A3A;
+  border-color: #1E2A3A;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+html[data-theme=dark] body.path-webform form.webform-submission-form .form-label {
+  color: #E2E6F0;
+}
+html[data-theme=dark] body.path-webform form.webform-submission-form .form-control,
+html[data-theme=dark] body.path-webform form.webform-submission-form .form-select {
+  background-color: #0E1B2E;
+  border-color: #1E2A3A;
+  color: #E2E6F0;
+}
+html[data-theme=dark] body.path-webform form.webform-submission-form .form-control:focus,
+html[data-theme=dark] body.path-webform form.webform-submission-form .form-select:focus {
+  border-color: #347efe;
+  background-color: #1E2A3A;
+}
+html[data-theme=dark] body.path-webform form.webform-submission-form .form-actions .btn-primary:hover {
+  box-shadow: 0 4px 12px rgba(52, 126, 254, 0.2);
+}
 .view-wiki-main-page .view-content {
   background-color: #ffffff !important;
   width: 100%;

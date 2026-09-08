@@ -1,0 +1,113 @@
+body.path-webform {
+    background-color: #f4f6f9;
+
+    .page__content > .container {
+        max-width: 800px !important;
+        margin-top: 2rem;
+        margin-bottom: 5rem;
+    }
+
+    form.webform-submission-form {
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 3rem;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+
+        .form-label {
+            font-weight: 600;
+            color: #0a1b2a;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            padding: 0.85rem 1rem;
+            font-size: 1rem;
+            background-color: #f8fafc;
+            color: #334155;
+            transition: all 0.2s ease;
+
+            &:focus {
+                border-color: #347efe;
+                box-shadow: 0 0 0 4px rgba(52, 126, 254, 0.15);
+                background-color: #ffffff;
+                outline: none;
+            }
+        }
+
+        textarea.form-control {
+            min-height: 180px;
+        }
+
+        .form-group {
+            margin-bottom: 1.75rem;
+        }
+
+        .form-actions {
+            margin-top: 2.5rem;
+            margin-bottom: 0;
+            display: flex;
+            justify-content: flex-end;
+
+            .btn-primary {
+                background-color: #347efe;
+                color: #ffffff;
+                border: none;
+                padding: 0.85rem 2.5rem;
+                font-size: 1.05rem;
+                font-weight: 600;
+                border-radius: 8px;
+                transition: background-color 0.2s, transform 0.1s;
+
+                &:hover {
+                    background-color: #2563eb;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(52, 126, 254, 0.3);
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+            }
+        }
+    }
+}
+
+/* ------------------------------------------
+   DARK MODE OVERRIDES FOR WEBFORM
+   ------------------------------------------ */
+html[data-theme="dark"] body.path-webform {
+    background-color: $dark-bg;
+
+    form.webform-submission-form {
+        background: $dark-surface;
+        border-color: $dark-border;
+        box-shadow: 0 8px 30px $dark-shadow;
+
+        .form-label {
+            color: $dark-text;
+        }
+
+        .form-control,
+        .form-select {
+            background-color: $dark-bg;
+            border-color: $dark-border;
+            color: $dark-text;
+
+            &:focus {
+                border-color: #347efe;
+                background-color: $dark-surface;
+            }
+        }
+
+        .form-actions .btn-primary {
+            &:hover {
+                box-shadow: 0 4px 12px rgba(52, 126, 254, 0.2);
+            }
+        }
+    }
+}
