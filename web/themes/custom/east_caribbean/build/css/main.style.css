@@ -16062,7 +16062,7 @@ html[data-theme=dark] [data-component-id="radix:breadcrumb"] .breadcrumb-item a:
   color: #1FA4A6 !important;
 }
 html[data-theme=dark] [data-component-id="radix:breadcrumb"] .breadcrumb-item.active {
-  color: #E2E6F0 !important;
+  color: #2fbcbe !important;
 }
 span.simplei-indicator.top-bar__title {
   order: -1 !important;
