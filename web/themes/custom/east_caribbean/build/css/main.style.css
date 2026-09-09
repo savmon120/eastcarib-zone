@@ -15756,7 +15756,7 @@ nav.navbar .dropdown-menu .dropdown-item.text-danger:hover {
   opacity: 0.7;
 }
 nav.navbar .dropdown-menu li.text-muted.border-bottom {
-  color: var(--bs-secondary-color) !important;
+  color: #E2E6F0 !important;
   border-bottom-color: var(--bs-border-color) !important;
 }
 nav.navbar .dropdown-menu .dropdown-divider {
