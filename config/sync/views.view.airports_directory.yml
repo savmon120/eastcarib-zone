@@ -25,7 +25,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Airports Directory'
+      title: Airports
       fields:
         field_airport_image:
           id: field_airport_image
