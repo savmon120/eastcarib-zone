@@ -1637,27 +1637,30 @@
         },
         {
             "name": "drupal/easy_breadcrumb",
-            "version": "2.0.9",
-            "version_normalized": "2.0.9.0",
+            "version": "2.0.10",
+            "version_normalized": "2.0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/easy_breadcrumb.git",
-                "reference": "2.0.9"
+                "reference": "2.0.10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/easy_breadcrumb-2.0.9.zip",
-                "reference": "2.0.9",
-                "shasum": "9e7c33e2ec0637d37d509776795a476f2f2d9bb8"
+                "url": "https://ftp.drupal.org/files/projects/easy_breadcrumb-2.0.10.zip",
+                "reference": "2.0.10",
+                "shasum": "a55c793c1f59be1a4866972998b50ced21bfbcb0"
             },
             "require": {
                 "drupal/core": "^9.2 || ^10 || ^11"
             },
+            "require-dev": {
+                "drush/drush": "^13"
+            },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.9",
-                    "datestamp": "1732752214",
+                    "version": "2.0.10",
+                    "datestamp": "1787942208",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3011,18 +3014,18 @@
         },
         {
             "name": "drupal/viewsreference",
-            "version": "2.0.0-beta13",
-            "version_normalized": "2.0.0.0-beta13",
+            "version": "2.0.0-beta14",
+            "version_normalized": "2.0.0.0-beta14",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/viewsreference.git",
-                "reference": "8.x-2.0-beta13"
+                "reference": "8.x-2.0-beta14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/viewsreference-8.x-2.0-beta13.zip",
-                "reference": "8.x-2.0-beta13",
-                "shasum": "359a8051f7faa5e5a9b568cb0705eb73ff97ce62"
+                "url": "https://ftp.drupal.org/files/projects/viewsreference-8.x-2.0-beta14.zip",
+                "reference": "8.x-2.0-beta14",
+                "shasum": "88e536cd96d2b76f1612d668e5b4e8aba7b0bfa3"
             },
             "require": {
                 "drupal/core": "^10 || ^11 || ^12"
@@ -3036,8 +3039,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.0-beta13",
-                    "datestamp": "1783759655",
+                    "version": "8.x-2.0-beta14",
+                    "datestamp": "1787221867",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
