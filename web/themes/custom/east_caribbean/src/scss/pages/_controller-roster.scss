@@ -17,10 +17,10 @@
         flex-wrap: wrap;
         gap: 20px;
         align-items: center;
-        background-color: #ffffff;
+        background-color: var(--bs-card-bg);
         padding: 12px 20px;
         border-radius: 8px;
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--bs-border-color);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
         width: max-content;
     }
@@ -36,7 +36,7 @@
         align-items: center;
         gap: 8px;
         font-size: 0.9rem;
-        color: #334155;
+        color: var(--bs-body-color);
         font-weight: 600;
         background: none;
         border: none;
@@ -51,14 +51,13 @@
         border: 1px solid transparent;
 
         &:hover {
-            background-color: #f8fafc;
-            border-color: #e2e8f0;
+            background-color: var(--bs-table-hover-bg);
+            border-color: var(--bs-border-color);
         }
 
         &.active {
-            background-color: #f1f5f9;
-            border-color: #cbd5e1;
-            color: #0a1b2a;
+            border-color: var(--bs-link-color);
+            color: var(--bs-link-color);
         }
     }
 
@@ -88,14 +87,15 @@
     table {
         width: 100%;
         border-collapse: collapse;
-        background-color: #ffffff;
+        background-color: var(--bs-card-bg);
         overflow: hidden;
     }
 
     thead {
         th {
-            background-color: #3e8e8e;
-            color: #ffffff;
+            /* Keeps the distinct brand blue header across both themes */
+            background-color: var(--bs-table-striped-bg);
+            color: var(--bs-btn-primary-color);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             padding: 10px 0;
@@ -108,25 +108,11 @@
                 width: 20%;
             }
 
-            &.views-field-field-initials {
-                width: 5%;
-            }
-
-            &.views-field-field-cid {
-                width: 15%;
-            }
-
-            &.views-field-field-rating {
-                width: 5%;
-            }
-
-            &.views-field-field-roster-role {
-                width: 20%;
-            }
-
-            &.views-field-field-roster-fir {
-                width: 10%;
-            }
+            &.views-field-field-initials { width: 5%; }
+            &.views-field-field-cid { width: 15%; }
+            &.views-field-field-rating { width: 5%; }
+            &.views-field-field-roster-role { width: 20%; }
+            &.views-field-field-roster-fir { width: 10%; }
 
             &.views-field-field-del-status,
             &.views-field-field-gnd-status,
@@ -144,12 +130,12 @@
             transition: background-color 0.2s ease;
 
             &:hover {
-                background-color: #f8fafc;
+                background-color: var(--bs-table-hover-bg);
             }
         }
 
         td {
-            color: #334155;
+            color: var(--bs-body-color);
             font-size: 0.95rem;
             vertical-align: middle;
             text-align: center;
@@ -167,8 +153,9 @@
             &.views-field-field-app-status,
             &.views-field-field-ctr-status {
                 width: 50px;
-                background-color: #f1f5f9;
-                border: 1px solid #ffffff;
+                /* Dynamically maps to #f1f5f9 in light, and $dark-surface-alt in dark */
+                background-color: var(--bs-table-striped-bg);
+                border: 1px solid var(--bs-body-bg);
 
                 &:has([class*="auth"]) {
                     background-color: $status-auth;
@@ -189,9 +176,9 @@
                     background: repeating-linear-gradient(
                             -40deg,
                             $status-auth,
-                            $status-auth 16px,
-                            #b42966 16px,
-                            #b42966 28px
+                            $status-auth 12px,
+                            #b42966 12px,
+                            #b42966 24px
                     ) !important;
                     color: #ffffff;
                 }
@@ -200,10 +187,11 @@
     }
 
     .views-field-title a {
-        color: #0548A3;
+        color: var(--bs-link-color);
         text-decoration: none;
 
         &:hover {
+            color: var(--bs-link-hover-color);
             text-decoration: underline;
         }
     }
@@ -223,38 +211,25 @@ html[data-theme="dark"] {
     .view-id-roster {
         .roster-legend,
         .roster-filters {
-            background-color: $dark-surface !important;
-            border-color: $dark-border !important;
             box-shadow: 0 2px 10px $dark-shadow !important;
-
-            .legend-item,
-            .filter-btn {
-                color: $dark-text !important;
-            }
         }
 
         .filter-btn {
-            &:hover {
-                background-color: $dark-surface-alt !important;
-                border-color: $dark-border !important;
-            }
-
             &.active {
+                /* Special soft-blue state specifically for the active filter button in dark mode */
                 background-color: rgba($brand-blue-soft, 0.15) !important;
                 border-color: $brand-blue-soft !important;
                 color: $brand-blue-soft !important;
             }
         }
-
-        table {
-            background-color: $dark-surface !important;
+        thead {
+            th {
+                /* Keeps the distinct brand blue header across both themes */
+                background-color: $dark-surface-alt;
+            }
         }
 
         thead th {
-            background-color: $brand-blue !important;
-            color: $dark-text !important;
-            border-color: $brand-blue !important;
-
             &.views-field-field-del-status,
             &.views-field-field-gnd-status,
             &.views-field-field-twr-status,
@@ -264,46 +239,19 @@ html[data-theme="dark"] {
             }
         }
 
-        tbody tr {
-            &:hover {
-                background-color: $dark-surface-alt !important;
-            }
-        }
-
         tbody td {
-            color: $dark-text !important;
-            background-color: $dark-surface !important;
-
-            &.views-field-title {
-                a {
-                    color: $brand-blue-soft !important;
-
-                    &:hover {
-                        color: $brand-blue-hover !important;
-                    }
-                }
-            }
-
             &.views-field-field-del-status,
             &.views-field-field-gnd-status,
             &.views-field-field-twr-status,
             &.views-field-field-app-status,
             &.views-field-field-ctr-status {
-                background-color: $dark-border !important;
-                border-color: $dark-border-subtle-dark !important;
+                /* Because the background was automatically handled by CSS variables,
+                   we only need to manually fix the border-color override here! */
+                border-color: $dark-border !important;
 
-                &:has([class*="auth"]) {
-                    background-color: $status-auth !important;
-                    color: $dark-text !important;
-                }
-
-                &:has([class*="solo"]) {
-                    background-color: $status-solo !important;
-                    color: $dark-text !important;
-                }
-
+                &:has([class*="auth"]),
+                &:has([class*="solo"]),
                 &:has([class*="tier2"]) {
-                    background-color: $status-tier2 !important;
                     color: $dark-text !important;
                 }
 
@@ -318,10 +266,6 @@ html[data-theme="dark"] {
                     color: #ffffff !important;
                 }
             }
-        }
-
-        .badge-pos {
-            color: $dark-text !important;
         }
     }
 }

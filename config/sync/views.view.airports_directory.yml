@@ -408,7 +408,7 @@ display:
           metatags:
             title: 'Airport Briefings | ECZ'
           tokenize: false
-      path: pilots/Briefing
+      path: pilots/Airport
     cache_metadata:
       max-age: -1
       contexts:

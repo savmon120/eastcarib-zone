@@ -1,0 +1,31 @@
+/* ------------------------------------------
+   LIGHT MODE PALETTE (Standard Theme)
+   ------------------------------------------ */
+
+/* Backgrounds */
+$light-bg: #ffffff;          // Off-white/gray main background
+$light-bg-alt: #f8f9fa;      // Pure white for navbars/alt areas
+$light-bg-alt-2: #f8f9fa;    // Slightly distinct white/gray
+$light-surface: #ffffff;     // Card backgrounds
+$light-surface-alt: #286CB0; // Raised / hovered surfaces (pill items)
+$light-surface-alt-2: #3489e0; // Raised / hovered surfaces (pill items)
+
+/* Borders */
+$light-border: #e0e0e0;      // Standard card borders
+$light-border-alt: #cbd5e1;  // Slightly darker for form inputs
+
+/* Text */
+$light-text: #0a1b2a;        // Deep navy blue for headings/primary text
+$light-text-muted: #334155;  // Slate for paragraphs
+$light-text-subtle: #64748b; // Lighter slate for hints/small text
+
+/* Brand accents */
+$brand-blue: #286CB0;       // Curaçao blue
+$brand-blue-soft: #2fbcbe;  // soft highlight
+$brand-blue-hover: #1FA4A6; // turquoise hover
+
+/* Accent red */
+$brand-red: #e11d48;
+
+/* Shadows */
+$light-shadow: rgba(0, 0, 0, 0.05); // Soft, elegant drop shadow

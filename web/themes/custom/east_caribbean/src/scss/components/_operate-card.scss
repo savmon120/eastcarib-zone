@@ -3,8 +3,8 @@
 }
 
 .block-inline-blockdashboard-operate-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    background-color: var(--bs-card-bg);
+    border: 1px solid var(--bs-border-color);
     border-radius: 8px;
     padding: 20px 20px 10px 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
@@ -17,12 +17,16 @@
     margin-bottom: 15px;
     margin-right: 15px;
 
+    @at-root html[data-theme="dark"] & {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    }
+
     .block__title {
         grid-column: 1;
         grid-row: 1;
         font-size: 1.4rem;
         font-weight: 800;
-        color: #1a1a1a;
+        color: var(--bs-body-color);
         margin: 0;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -54,7 +58,7 @@
         align-self: start;
 
         p {
-            color: #555555;
+            color: var(--bs-secondary-color);
             font-size: 1.05rem;
             margin-bottom: 0;
             line-height: 1.4;
@@ -84,7 +88,7 @@
 
             .stat-icon {
                 font-size: 24px;
-                color: #555555;
+                color: var(--bs-tertiary-color);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -98,13 +102,13 @@
             .stat-value {
                 font-weight: 800;
                 font-size: 1.15rem;
-                color: #1a1a1a;
+                color: var(--bs-body-color);
                 line-height: 1.1;
             }
 
             .stat-label {
                 font-size: 0.8rem;
-                color: #777777;
+                color: var(--bs-secondary-color);
                 font-weight: 600;
             }
         }
@@ -117,7 +121,7 @@
 
         a {
             display: inline-block;
-            background-color: #4fb2b2;
+            background-color: var(--bs-link-color);
             color: #ffffff;
             padding: 12px 28px;
             border-radius: 50px;
@@ -129,9 +133,9 @@
             transition: background-color 0.2s ease, transform 0.2s ease;
 
             &:hover {
-                background-color: #3e8e8e;
+                background-color: var(--bs-link-hover-color);
                 transform: translateY(-2px);
-                color: #ffffff;
+                color: var(--bs-btn-primary-color);
             }
         }
     }
@@ -153,45 +157,3 @@
         .field--name-field-content-link { grid-column: 1; grid-row: 5; }
     }
 }
-/* ------------------------------------------
-   DARK MODE OVERRIDES FOR OPERATE CARD
-   ------------------------------------------ */
-
-html[data-theme="dark"] .block-inline-blockdashboard-operate-card {
-  background-color: $dark-surface !important;
-  border-color: $dark-border !important;
-  box-shadow: 0 2px 10px $dark-shadow !important;
-
-  .block__title {
-    color: $dark-text !important;
-  }
-
-  .field--name-field-body p {
-    color: $dark-text-muted !important;
-  }
-
-  .field--name-field-stats {
-    .stat-icon {
-      color: $dark-text-subtle !important;
-    }
-
-    .stat-value {
-      color: $dark-text !important;
-    }
-
-    .stat-label {
-      color: $dark-text-muted !important;
-    }
-  }
-
-  .field--name-field-content-link a {
-    background-color: $brand-blue-hover !important;
-    color: $dark-text !important;
-
-    &:hover {
-      background-color: $brand-blue-soft !important;
-      transform: translateY(-2px);
-    }
-  }
-}
-

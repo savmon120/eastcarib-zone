@@ -1,7 +1,7 @@
 .view-wiki-main-page {
 
     .view-content {
-        background-color: #ffffff !important;
+        background-color: var(--bs-body-bg) !important;
         width: 100%;
         max-width: 1355px;
         margin: 0 auto;
@@ -12,14 +12,15 @@
     }
 
     .wiki-card {
-        background-color: #f5f5f5;
+        background-color: var(--bs-card-bg-alt);
+        border: 1px solid var(--bs-border-color);
         border-radius: 10px;
         width: 300px;
         min-height: 410px;
         display: flex;
         flex-direction: column;
-        -webkit-box-shadow: inset 0 0 5px 0 black, 6px 6px 4px -3px black, 0 6px 4px -3px black;
-        box-shadow: inset 0 0 5px 0 black, 6px 6px 4px -3px black, 0 6px 4px -3px black;
+        -webkit-box-shadow: inset 0 0 5px 0 rgba(0,0,0,0.05), 6px 6px 4px -3px rgba(0,0,0,0.15), 0 6px 4px -3px rgba(0,0,0,0.15);
+        box-shadow: inset 0 0 5px 0 rgba(0,0,0,0.05), 6px 6px 4px -3px rgba(0,0,0,0.15), 0 6px 4px -3px rgba(0,0,0,0.15);
         user-select: none;
         position: relative;
 
@@ -57,11 +58,11 @@
         text-align: center;
 
         a {
-            color: #0548A3;
+            color: var(--bs-btn-bg);
             text-decoration: none;
 
             &:hover {
-                color: $brand-blue-hover;
+                color: #3489e0;
             }
         }
     }
@@ -70,10 +71,12 @@
         font-size: 1.0rem;
         padding: 0 0.5em 0 2em;
         height: 175px;
+        color: var(--bs-body-color);
 
         .field-content {
             p {
                 margin: 0;
+                color: var(--bs-secondary-color);
             }
 
             br {
@@ -88,13 +91,13 @@
             break-inside: avoid;
             page-break-inside: avoid;
             text-decoration: none;
-            color: #0548A3;
+            color: var(--bs-btn-bg);
             padding: 2px 0;
             line-height: 1.15;
             transition: all 0.2s ease;
 
             &:hover {
-                color: $brand-blue-hover;
+                color: #3489e0;
             }
         }
     }
@@ -112,49 +115,41 @@
         align-self: center;
     }
 }
+
 /* ------------------------------------------
    DARK MODE OVERRIDES — WIKI MAIN PAGE
    ------------------------------------------ */
 
 html[data-theme="dark"] .view-wiki-main-page {
 
-  .view-content {
-    background-color: $dark-bg !important;
-    box-shadow: none !important;
-  }
-
-  .wiki-card {
-    background-color: $dark-bg-alt !important;
-    box-shadow: inset 0 0 5px 0 $dark-shadow,
-                6px 6px 4px -3px $dark-shadow,
-                0 6px 4px -3px $dark-shadow !important;
-    border-color: $dark-border !important;
-  }
-
-  .views-field-title a {
-    color: $dark-text !important;
-
-      &:hover {
-        color: $brand-blue-hover !important;
-      }
-  }
-
-  .views-field-field-body {
-    color: $dark-text !important;
-
-    a {
-      color: $dark-text !important;
-
-      &:hover {
-        color: $brand-blue-hover !important;
-      }
+    .view-content {
+        box-shadow: none !important;
     }
-  }
 
-  .event-meta,
-  .field-content p,
-  .views-field-field-body p {
-    color: $dark-text-muted !important;
-  }
+    .views-field-field-body {
+        a {
+            color: var(--bs-btn-color);
+
+            &:hover {
+                color: #3489e0;
+            }
+        }
+    }
+
+    .views-field-title {
+        a {
+            color: var(--bs-btn-color);
+
+            &:hover {
+                color: #3489e0;
+            }
+        }
+    }
+
+    .wiki-card {
+        background-color: var(--bs-card-bg);
+        box-shadow: inset 0 0 5px 0 $dark-shadow,
+        6px 6px 4px -3px $dark-shadow,
+        0 6px 4px -3px $dark-shadow !important;
+    }
 }
-

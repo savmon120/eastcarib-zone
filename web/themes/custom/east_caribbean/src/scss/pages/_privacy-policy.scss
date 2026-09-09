@@ -1,7 +1,7 @@
 body.node-type--page:not(.path-frontpage) {
 
     .node--page--full {
-        background-color: #ffffff;
+        background-color: var(--bs-card-bg);
 
         @media (max-width: 576px) {
             padding: 25px 20px;
@@ -12,23 +12,28 @@ body.node-type--page:not(.path-frontpage) {
             display: block;
             font-size: 2.5rem;
             font-weight: 800;
-            color: #0a1b2a;
+            color: var(--bs-body-color);
             margin-bottom: 2rem;
             line-height: 1.2;
         }
 
         .field--name-field-body {
             font-size: 1.1rem;
-            color: #334155;
+            color: var(--bs-body-color);
+
+            p {
+                color: var(--bs-secondary-color);
+            }
 
             h2, h3 {
-                color: #0a1b2a;
+                color: var(--bs-body-color);
                 font-weight: 700;
             }
 
             ul, ol {
                 margin-bottom: 1.5rem;
                 padding-left: 1.5rem;
+                color: var(--bs-secondary-color);
 
                 li {
                     margin-bottom: 0.5rem;
@@ -36,60 +41,43 @@ body.node-type--page:not(.path-frontpage) {
             }
 
             .ng-star-inserted .ext {
-                color: #0548A3;
+                color: var(--bs-link-color);
                 text-decoration: none;
                 font-weight: 600;
                 border-bottom: 1px solid transparent;
-                transition: border-color 0.2s ease;
+                transition: border-color 0.2s ease, color 0.2s ease;
 
                 &:hover {
-                    border-color: #0548A3;
+                    border-color: var(--bs-link-hover-color);
                 }
             }
         }
     }
 }
+
 /* ------------------------------------------
    DARK MODE OVERRIDES — GENERIC PAGE NODE
    ------------------------------------------ */
 
 html[data-theme="dark"] body.node-type--page:not(.path-frontpage) {
-/* .node--page--ful controls the main content area of the basic page content type. */
-  .node--page--full {
-    background-color: transparent !important;
-    border-color: $dark-border !important;
+    .node--page--full {
+        background-color: transparent !important;
+        border-color: $dark-border !important;
 
-    .block-field-blocknodepagetitle span,
-    h1.page-title {
-      color: $dark-text !important;
-    }
+        .field--name-field-body {
 
-    .field--name-field-body {
-      color: $dark-text !important;
+            h2, h3 {
+                color: $brand-blue-soft !important;
+            }
 
-      h2, h3 {
-        color: $brand-blue-soft !important;
-      }
+            .ng-star-inserted .ext {
+                color: $dark-text !important;
+                border-bottom-color: transparent !important;
 
-      p {
-        color: $dark-text-muted !important;
-      }
-
-      ul, ol {
-        li {
-          color: $dark-text-muted !important;
+                &:hover {
+                    border-bottom-color: $brand-blue-hover !important;
+                }
+            }
         }
-      }
-
-        .ng-star-inserted .ext {
-        color: $dark-text !important;
-        border-bottom-color: transparent !important;
-
-        &:hover {
-          border-bottom-color: $brand-blue-hover !important;
-        }
-      }
     }
-  }
 }
-

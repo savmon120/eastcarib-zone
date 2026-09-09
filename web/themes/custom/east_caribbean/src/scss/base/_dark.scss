@@ -8,11 +8,16 @@ html[data-theme="dark"] {
   --bs-body-bg: #{$dark-bg};
   --bs-body-color: #{$dark-text};
 
+  /* Button colors */
+  --bs-btn-primary-color: #{$dark-text};
+  --bs-btn-secondary-color: #{$dark-text-muted};
+
   /* Borders */
   --bs-border-color: #{$dark-border};
 
   /* Cards */
   --bs-card-bg: #{$dark-surface};
+  --bs-card-bg-alt: #{$dark-bg};
   --bs-card-color: #{$dark-text};
 
   /* Navbar */
@@ -21,6 +26,7 @@ html[data-theme="dark"] {
 
   /* Buttons */
   --bs-btn-bg: #{$dark-surface-alt};
+  --bs-btn-bg-hover: #{$dark-surface-alt-2};
   --bs-btn-color: #{$dark-text};
   --bs-btn-border-color: #{$dark-border};
 
@@ -47,4 +53,12 @@ html[data-theme="dark"] {
   --radix-header-bg: #{$dark-bg-alt};
   --radix-footer-bg: #{$dark-bg-alt};
   --radix-sidebar-bg: #{$dark-bg};
+
+  --bs-secondary-color: #{$dark-text-muted};
+  --bs-tertiary-color: #{$dark-text-subtle};
+  --bs-danger: #ff6b6b;
+
+  --nav-bg: rgba(14, 27, 46, 0.8);
+  --nav-border: rgba(30, 42, 58, 0.8);
+  --nav-dropdown-bg: rgba(30, 42, 58, 0.95);
 }

@@ -1,154 +1,115 @@
 .vatsim-events-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    background-color: var(--bs-card-bg);
+    border: 1px solid var(--bs-border-color);
     border-radius: 12px;
     padding: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     margin-bottom: 15px;
-}
 
-.vatsim-events-card .view-header {
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: #1a1a1a;
-    text-transform: uppercase;
-    margin: 0 0 15px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .view-header {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--bs-body-color);
+        text-transform: uppercase;
+        margin: 0 0 15px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-.vatsim-events-card .events-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
+    .events-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
 
-.vatsim-events-card .events-list li {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    background-color: #f8f9fa;
-    border: 1px solid #e2e6ea;
-    border-radius: 6px;
-    padding: 10px 12px;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+        li {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background-color: var(--bs-card-bg-alt);
+            border: 1px solid var(--bs-border-color);
+            border-radius: 6px;
+            padding: 10px 12px;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
 
-    &:hover {
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
-        transform: translateY(-2px);
+            &:hover {
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
+                transform: translateY(-2px);
+            }
+        }
+
+        .events-empty {
+            background-color: transparent;
+            border: none;
+            justify-content: center;
+            color: var(--bs-tertiary-color);
+            font-style: italic;
+            padding: 10px 0;
+        }
+    }
+
+    .event-banner {
+        width: 48px;
+        height: 48px;
+        border-radius: 6px;
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+
+    .event-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+    }
+
+    .event-name {
+        font-weight: 800;
+        font-size: 0.9rem;
+        color: var(--bs-body-color);
+
+        a {
+            color: inherit;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: none;
+                color: var(--bs-link-color);
+            }
+        }
+    }
+
+    .event-meta {
+        font-weight: 500;
+        color: var(--bs-secondary-color);
+        font-size: 0.75rem;
+    }
+
+    .vatsim-events-view-all {
+        display: inline-block;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-decoration: none !important;
+        color: var(--bs-body-color);
+
+        &:hover {
+            color: var(--bs-link-color);
+            text-decoration: underline !important;
+        }
     }
 }
 
-.vatsim-events-card .event-banner {
-    width: 48px;
-    height: 48px;
-    border-radius: 6px;
-    object-fit: cover;
-    flex-shrink: 0;
-}
-
-.vatsim-events-card .event-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
-}
-
-.vatsim-events-card .event-name {
-    font-weight: 800;
-    color: #000000;
-    font-size: 0.9rem;
-}
-
-.vatsim-events-card .event-name a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.vatsim-events-card .event-name a:hover {
-    text-decoration: none;
-    color: $brand-blue
-}
-
-.vatsim-events-card .event-meta {
-    font-weight: 500;
-    color: #666666;
-    font-size: 0.75rem;
-}
-
-.vatsim-events-card .events-list .events-empty {
-    background-color: transparent;
-    border: none;
-    justify-content: center;
-    color: #777777;
-    font-style: italic;
-    padding: 10px 0;
-}
-
-.vatsim-events-card .vatsim-events-view-all {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-decoration: none !important;
-    color: #1a1a1a;
-
-    &:hover {
-        color: $brand-blue;
-    }
-}
-
-.vatsim-events-card .vatsim-events-view-all:hover {
-    text-decoration: underline;
-}
 /* ------------------------------------------
    DARK MODE OVERRIDES — VATSIM EVENTS CARD
    ------------------------------------------ */
 
 html[data-theme="dark"] .vatsim-events-card {
-    background-color: $dark-surface !important;
-    border: 1px solid $dark-border !important;
-    box-shadow: 0 4px 20px $dark-shadow !important;
+    box-shadow: 0 4px 20px $dark-shadow;
 
-    .view-header {
-        color: $dark-text !important;
-
-        .vatsim-events-view-all {
-            color: $dark-text !important;
-
-            &:hover {
-                color: $brand-blue-soft !important;
-            }
-        }
-    }
-
-    .events-list li {
-        background-color: $dark-bg !important;
-        border: 1px solid $dark-border !important;
-    }
-
-    .event-name {
-        color: $dark-text !important;
-
-        &:hover {
-            color: $brand-blue-soft !important;
-        }
-    }
-
-    .event-name a {
-        color: inherit !important;
-    }
-
-    .event-meta {
-        color: $dark-text-muted !important;
-    }
-
-    .events-list .events-empty {
-        background-color: transparent !important;
-        border: none !important;
-        color: $dark-text-subtle !important;
+    .events-list li:hover {
+        box-shadow: 0 6px 15px $dark-shadow;
     }
 }

@@ -3,13 +3,13 @@
     margin: 0 auto;
 
     .step-card {
-        background-color: #ffffff;
+        background-color: var(--bs-card-bg);
         border-radius: 8px;
         padding: 30px 15px;
         height: 100%;
         text-align: center;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--bs-border-color);
 
         .step-icon {
             display: inline-flex;
@@ -20,9 +20,9 @@
             font-size: 1.5rem;
             margin-bottom: 15px;
             border-radius: 50%;
-            background-color: #f1f5f9;
-            color: #3e8e8e;
-            border: 2px solid #3e8e8e;
+            background-color: var(--bs-card-bg-alt);
+            color: var(--bs-link-color);
+            border: 2px solid var(--bs-link-color);
             font-weight: 800;
         }
 
@@ -30,28 +30,28 @@
             font-size: 1.05rem;
             font-weight: 800;
             margin-bottom: 10px;
-            color: #0a1b2a;
+            color: var(--bs-body-color);
         }
 
         p {
             font-size: 0.95rem;
             margin: 0;
-            color: #334155;
+            color: var(--bs-secondary-color);
             line-height: 1.4;
         }
     }
 
     .faq-card {
-        background-color: #ffffff;
+        background-color: var(--bs-card-bg);
         border-radius: 5px;
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--bs-border-color);
         height: 100%;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
         overflow: hidden;
 
         h5 {
-            background-color: #3e8e8e;
-            color: #ffffff;
+            background-color: var(--bs-link-color);
+            color: var(--bs-btn-primary-color);
             padding: 12px 15px;
             margin: 0;
             font-weight: 700;
@@ -64,27 +64,29 @@
             padding: 15px;
             margin: 0;
             font-size: 0.95rem;
-            color: #334155;
+            color: var(--bs-secondary-color);
             line-height: 1.5;
         }
     }
 
     a.btn-join-apply {
-        background-color: #3e8e8e !important;
-        color: #ffffff !important;
+        background-color: var(--bs-link-color) !important;
+        color: var(--bs-btn-primary-color) !important;
         border-radius: 5px;
         transition: all 0.2s ease;
         text-decoration: none !important;
+
         &:visited {
-            color: #ffffff !important;
+            color: var(--bs-btn-primary-color) !important;
         }
 
         &:hover,
         &:focus,
         &:active {
-            background-color: #2c6666 !important;
-            border-color: #2c6666 !important;
-            color: #ffffff !important;
+            background-color: var(--bs-link-hover-color) !important;
+            border-color: transparent !important;
+            color: var(--bs-btn-primary-color) !important;
+            outline: none !important;
         }
     }
 }
@@ -95,55 +97,17 @@
 
 html[data-theme="dark"] .join-page-wrapper {
     .step-card {
-        background-color: $dark-surface !important;
-        border-color: $dark-border !important;
-        box-shadow: 0 4px 12px $dark-shadow !important;
+        box-shadow: 0 4px 12px $dark-shadow;
 
         .step-icon {
-            background-color: $dark-border !important;
-            color: white !important;
-            border-color: $brand-blue-hover !important;
-        }
-
-        h4 {
-            color: $dark-text !important;
-        }
-
-        p {
-            color: $dark-text-muted !important;
+            /* Restores the specific filled-circle look for the icon in dark mode */
+            background-color: var(--bs-border-color);
+            color: var(--bs-btn-primary-color);
+            border-color: var(--bs-link-hover-color);
         }
     }
 
     .faq-card {
-        background-color: $dark-surface !important;
-        border-color: $dark-border !important;
-        box-shadow: 0 4px 12px $dark-shadow !important;
-
-        h5 {
-            background-color: $brand-blue-hover !important;
-            color: $dark-text !important;
-        }
-
-        p {
-            color: $dark-text-muted !important;
-        }
-    }
-
-    a.btn-join-apply {
-        background-color: $brand-blue-hover !important;
-        color: #ffffff !important;
-
-        &:visited {
-            color: #ffffff !important;
-        }
-
-        &:hover,
-        &:focus,
-        &:active {
-            background-color: $brand-blue-soft !important;
-            border-color: transparent !important;
-            color: #ffffff !important;
-            outline: none !important;
-        }
+        box-shadow: 0 4px 12px $dark-shadow;
     }
 }

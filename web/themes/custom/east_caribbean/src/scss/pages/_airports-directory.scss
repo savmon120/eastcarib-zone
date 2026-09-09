@@ -17,7 +17,7 @@
 
     h3 {
         grid-column: 1 / -1;
-        color: #0a1b2a;
+        color: var(--bs-body-color);
         font-weight: 700;
         font-size: 1.8rem;
         text-transform: uppercase;
@@ -35,12 +35,12 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        background: #ffffff;
+        background: var(--bs-card-bg);
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid rgba(0,0,0,0.2);
+        border: 1px solid var(--bs-border-color);
         height: 280px;
         cursor: pointer;
 
@@ -58,7 +58,7 @@
         width: 100%;
         aspect-ratio: 16 / 9;
         overflow: hidden;
-        background-color: #f1f3f5;
+        background-color: var(--bs-border-color);
 
         .media,
         .field,
@@ -90,6 +90,7 @@
         display: block;
         text-align: center;
         padding: 0 20px;
+        color: var(--bs-body-color);
     }
 
     .airport-card__name {
@@ -102,6 +103,11 @@
         a {
             text-decoration: none;
             color: inherit;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: var(--bs-link-hover-color);
+            }
         }
     }
 
@@ -110,44 +116,25 @@
         font-size: 1.3rem;
     }
 }
+
 /* ------------------------------------------
    DARK MODE OVERRIDES — AIRPORTS DIRECTORY
    ------------------------------------------ */
 
 html[data-theme="dark"] .view-airports-directory {
 
-  h3 {
-    color: $dark-text !important;
-  }
+    .views-row {
+        box-shadow: 0 4px 15px $dark-shadow;
 
-  .views-row {
-    background: $dark-surface !important;
-    border-color: $dark-border !important;
-    box-shadow: 0 4px 15px $dark-shadow !important;
-
-    &:hover {
-      box-shadow: 0 10px 25px $dark-shadow !important;
-
-      .airport-card__img-wrapper img {
-        transform: scale(1.05);
-      }
+        &:hover {
+            box-shadow: 0 10px 25px $dark-shadow;
+        }
     }
-  }
 
-  .airport-card__img-wrapper {
-    background-color: $dark-border !important;
-  }
-
-  .airport-card__name,
-  .airport-card__code {
-    color: $dark-text !important;
-
-    a {
-      color: $brand-blue-soft !important;
-
-      &:hover {
-        color: $brand-blue-hover !important;
-      }
+    .airport-card__name,
+    .airport-card__code {
+        a {
+            color: var(--bs-link-color);
+        }
     }
-  }
 }

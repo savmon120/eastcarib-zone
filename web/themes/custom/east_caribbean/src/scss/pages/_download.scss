@@ -12,7 +12,7 @@
         border: 1px solid rgba(0, 0, 0, 0.05);
 
         thead {
-            background-color: #0a1b2a;
+            background-color: $dark-surface-alt;
             color: #ffffff;
 
             th {
@@ -89,8 +89,6 @@ html[data-theme="dark"] .view-downloads {
         box-shadow: 0 4px 15px $dark-shadow !important;
 
         thead {
-            background-color: $brand-blue !important;
-
             th {
                 color: $dark-text !important;
                 border: none !important;

@@ -1,10 +1,14 @@
 .live-flights-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    background-color: var(--bs-card-bg);
+    border: 1px solid var(--bs-border-color);
     border-radius: 12px;
     padding: 25px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     margin: 0 15px 15px 0;
+
+    .view-header .pulse-indicator {
+        color: var(--bs-danger);
+    }
 
     .flight-section {
         margin-bottom: 20px;
@@ -16,7 +20,7 @@
         .flight-title {
             font-size: 0.85rem;
             font-weight: 700;
-            color: #777777;
+            color: var(--bs-secondary-color);
             text-transform: uppercase;
             padding-bottom: 5px;
             margin-bottom: 10px;
@@ -24,10 +28,10 @@
     }
 
     .flight-table {
-        border: 1px solid #e2e6ea;
+        border: 1px solid var(--bs-border-color);
         border-radius: 6px;
         overflow: hidden;
-        background-color: #f8f9fa;
+        background-color: var(--bs-card-bg-2);
     }
 
     .flight-table-header, .flight-list li {
@@ -39,12 +43,12 @@
     }
 
     .flight-table-header {
-        background-color: #e9ecef;
+        background-color: var(--bs-form-control-bg);
         font-weight: 700;
         font-size: 0.7rem;
-        color: #555555;
+        color: var(--bs-secondary-color);
         text-transform: uppercase;
-        border-bottom: 1px solid #dcdcdc;
+        border-bottom: 1px solid var(--bs-border-color);
     }
 
     .flight-list {
@@ -53,8 +57,8 @@
         margin: 0;
 
         li {
-            background-color: #ffffff;
-            border-bottom: 1px solid #e2e6ea;
+            background-color: var(--bs-card-bg);
+            border-bottom: 1px solid var(--bs-border-color);
             font-size: 0.85rem;
 
             &:last-child {
@@ -69,23 +73,24 @@
 
             .f-pilot {
                 font-weight: 500;
-                color: #444444;
+                color: var(--bs-secondary-color);
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
 
             .f-acft {
-                color: #666666;
+                color: var(--bs-tertiary-color);
                 font-size: 0.8rem;
             }
 
             .f-dep, .f-arr {
                 font-family: monospace;
                 font-weight: 700;
-                color: #333333;
-                background-color: #f1f3f5;
+                color: var(--bs-body-color);
+                background-color: var(--bs-navbar-bg);
                 padding: 3px 6px;
+                border: 1px solid var(--bs-border-color);
                 border-radius: 4px;
                 text-align: center;
                 letter-spacing: 0.5px;
@@ -95,14 +100,14 @@
         .flight-loading, .flight-empty, .flight-error {
             display: block;
             text-align: center;
-            color: #777777;
+            color: var(--bs-secondary-color);
             font-style: italic;
             padding: 15px;
-            background-color: #ffffff;
+            background-color: transparent;
         }
 
         .flight-error {
-            color: #d32f2f;
+            color: var(--bs-danger);
         }
     }
 
@@ -122,67 +127,33 @@
    ------------------------------------------ */
 
 html[data-theme="dark"] .live-flights-card {
-    background-color: $dark-surface !important;
-    border: 1px solid $dark-border !important;
-    box-shadow: 0 4px 20px $dark-shadow !important;
+    box-shadow: 0 4px 20px $dark-shadow;
 
-    .view-header {
-        color: $dark-text !important;
-
-        .pulse-indicator {
-            color: #ff6b6b !important;
-        }
-    }
-
-    .flight-section .flight-title {
-        color: $dark-text-muted !important;
-    }
-
+    /* Enforce specific deep background for the table area */
     .flight-table {
         background-color: $dark-bg !important;
-        border: 1px solid $dark-border !important;
     }
 
+    /* Highlight header with surface-alt */
     .flight-table-header {
         background-color: $dark-surface-alt !important;
         color: $dark-text !important;
-        border-bottom: 1px solid $dark-border !important;
     }
 
     .flight-list li {
         background-color: $dark-bg !important;
-        border-bottom: 1px solid $dark-border !important;
-        color: $dark-text !important;
 
+        /* Overrides the steelblue callsign to pure white */
         .f-callsign {
             color: $dark-text !important;
         }
 
-        .f-pilot {
-            color: $dark-text-muted !important;
-        }
-
-        .f-acft {
-            color: $dark-text-subtle !important;
-        }
-
+        /* Highlight departure/arrival badges */
         .f-dep,
         .f-arr {
             background-color: $dark-surface-alt !important;
             border: 1px solid $dark-border !important;
             color: $dark-text !important;
-            border-radius: 4px;
         }
-    }
-
-    .flight-loading,
-    .flight-empty,
-    .flight-error {
-        background-color: transparent !important;
-        color: $dark-text-muted !important;
-    }
-
-    .flight-error {
-        color: #ff6b6b !important;
     }
 }

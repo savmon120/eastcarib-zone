@@ -4,7 +4,7 @@
     .block__title, .view-header {
         font-size: 1.05rem;
         font-weight: 800;
-        color: #1a1a1a;
+        color: var(--bs-body-color);
         text-transform: uppercase;
         margin: 0 0 20px 0;
     }
@@ -73,7 +73,7 @@
             text-decoration: none;
 
             &:hover {
-                color: #4fb2b2;
+                color: var(--bs-link-hover-color);
             }
         }
     }
@@ -95,5 +95,18 @@
     @media (max-width: 576px) {
         .view-content { grid-template-columns: 1fr; }
         .views-row { min-height: 200px; }
+    }
+}
+
+/* ------------------------------------------
+   DARK MODE OVERRIDES
+   ------------------------------------------ */
+html[data-theme="dark"] .block-views-blockfeatured-airports-block-1 {
+    .views-row {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45);
+
+        &:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
     }
 }

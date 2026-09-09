@@ -6,7 +6,7 @@
         span {
             font-size: 2.5rem;
             font-weight: 800;
-            color: #0a1b2a;
+            color: var(--bs-body-color);
             text-transform: uppercase;
         }
 
@@ -26,8 +26,8 @@
     }
 
     .views-row {
-        background-color: #ffffff;
-        border: 1px solid #e2e8f0;
+        background-color: var(--bs-card-bg);
+        border: 1px solid var(--bs-border-color);
         border-radius: 12px;
         padding: 12px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
@@ -81,9 +81,9 @@
         align-self: center;
         display: inline-block;
         padding: 4px 12px;
-        background-color: #f1f3f5;
-        color: #333333;
-        border: 1px solid #dcdcdc;
+        background-color: var(--bs-card-bg);
+        color: var(--bs-body-color);
+        border: 1px solid var(--bs-border-color);
         border-radius: 4px;
         font-size: 0.65rem;
         font-weight: 700;
@@ -96,7 +96,7 @@
         align-self: center;
         font-size: 0.85rem;
         font-weight: 600;
-        color: #64748b;
+        color: var(--bs-secondary-color);
 
         time {
             display: inline-block;
@@ -111,12 +111,12 @@
         a {
             font-size: 1.4rem;
             font-weight: 800;
-            color: #0a1b2a;
+            color: var(--bs-body-color);
             text-decoration: none;
             line-height: 1.25;
 
             &:hover {
-                color: #0548A3;
+                color: var(--bs-link-color);
             }
         }
     }
@@ -125,7 +125,7 @@
     .views-field-field-body {
         grid-area: body;
         font-size: 0.95rem;
-        color: #475569;
+        color: var(--bs-secondary-color);
         line-height: 1.6;
         margin: 0;
         align-self: start;
@@ -142,70 +142,29 @@
         }
     }
 }
+
 /* ------------------------------------------
    DARK MODE OVERRIDES — LATEST NEWS LISTING PAGE
    ------------------------------------------ */
 
 html[data-theme="dark"] .view-id-latest_news.view-display-id-page_1 {
 
-  /* Header */
-  .view-header span {
-    color: $dark-text !important;
-  }
+    .views-row {
+        box-shadow: 0 4px 15px $dark-shadow;
 
-  /* Card wrapper */
-  .views-row {
-    background-color: $dark-surface !important;
-    border-color: $dark-border !important;
-    box-shadow: 0 4px 15px $dark-shadow !important;
-
-    &:hover {
-      box-shadow: 0 8px 25px $dark-shadow !important;
-      transform: translateY(-4px);
+        &:hover {
+            box-shadow: 0 8px 25px $dark-shadow;
+        }
     }
-  }
 
-  /* Image wrapper */
-  .views-field-field-news-image {
-    img {
-      border-radius: 8px;
-      box-shadow: 0 4px 15px $dark-shadow !important;
+    .views-field-field-news-image {
+        img {
+            box-shadow: 0 4px 15px $dark-shadow;
+        }
     }
-  }
 
-  /* Category pill */
-  .views-field-field-category {
-    background-color: $dark-border !important;
-    color: $dark-text !important;
-    border-color: $dark-surface-alt !important;
-  }
-
-  /* Date */
-  .views-field-created {
-    color: $dark-text-muted !important;
-
-    time {
-      color: $dark-text-muted !important;
+    .views-field-field-category {
+        background-color: var(--bs-border-color) !important;
+        border-color: var(--bs-btn-bg) !important;
     }
-  }
-
-  /* Title */
-  .views-field-title a {
-    color: $dark-text !important;
-
-    &:hover {
-      color: $brand-blue-hover !important;
-    }
-  }
-
-  /* Description */
-  .views-field-field-description,
-  .views-field-field-body {
-    color: $dark-text-muted !important;
-
-    p {
-      color: $dark-text-muted !important;
-    }
-  }
 }
-

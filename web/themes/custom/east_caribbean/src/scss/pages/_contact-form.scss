@@ -1,5 +1,5 @@
 body.path-webform {
-    background-color: #f4f6f9;
+    background-color: var(--bs-body-bg);
 
     .page__content > .container {
         max-width: 800px !important;
@@ -8,15 +8,15 @@ body.path-webform {
     }
 
     form.webform-submission-form {
-        background: #ffffff;
-        border: 1px solid #e0e0e0;
+        background: var(--bs-card-bg);
+        border: 1px solid var(--bs-border-color);
         border-radius: 12px;
         padding: 3rem;
         box-shadow: 0 8px 30px rgba(0,0,0,0.04);
 
         .form-label {
             font-weight: 600;
-            color: #0a1b2a;
+            color: var(--bs-body-color);
             margin-bottom: 0.5rem;
             font-size: 0.95rem;
         }
@@ -24,17 +24,17 @@ body.path-webform {
         .form-control,
         .form-select {
             border-radius: 8px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--bs-form-control-border-color);
             padding: 0.85rem 1rem;
             font-size: 1rem;
-            background-color: #f8fafc;
-            color: #334155;
+            background-color: var(--bs-card-bg-alt);
+            color: var(--bs-form-control-color);
             transition: all 0.2s ease;
 
             &:focus {
-                border-color: #347efe;
+                border-color: var(--bs-link-color);
                 box-shadow: 0 0 0 4px rgba(52, 126, 254, 0.15);
-                background-color: #ffffff;
+                background-color: var(--bs-card-bg);
                 outline: none;
             }
         }
@@ -54,7 +54,7 @@ body.path-webform {
             justify-content: center;
 
             .btn-primary {
-                background-color: #347efe;
+                background-color: var(--bs-btn-bg);
                 color: #ffffff;
                 border: none;
                 padding: 0.85rem 2.5rem;
@@ -64,7 +64,7 @@ body.path-webform {
                 transition: background-color 0.2s, transform 0.1s;
 
                 &:hover {
-                    background-color: #2563eb;
+                    background-color: var(--bs-btn-bg-hover);
                     transform: translateY(-2px);
                     box-shadow: 0 4px 12px rgba(52, 126, 254, 0.3);
                 }
@@ -81,28 +81,9 @@ body.path-webform {
    DARK MODE OVERRIDES FOR WEBFORM
    ------------------------------------------ */
 html[data-theme="dark"] body.path-webform {
-    background-color: $dark-bg;
 
     form.webform-submission-form {
-        background: $dark-surface;
-        border-color: $dark-border;
         box-shadow: 0 8px 30px $dark-shadow;
-
-        .form-label {
-            color: $dark-text;
-        }
-
-        .form-control,
-        .form-select {
-            background-color: $dark-bg;
-            border-color: $dark-border;
-            color: $dark-text;
-
-            &:focus {
-                border-color: #347efe;
-                background-color: $dark-surface;
-            }
-        }
 
         .form-actions .btn-primary {
             &:hover {

@@ -10,7 +10,7 @@
             display: block;
             font-size: 2.75rem;
             font-weight: 800;
-            color: #0a1b2a;
+            color: var(--bs-body-color);
             line-height: 1.2;
             margin: 0;
             text-align: center;
@@ -19,7 +19,7 @@
 
     .block-field-blocknodelatest-newscreated,
     h1 {
-        text-align: center ;
+        text-align: center;
     }
 
     footer {
@@ -29,7 +29,7 @@
         .author {
             font-size: 0;
             color: transparent;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--bs-border-color);
             padding-bottom: 1rem;
 
             .user,
@@ -40,7 +40,7 @@
             time {
                 font-size: 0.95rem;
                 font-weight: 600;
-                color: #64748b;
+                color: var(--bs-secondary-color);
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 display: inline-block;
@@ -66,10 +66,14 @@
     .field--name-body {
         font-size: 1.15rem;
         line-height: 1.8;
-        color: #334155;
+        color: var(--bs-body-color);
+
+        p {
+            color: var(--bs-secondary-color);
+        }
 
         h2, h3 {
-            color: #0a1b2a;
+            color: var(--bs-body-color);
             font-weight: 700;
             margin-bottom: 1rem;
         }
@@ -77,6 +81,7 @@
         ul, ol {
             margin-bottom: 1.5rem;
             padding-left: 1.5rem;
+            color: var(--bs-secondary-color);
 
             li {
                 margin-bottom: 0.5rem;
@@ -84,72 +89,33 @@
         }
 
         a {
-            color: #0548A3;
+            color: var(--bs-link-color);
             text-decoration: none;
             border-bottom: 1px solid transparent;
             transition: border-color 0.2s ease;
 
             &:hover {
-                border-color: #0548A3;
+                border-color: var(--bs-link-hover-color);
             }
         }
     }
 }
+
 /* ------------------------------------------
    DARK MODE OVERRIDES — LATEST NEWS FULL NODE
    ------------------------------------------ */
 
 html[data-theme="dark"] .node--latest-news--full {
 
-  /* Title */
-  .block-field-blocknodelatest-newstitle,
-  h1.page-title {
-    .block__content span,
-    h1, h2 {
-      color: $dark-text !important;
-    }
-  }
-
-  /* Author / date footer */
-  footer .author {
-    border-bottom-color: $dark-border !important;
-
-    time {
-      color: $dark-text-muted !important;
-    }
-  }
-
-  /* News image */
-  .field--name-field-news-image img {
-    box-shadow: 0 4px 15px $dark-shadow !important;
-  }
-
-  /* Body text */
-  .field--name-field-description,
-  .field--name-body {
-    color: $dark-text !important;
-
-    h2, h3 {
-      color: $brand-blue-soft !important;
+    /* News image shadow */
+    .field--name-field-news-image img {
+        box-shadow: 0 4px 15px $dark-shadow !important;
     }
 
-    p {
-      color: $dark-text-muted !important;
+    .field--name-field-description,
+    .field--name-body {
+        h2, h3 {
+            color: $brand-blue-soft !important;
+        }
     }
-
-    ul, ol {
-      li {
-        color: $dark-text-muted !important;
-      }
-    }
-
-    a {
-      color: $brand-blue-soft !important;
-      border-bottom-color: transparent !important;
-
-      &:hover {
-        border-bottom-color: $brand-blue-hover !important;
-      }
-    }
-  }
 }
