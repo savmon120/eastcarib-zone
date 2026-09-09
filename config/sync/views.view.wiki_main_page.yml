@@ -333,7 +333,7 @@ display:
           metatags:
             title: 'Documents Portal | ECZ'
           tokenize: false
-      path: wiki/Main_Page
+      path: wiki
     cache_metadata:
       max-age: -1
       contexts:
