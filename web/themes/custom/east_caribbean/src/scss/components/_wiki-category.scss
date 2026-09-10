@@ -56,8 +56,7 @@
                             font-weight: 400;
 
                             &:hover {
-                                text-decoration: underline;
-                                color: var(--bs-link-color);
+                                color: var(--bs-link-hover-color);
                             }
                         }
                     }
@@ -108,7 +107,7 @@ html[data-theme="dark"] .view-category-documents-table {
             }
 
             &:hover {
-                background-color: rgba($brand-blue-soft, 0.15) !important;
+                background-color: rgba($brand-blue-soft, 0.10) !important;
             }
         }
     }
