@@ -12566,6 +12566,7 @@ body.path-wiki .view-content {
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   background: var(--bs-card-bg);
   border-radius: 12px;
   overflow: hidden;
@@ -12577,7 +12578,8 @@ body.path-wiki .view-content {
     box-shadow 0.3s ease,
     -webkit-transform 0.3s ease;
   border: 1px solid var(--bs-border-color);
-  height: 280px;
+  height: auto;
+  padding: 10px 0;
   cursor: pointer;
 }
 .view-airports-directory .views-row:hover {
@@ -12585,21 +12587,13 @@ body.path-wiki .view-content {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
-.view-airports-directory .views-row:hover .airport-card__img-wrapper img {
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
-}
 .view-airports-directory .airport-card__img-wrapper {
-  width: 100%;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-  background-color: var(--bs-border-color);
+  aspect-ratio: auto !important;
+  height: 0 !important;
+  background-color: transparent !important;
 }
-.view-airports-directory .airport-card__img-wrapper .media,
-.view-airports-directory .airport-card__img-wrapper .field,
-.view-airports-directory .airport-card__img-wrapper .field__item {
-  width: 100%;
-  height: 100%;
+.view-airports-directory .airport-card__img-wrapper img {
+  display: none !important;
 }
 .view-airports-directory .airport-card__img-wrapper a::after {
   content: "";
@@ -12609,15 +12603,6 @@ body.path-wiki .view-content {
   right: 0;
   bottom: 0;
   z-index: 1;
-}
-.view-airports-directory .airport-card__img-wrapper img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
-  transition: -webkit-transform 0.5s ease;
-  transition: transform 0.5s ease;
-  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
 }
 .view-airports-directory .airport-card__name,
 .view-airports-directory .airport-card__code {
@@ -12629,8 +12614,6 @@ body.path-wiki .view-content {
 .view-airports-directory .airport-card__name {
   font-weight: 700;
   font-size: 1.1rem;
-  height: 53px;
-  margin-top: 15px;
   margin-bottom: 5px;
 }
 .view-airports-directory .airport-card__name a {
@@ -14203,6 +14186,10 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
   -ms-user-select: none;
   user-select: none;
   position: relative;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 .view-wiki-main-page .wiki-card .views-field-title a::after {
   content: "";
@@ -14215,17 +14202,27 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
 }
 .view-wiki-main-page .wiki-card .wiki-card-img img {
   width: 100% !important;
-  height: 220px !important;
+  height: 250px !important;
   -o-object-fit: cover !important;
   object-fit: cover !important;
   border-radius: 8px;
+  opacity: 0.65;
 }
 .view-wiki-main-page .wiki-card img {
   width: 100% !important;
-  height: 220px !important;
+  height: 250px !important;
   -o-object-fit: cover !important;
   object-fit: cover !important;
   border-radius: 0 0 10px 10px;
+  transition: opacity 0.3s ease, -webkit-filter 0.3s ease;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+  transition:
+    filter 0.3s ease,
+    opacity 0.3s ease,
+    -webkit-filter 0.3s ease;
+}
+.view-wiki-main-page .wiki-card:hover img {
+  opacity: 0.9;
 }
 .view-wiki-main-page .views-field-title {
   font-size: clamp(1rem, 1.3vw, 1.4rem);
@@ -14236,6 +14233,7 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
 .view-wiki-main-page .views-field-title a {
   color: var(--bs-btn-bg);
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 .view-wiki-main-page .views-field-title a:hover {
   color: #3489e0;
@@ -14243,12 +14241,14 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
 .view-wiki-main-page .views-field-field-body {
   font-size: 1rem;
   padding: 0 0.5em 0 2em;
-  height: 175px;
+  height: 145px;
   color: var(--bs-body-color);
+  transition: color 0.3s ease;
 }
 .view-wiki-main-page .views-field-field-body .field-content p {
   margin: 0;
   color: var(--bs-secondary-color);
+  transition: color 0.3s ease;
 }
 .view-wiki-main-page .views-field-field-body .field-content br {
   display: none;
@@ -14265,7 +14265,7 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
   color: var(--bs-btn-bg);
   padding: 2px 0;
   line-height: 1.15;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 .view-wiki-main-page .views-field-field-body a:hover {
   color: #3489e0;
@@ -14306,6 +14306,14 @@ html[data-theme=dark] .view-wiki-main-page .wiki-card {
     inset 0 0 5px 0 rgba(0, 0, 0, 0.45),
     6px 6px 4px -3px rgba(0, 0, 0, 0.45),
     0 6px 4px -3px rgba(0, 0, 0, 0.45) !important;
+}
+html[data-theme=dark] .view-wiki-main-page .wiki-card img {
+  -webkit-filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1);
+  opacity: 0.65;
+}
+html[data-theme=dark] .view-wiki-main-page .wiki-card:hover img {
+  opacity: 0.9;
 }
 .view-category-documents-table {
   margin: 3rem auto;
@@ -15552,20 +15560,20 @@ header,
 .site-header,
 .region-header,
 nav.navbar {
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  z-index: 100 !important;
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
 }
 nav.navbar {
-  background-color: var(--nav-bg) !important;
+  background-color: var(--nav-bg);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  border-bottom: 1px solid var(--nav-border) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  border-bottom: 1px solid var(--nav-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   padding-top: 15px;
   padding-bottom: 15px;
 }
@@ -15580,7 +15588,7 @@ nav.navbar {
     position: static;
     -webkit-transform: none;
     transform: none;
-    margin: 0 auto !important;
+    margin: 0 auto;
   }
   nav.navbar .block--east-caribbean-ecznavbarmenu ul.nav {
     display: flex;
@@ -15590,7 +15598,7 @@ nav.navbar {
     gap: 8px;
   }
   nav.navbar .block--east-caribbean-vatsimusermenu {
-    margin-left: 0 !important;
+    margin-left: 0;
   }
 }
 nav.navbar .vatsim-nav-item {
@@ -15601,10 +15609,10 @@ nav.navbar .vatsim-nav-item {
 }
 nav.navbar .vatsim-nav-item .vatsim-login-btn,
 nav.navbar .vatsim-nav-item .vatsim-user-btn {
-  background-color: var(--bs-btn-bg) !important;
-  color: #ffffff !important;
+  background-color: var(--bs-btn-bg);
+  color: #ffffff;
   border-radius: 50px;
-  padding: 10px 28px !important;
+  padding: 10px 28px;
   font-weight: 700;
   font-size: 0.95rem;
   text-decoration: none;
@@ -15620,13 +15628,13 @@ nav.navbar .vatsim-nav-item .vatsim-user-btn {
 }
 nav.navbar .vatsim-nav-item .vatsim-login-btn:hover,
 nav.navbar .vatsim-nav-item .vatsim-user-btn:hover {
-  color: var(--bs-btn-primary-color) !important;
+  color: var(--bs-btn-primary-color);
   -webkit-transform: translateY(-2px);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 nav.navbar .vatsim-nav-item .vatsim-user-btn {
-  padding: 10px 22px !important;
+  padding: 10px 22px;
 }
 nav.navbar .vatsim-nav-item .vatsim-user-btn::after {
   vertical-align: middle;
@@ -15665,30 +15673,30 @@ nav.navbar .vatsim-nav-item .theme-toggle-btn:hover .theme-icon {
   filter: invert(1) hue-rotate(180deg);
 }
 nav.navbar .navbar-brand {
-  color: var(--bs-btn-primary-color) !important;
+  color: var(--bs-btn-primary-color);
   font-weight: 700;
   font-size: 1.2rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 nav.navbar .navbar-brand span {
-  color: var(--bs-btn-primary-color) !important;
+  color: var(--bs-btn-primary-color);
   font-family: "Permanent Marker", cursive;
 }
 nav.navbar .navbar-brand img {
   margin-right: 12px;
 }
 nav.navbar li.navbar-text {
-  padding: 0 !important;
-  margin: 0 !important;
+  padding: 0;
+  margin: 0;
   color: inherit;
 }
 nav.navbar .nav-link {
-  color: var(--bs-btn-primary-color) !important;
+  color: var(--bs-btn-primary-color);
   font-weight: 600;
   font-size: 0.95rem;
-  padding-left: 18px !important;
-  padding-right: 18px !important;
+  padding-left: 18px;
+  padding-right: 18px;
   transition: opacity 0.2s ease-in-out;
 }
 nav.navbar .nav-link:hover,
@@ -15700,7 +15708,7 @@ nav.navbar span.nav-link {
   display: block;
 }
 nav.navbar .dropdown-menu {
-  background-color: var(--nav-dropdown-bg) !important;
+  background-color: var(--nav-dropdown-bg);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--bs-border-color);
@@ -15708,8 +15716,8 @@ nav.navbar .dropdown-menu {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   padding: 10px;
   margin-top: 5px;
-  left: 50% !important;
-  right: auto !important;
+  left: 50%;
+  right: auto;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
 }
@@ -15723,7 +15731,7 @@ nav.navbar .dropdown-menu::before {
   background: transparent;
 }
 nav.navbar .dropdown-menu .dropdown-item {
-  color: var(--bs-btn-primary-color) !important;
+  color: var(--bs-btn-primary-color);
   font-weight: 600;
   font-size: 0.9rem;
   padding: 8px 20px;
@@ -15733,28 +15741,29 @@ nav.navbar .dropdown-menu .dropdown-item {
     color 0.2s ease;
   border-radius: 5px;
   text-align: center;
-  background-color: transparent !important;
+  background-color: transparent;
 }
 nav.navbar .dropdown-menu .dropdown-item:hover,
 nav.navbar .dropdown-menu .dropdown-item:focus,
 nav.navbar .dropdown-menu .dropdown-item.active,
 nav.navbar .dropdown-menu .dropdown-item.is-active {
-  background-color: transparent !important;
-  color: var(--bs-btn-primary-color) !important;
+  background-color: transparent;
+  color: var(--bs-btn-primary-color);
   opacity: 0.5;
 }
 nav.navbar .dropdown-menu .dropdown-item.text-danger {
-  color: var(--bs-danger) !important;
+  color: var(--bs-danger);
 }
 nav.navbar .dropdown-menu .dropdown-item.text-danger:hover {
   opacity: 0.7;
 }
 nav.navbar .dropdown-menu li.text-muted.border-bottom {
-  color: #2fbcbe !important;
-  border-bottom-color: var(--bs-border-color) !important;
+  color: var(--bs-btn-primary-color);
+  border-bottom-color: var(--bs-border-color);
+  text-align: center;
 }
 nav.navbar .dropdown-menu .dropdown-divider {
-  border-top-color: var(--bs-border-color) !important;
+  border-top-color: var(--bs-border-color);
 }
 @media (min-width: 992px) {
   nav.navbar .nav-item.dropdown,
@@ -15793,10 +15802,10 @@ nav.navbar .dropdown-menu .dropdown-divider {
   }
 }
 html[data-theme=dark] nav.navbar {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
 }
 html[data-theme=dark] nav.navbar .dropdown-menu {
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
 }
 html[data-theme=dark] nav.navbar .vatsim-nav-item .theme-toggle-btn .theme-icon {
   -webkit-transform: scaleX(-1);

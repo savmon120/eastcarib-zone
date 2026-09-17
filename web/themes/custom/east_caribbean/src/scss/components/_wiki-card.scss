@@ -23,6 +23,7 @@
         box-shadow: inset 0 0 5px 0 rgba(0,0,0,0.05), 6px 6px 4px -3px rgba(0,0,0,0.15), 0 6px 4px -3px rgba(0,0,0,0.15);
         user-select: none;
         position: relative;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 
         .views-field-title a::after {
             content: "";
@@ -37,17 +38,25 @@
         .wiki-card-img {
             img {
                 width: 100% !important;
-                height: 220px !important;
+                height: 250px !important;
                 object-fit: cover !important;
                 border-radius: 8px;
+                opacity: 0.65;
             }
         }
 
         img {
             width: 100% !important;
-            height: 220px !important;
+            height: 250px !important;
             object-fit: cover !important;
             border-radius: 0 0 10px 10px;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+
+        &:hover {
+            img {
+                opacity: 0.9;
+            }
         }
     }
 
@@ -60,6 +69,7 @@
         a {
             color: var(--bs-btn-bg);
             text-decoration: none;
+            transition: color 0.3s ease;
 
             &:hover {
                 color: #3489e0;
@@ -70,13 +80,15 @@
     .views-field-field-body {
         font-size: 1.0rem;
         padding: 0 0.5em 0 2em;
-        height: 175px;
+        height: 145px;
         color: var(--bs-body-color);
+        transition: color 0.3s ease;
 
         .field-content {
             p {
                 margin: 0;
                 color: var(--bs-secondary-color);
+                transition: color 0.3s ease;
             }
 
             br {
@@ -94,7 +106,7 @@
             color: var(--bs-btn-bg);
             padding: 2px 0;
             line-height: 1.15;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
 
             &:hover {
                 color: #3489e0;
@@ -151,5 +163,16 @@ html[data-theme="dark"] .view-wiki-main-page {
         box-shadow: inset 0 0 5px 0 $dark-shadow,
         6px 6px 4px -3px $dark-shadow,
         0 6px 4px -3px $dark-shadow !important;
+
+        img {
+            filter: brightness(0) invert(1);
+            opacity: 0.65;
+        }
+
+        &:hover {
+            img {
+                opacity: 0.9;
+            }
+        }
     }
 }
