@@ -12531,29 +12531,36 @@ body.path-wiki .view-content {
 .view-airports-directory .view-content,
 .view-airports-directory .view-grouping-content {
   display: grid;
-  gap: 1.5rem;
+  -webkit-column-gap: 3rem;
+  -moz-column-gap: 3rem;
+  column-gap: 3rem;
+  row-gap: 0;
   grid-template-columns: repeat(1, 1fr);
 }
 @media (min-width: 768px) {
   .view-airports-directory .view-content,
   .view-airports-directory .view-grouping-content {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (min-width: 1200px) {
   .view-airports-directory .view-content,
   .view-airports-directory .view-grouping-content {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 .view-airports-directory h3,
 .view-airports-directory .h3 {
   grid-column: 1/-1;
   color: var(--bs-body-color);
-  font-weight: 700;
-  font-size: 1.8rem;
+  font-weight: 800;
+  font-size: 1.2rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--bs-border-color);
 }
 .view-airports-directory h3 a,
 .view-airports-directory .h3 a {
@@ -12565,32 +12572,30 @@ body.path-wiki .view-content {
 .view-airports-directory .views-row {
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: var(--bs-card-bg);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.3s ease, -webkit-transform 0.3s ease;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    -webkit-transform 0.3s ease;
-  border: 1px solid var(--bs-border-color);
-  height: auto;
-  padding: 10px 0;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid var(--bs-border-color);
+  padding: 18px 10px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 .view-airports-directory .views-row:hover {
-  -webkit-transform: translateY(-5px);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  background-color: rgba(5, 72, 163, 0.04);
+}
+.view-airports-directory .views-row:hover .airport-card__name {
+  color: var(--bs-link-hover-color);
 }
 .view-airports-directory .airport-card__img-wrapper {
   aspect-ratio: auto !important;
   height: 0 !important;
+  width: 0 !important;
   background-color: transparent !important;
+  margin: 0;
+  padding: 0;
 }
 .view-airports-directory .airport-card__img-wrapper img {
   display: none !important;
@@ -12607,36 +12612,31 @@ body.path-wiki .view-content {
 .view-airports-directory .airport-card__name,
 .view-airports-directory .airport-card__code {
   display: block;
-  text-align: center;
-  padding: 0 20px;
-  color: var(--bs-body-color);
+  padding: 0;
+  margin: 0;
 }
 .view-airports-directory .airport-card__name {
-  font-weight: 700;
-  font-size: 1.1rem;
-  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--bs-body-color);
+  text-align: left;
+  flex: 1;
+  padding-right: 15px;
+  transition: color 0.2s ease;
 }
 .view-airports-directory .airport-card__name a {
   text-decoration: none;
   color: inherit;
-  transition: color 0.2s ease;
-}
-.view-airports-directory .airport-card__name a:hover {
-  color: var(--bs-link-hover-color);
 }
 .view-airports-directory .airport-card__code {
   font-weight: 700;
-  font-size: 1.3rem;
-}
-html[data-theme=dark] .view-airports-directory .views-row {
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45);
+  font-size: 0.95rem;
+  color: var(--bs-secondary-color);
+  text-align: right;
+  letter-spacing: 0.5px;
 }
 html[data-theme=dark] .view-airports-directory .views-row:hover {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
-}
-html[data-theme=dark] .view-airports-directory .airport-card__name a,
-html[data-theme=dark] .view-airports-directory .airport-card__code a {
-  color: var(--bs-link-color);
+  background-color: var(--bs-card-bg);
 }
 .paragraph--type--frequency-grid > .paragraph__column {
   display: flex;
@@ -14167,14 +14167,20 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
   padding: 40px;
   display: flex;
   flex-wrap: wrap;
-  gap: 25px;
+  gap: 20px;
+}
+@media (min-width: 2000px) {
+  .view-wiki-main-page .view-content {
+    max-width: 1650px;
+    gap: 30px;
+  }
 }
 .view-wiki-main-page .wiki-card {
   background-color: var(--bs-card-bg-alt);
   border: 1px solid var(--bs-border-color);
   border-radius: 10px;
-  width: 300px;
-  min-height: 410px;
+  width: 260px;
+  min-height: 320px;
   display: flex;
   flex-direction: column;
   box-shadow:
@@ -14191,6 +14197,12 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
     border-color 0.3s ease,
     box-shadow 0.3s ease;
 }
+@media (min-width: 2000px) {
+  .view-wiki-main-page .wiki-card {
+    width: 320px;
+    min-height: 390px;
+  }
+}
 .view-wiki-main-page .wiki-card .views-field-title a::after {
   content: "";
   position: absolute;
@@ -14202,15 +14214,20 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
 }
 .view-wiki-main-page .wiki-card .wiki-card-img img {
   width: 100% !important;
-  height: 250px !important;
+  height: 160px !important;
   -o-object-fit: cover !important;
   object-fit: cover !important;
   border-radius: 8px;
   opacity: 0.65;
 }
+@media (min-width: 2000px) {
+  .view-wiki-main-page .wiki-card .wiki-card-img img {
+    height: 200px !important;
+  }
+}
 .view-wiki-main-page .wiki-card img {
   width: 100% !important;
-  height: 250px !important;
+  height: 160px !important;
   -o-object-fit: cover !important;
   object-fit: cover !important;
   border-radius: 0 0 10px 10px;
@@ -14221,11 +14238,16 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
     opacity 0.3s ease,
     -webkit-filter 0.3s ease;
 }
+@media (min-width: 2000px) {
+  .view-wiki-main-page .wiki-card img {
+    height: 200px !important;
+  }
+}
 .view-wiki-main-page .wiki-card:hover img {
   opacity: 0.9;
 }
 .view-wiki-main-page .views-field-title {
-  font-size: clamp(1rem, 1.3vw, 1.4rem);
+  font-size: clamp(0.95rem, 1.2vw, 1.25rem);
   font-weight: bold;
   padding: 5px 0.5em 0 0.5em;
   text-align: center;
@@ -14239,11 +14261,17 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
   color: #3489e0;
 }
 .view-wiki-main-page .views-field-field-body {
-  font-size: 1rem;
-  padding: 0 0.5em 0 2em;
-  height: 145px;
+  font-size: 0.95rem;
+  padding: 0 0.5em 0 1.5em;
+  height: 115px;
   color: var(--bs-body-color);
   transition: color 0.3s ease;
+}
+@media (min-width: 2000px) {
+  .view-wiki-main-page .views-field-field-body {
+    font-size: 1.05rem;
+    height: 140px;
+  }
 }
 .view-wiki-main-page .views-field-field-body .field-content p {
   margin: 0;
@@ -14279,6 +14307,14 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
   -moz-column-gap: 15px;
   column-gap: 15px;
 }
+@media (max-width: 400px) {
+  .view-wiki-main-page .wiki-card-split .views-field-field-body .field-content,
+  .view-wiki-main-page .split-columns {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+  }
+}
 .view-wiki-main-page .views-field-field-media-image {
   margin-top: auto;
   max-width: 100%;
@@ -14292,13 +14328,13 @@ html[data-theme=dark] .view-wiki-main-page .views-field-field-body a {
   color: var(--bs-btn-color);
 }
 html[data-theme=dark] .view-wiki-main-page .views-field-field-body a:hover {
-  color: #2267ad;
+  color: var(--bs-link-hover-color);
 }
 html[data-theme=dark] .view-wiki-main-page .views-field-title a {
   color: var(--bs-btn-color);
 }
 html[data-theme=dark] .view-wiki-main-page .views-field-title a:hover {
-  color: #2267ad;
+  color: var(--bs-link-hover-color);
 }
 html[data-theme=dark] .view-wiki-main-page .wiki-card {
   background-color: var(--bs-card-bg);

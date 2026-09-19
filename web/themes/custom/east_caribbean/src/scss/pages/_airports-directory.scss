@@ -2,26 +2,31 @@
     .view-content,
     .view-grouping-content {
         display: grid;
-        gap: 1.5rem;
+        column-gap: 3rem;
+        row-gap: 0;
 
         grid-template-columns: repeat(1, 1fr);
 
         @media (min-width: 768px) {
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
         }
 
         @media (min-width: 1200px) {
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(3, 1fr);
         }
     }
 
     h3 {
         grid-column: 1 / -1;
         color: var(--bs-body-color);
-        font-weight: 700;
-        font-size: 1.8rem;
+        font-weight: 800;
+        font-size: 1.2rem;
         text-transform: uppercase;
         letter-spacing: 1px;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--bs-border-color);
 
         a {
             text-decoration: none;
@@ -34,28 +39,33 @@
     .views-row {
         position: relative;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        background: var(--bs-card-bg);
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid var(--bs-border-color);
-        height: auto;
-        padding: 10px 0;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background: transparent;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid var(--bs-border-color);
+        padding: 18px 10px;
         cursor: pointer;
+        transition: background-color 0.2s ease;
 
         &:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            background-color: rgba(5, 72, 163, 0.04);
+
+            .airport-card__name {
+                color: var(--bs-link-hover-color);
+            }
         }
     }
 
     .airport-card__img-wrapper {
         aspect-ratio: auto !important;
         height: 0 !important;
+        width: 0 !important;
         background-color: transparent !important;
+        margin: 0;
+        padding: 0;
 
         img {
             display: none !important;
@@ -75,30 +85,31 @@
     .airport-card__name,
     .airport-card__code {
         display: block;
-        text-align: center;
-        padding: 0 20px;
-        color: var(--bs-body-color);
+        padding: 0;
+        margin: 0;
     }
 
     .airport-card__name {
-        font-weight: 700;
-        font-size: 1.1rem;
-        margin-bottom: 5px;
+        font-weight: 500;
+        font-size: 1rem;
+        color: var(--bs-body-color);
+        text-align: left;
+        flex: 1;
+        padding-right: 15px;
+        transition: color 0.2s ease;
 
         a {
             text-decoration: none;
             color: inherit;
-            transition: color 0.2s ease;
-
-            &:hover {
-                color: var(--bs-link-hover-color);
-            }
         }
     }
 
     .airport-card__code {
         font-weight: 700;
-        font-size: 1.3rem;
+        font-size: 0.95rem;
+        color: var(--bs-secondary-color);
+        text-align: right;
+        letter-spacing: 0.5px;
     }
 }
 
@@ -108,18 +119,7 @@
 
 html[data-theme="dark"] .view-airports-directory {
 
-    .views-row {
-        box-shadow: 0 4px 15px $dark-shadow;
-
-        &:hover {
-            box-shadow: 0 10px 25px $dark-shadow;
-        }
-    }
-
-    .airport-card__name,
-    .airport-card__code {
-        a {
-            color: var(--bs-link-color);
-        }
+    .views-row:hover {
+        background-color: var(--bs-card-bg);
     }
 }
