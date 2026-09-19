@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.wiki_article.field_page_content
     - field.field.node.wiki_article.field_parent_category
+    - field.field.node.wiki_article.field_visibility
     - field.field.node.wiki_article.layout_builder__layout
     - node.type.wiki_article
   module:
