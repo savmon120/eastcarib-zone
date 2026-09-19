@@ -16,3 +16,9 @@ services:
       - '@logger.channel.fir_sso'
     tags:
       - { name: event_subscriber }
+  oauth2_client.oauth2_client.vatsim:
+    class: Drupal\fir_sso\Plugin\Oauth2Client\VatsimClient
+    calls:
+      - [setAuthorizationUri, ['https://auth.vatsim.net/oauth/authorize']]
+      - [setTokenUri, ['https://auth.vatsim.net/oauth/token']]
+      - [setResourceUri, ['https://auth.vatsim.net/api/user']]

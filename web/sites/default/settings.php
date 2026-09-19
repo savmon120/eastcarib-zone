@@ -909,3 +909,8 @@ $settings['enable_html5_validation'] = FALSE;
 # if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
+$config['oauth2_client.oauth2_client.vatsim']['client_id'] = 'PROD_CLIENT_ID';
+$config['oauth2_client.oauth2_client.vatsim']['client_secret'] = 'PROD_CLIENT_SECRET';
+$config['oauth2_client.oauth2_client.vatsim']['authorization_uri'] = 'https://auth.vatsim.net/oauth/authorize';
+$config['oauth2_client.oauth2_client.vatsim']['token_uri'] = 'https://auth.vatsim.net/oauth/token';
+$config['oauth2_client.oauth2_client.vatsim']['resource_owner_uri'] = 'https://auth.vatsim.net/api/user';

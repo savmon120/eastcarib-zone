@@ -1,0 +1,6 @@
+services:
+  oauth2_client.vatsim:
+    calls:
+      - [setAuthorizationUri, ['https://auth-dev.vatsim.net/oauth/authorize']]
+      - [setTokenUri, ['https://auth-dev.vatsim.net/oauth/token']]
+      - [setResourceUri, ['https://auth-dev.vatsim.net/api/user']]
