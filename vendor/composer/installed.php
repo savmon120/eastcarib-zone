@@ -3,7 +3,7 @@
         'name' => 'drupal/recommended-project',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '3f7a4186390af866d7dd89dd0c5c0a0d22690cea',
+        'reference' => '2c29968a8f25fae2433c322bade4e8daa8a0a985',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -478,6 +478,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/quick_node_clone' => array(
+            'pretty_version' => '1.22.0',
+            'version' => '1.22.0.0',
+            'reference' => '8.x-1.22',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/quick_node_clone',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/radix' => array(
             'pretty_version' => '6.0.8',
             'version' => '6.0.8.0',
@@ -490,7 +499,7 @@
         'drupal/recommended-project' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '3f7a4186390af866d7dd89dd0c5c0a0d22690cea',
+            'reference' => '2c29968a8f25fae2433c322bade4e8daa8a0a985',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
