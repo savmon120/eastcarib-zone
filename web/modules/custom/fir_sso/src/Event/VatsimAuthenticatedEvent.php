@@ -11,15 +11,9 @@ use Symfony\Contracts\EventDispatcher\Event;
  * token exchange. Carries the raw /api/user response so subscribers can
  * provision Drupal accounts without needing to know about the OAuth flow.
  *
- * Data shape:
- *   $data['data']['cid']
- *   $data['data']['personal']['name_first']
- *   $data['data']['personal']['name_last']
- *   $data['data']['personal']['email']
- *   $data['data']['vatsim']['rating']['short']
- *   $data['data']['vatsim']['region']['id']
- *   $data['data']['vatsim']['division']['id']
- *   $data['data']['vatsim']['subdivision']['id']
+ * The VATSIM Connect payload may arrive either as a flattened top-level array or
+ * as a nested "data" wrapper depending on the endpoint and SDK response shape.
+ * The subscriber should normalize the payload before reading fields.
  */
 final class VatsimAuthenticatedEvent extends Event {
 

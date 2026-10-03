@@ -27,9 +27,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  *   id = "vatsim",
  *   name = @Translation("VATSIM OAuth2 Client"),
  *   grant_type = "authorization_code",
- *   authorization_uri = "https://auth-dev.vatsim.net/oauth/authorize",
- *   token_uri = "https://auth-dev.vatsim.net/oauth/token",
- *   resource_owner_uri = "https://auth-dev.vatsim.net/api/user",
  *   scopes = {"full_name", "email", "vatsim_details"},
  *   scope_separator = " ",
  *   success_message = FALSE
@@ -49,16 +46,29 @@ class VatsimClient extends Oauth2ClientPluginBase implements Oauth2ClientPluginR
     return $instance;
   }
 
+  private function getRuntimeSetting(string $name, string $default = ''): string {
+    $settings = \Drupal::service('settings');
+    return (string) $settings->get('fir_sso.vatsim.' . $name, $default);
+  }
+
+  public function getClientId(): string {
+    return $this->getRuntimeSetting('client_id');
+  }
+
+  public function getClientSecret(): string {
+    return $this->getRuntimeSetting('client_secret');
+  }
+
   public function getAuthorizationUri(): string {
-    return 'https://auth-dev.vatsim.net/oauth/authorize';
+    return $this->getRuntimeSetting('authorization_uri');
   }
 
   public function getTokenUri(): string {
-    return 'https://auth-dev.vatsim.net/oauth/token';
+    return $this->getRuntimeSetting('token_uri');
   }
 
   public function getResourceUri(): string {
-    return 'https://auth-dev.vatsim.net/api/user';
+    return $this->getRuntimeSetting('resource_owner_uri');
   }
 
   public function storeAccessToken(AccessTokenInterface $accessToken): void {

@@ -45,27 +45,26 @@ class VatsimUserManager {
    *   If the VATSIM payload does not contain a CID.
    */
   public function provisionUser(array $vatsimData): UserInterface {
-    $data = $vatsimData['data'] ?? [];
-    $cid = (string) ($data['cid'] ?? '');
+    $data = $this->normalizePayload($vatsimData);
+    $cid = (string) ($this->readValue($data, ['cid']) ?? '');
 
-    if (empty($cid)) {
+    if ($cid === '') {
       throw new \RuntimeException('VATSIM authentication payload is missing the required CID field.');
     }
 
-    $email = $data['personal']['email'] ?? '';
-    $firstName = $data['personal']['name_first'] ?? '';
-    $lastName = $data['personal']['name_last'] ?? '';
-    $rating = $data['vatsim']['rating']['short'] ?? '';
-    $region = $data['vatsim']['region']['id'] ?? '';
-    $division = $data['vatsim']['division']['id'] ?? '';
-    $subdivision = $data['vatsim']['subdivision']['id'] ?? '';
+    $email = (string) ($this->readValue($data, ['personal.email', 'email']) ?? '');
+    $firstName = (string) ($this->readValue($data, ['personal.name_first', 'first_name']) ?? '');
+    $lastName = (string) ($this->readValue($data, ['personal.name_last', 'last_name']) ?? '');
+    $rating = (string) ($this->readValue($data, ['vatsim.rating.short', 'rating.short', 'rating']) ?? '');
+    $region = (string) ($this->readValue($data, ['vatsim.region.id', 'region.id']) ?? '');
+    $division = (string) ($this->readValue($data, ['vatsim.division.id', 'division.id']) ?? '');
+    $subdivision = (string) ($this->readValue($data, ['vatsim.subdivision.id', 'subdivision.id']) ?? '');
 
     $storage = $this->entityTypeManager->getStorage('user');
     $existing = $storage->loadByProperties(['field_vatsim_cid' => $cid]);
 
     /** @var \Drupal\user\UserInterface $account */
     if (empty($existing)) {
-      // First login — create a new Drupal account keyed on the VATSIM CID.
       $account = $storage->create([
         'name' => $cid,
         'mail' => $email,
@@ -78,7 +77,6 @@ class VatsimUserManager {
       $this->logger->info('Loaded existing Drupal account for VATSIM CID @cid.', ['@cid' => $cid]);
     }
 
-    // Sync VATSIM profile fields on every login so they stay current.
     $account->set('field_vatsim_cid', $cid);
     $account->set('field_vatsim_first_name', $firstName);
     $account->set('field_vatsim_last_name', $lastName);
@@ -87,81 +85,88 @@ class VatsimUserManager {
     $account->set('field_vatsim_division', $division);
     $account->set('field_vatsim_subdivision', $subdivision);
 
+    $roles = ['authenticated'];
+    $ratingMap = [
+      'OBS' => 1,
+      'S1' => 2,
+      'S2' => 3,
+      'S3' => 4,
+      'C1' => 5,
+      'C3' => 6,
+      'I1' => 7,
+      'I3' => 8,
+      'SUP' => 9,
+      'ADM' => 10,
+    ];
 
-  /**
-   * -------------------------------
-   * ROLE ASSIGNMENT LOGIC
-   * -------------------------------
-   */
+    $ratingLevel = $ratingMap[$rating] ?? 0;
+    $isSandbox = ((int) $cid >= 10000000 && (int) $cid <= 10000010);
+    $allowedSubdivisions = ['CUR', 'PIA'];
+    $isInZone = $division === 'CAR' && in_array($subdivision, $allowedSubdivisions, TRUE);
 
-  // Base roles.
-  $roles = ['authenticated'];
+    if ($isSandbox) {
+      $sandboxOverrideCIDs = ['10000000', '10000001', '10000002', '10000003', '10000004'];
+      $isInZone = in_array($cid, $sandboxOverrideCIDs, TRUE);
+    }
 
-  // Rating map.
-  $ratingMap = [
-    'OBS' => 1,
-    'S1'  => 2,
-    'S2'  => 3,
-    'S3'  => 4,
-    'C1'  => 5,
-    'C3'  => 6,
-    'I1'  => 7,
-    'I3'  => 8,
-    'SUP' => 9,
-    'ADM' => 10,
-  ];
+    $isLearningController = ($rating === 'OBS') && $isInZone;
+    $isRatedController = ($ratingLevel >= 2) && $isInZone;
+    $isController = $isLearningController || $isRatedController;
 
-  $ratingLevel = $ratingMap[$rating] ?? 0;
+    if ($account->hasRole('visiting_controller')) {
+      $isController = TRUE;
+    }
 
-  // Dectect https://vatsim.dev/services/connect/sandbox/#test-accounts accounts
-  $isSandbox = ((int)$cid >= 10000000 && (int)$cid <= 10000010);
+    if ($isController) {
+      $roles[] = 'controller';
+    }
+    else {
+      $roles[] = 'pilot';
+    }
 
-  // East Caribbean Zone = Piarco FIR + Curaçao FIR.
-  $allowedSubdivisions = ['CUR', 'PIA'];
-
-  // Zone membership.
-  $isInZone =
-    $division === 'CAR' &&
-    in_array($subdivision, $allowedSubdivisions, TRUE);
-
-  // Sandbox override for half the sandbox accounts to allow testing of controller roles.
-  if ($isSandbox) {
-    $sandboxOverrideCIDs = ['10000000', '10000001', '10000002', '10000003', '10000004'];
-    $isInZone = in_array($cid, $sandboxOverrideCIDs, TRUE);
-  }
-  // Learning controllers (OBS in zone).
-  $isLearningController = ($rating === 'OBS') && $isInZone;
-
-  // Rated controllers (S1+ in zone).
-  $isRatedController = ($ratingLevel >= 2) && $isInZone;
-
-  // Combined controller check.
-  $isController = $isLearningController || $isRatedController;
-
-  // Visitors override.
-  if ($account->hasRole('visiting_controller')) {
-    $isController = TRUE;
-  }
-
-  // Assign final role.
-  if ($isController) {
-    $roles[] = 'controller';
-  }
-  else {
-    $roles[] = 'pilot';
-  }
-
-  $account->set('roles', $roles);
-
-  /**
-   * -------------------------------
-   * END OF ROLE LOGIC
-   * -------------------------------
-   */
-
+    $account->set('roles', $roles);
     $account->save();
 
     return $account;
-}
+  }
+
+  /**
+   * Normalizes the payload shape returned by VATSIM Connect.
+   *
+   * Some responses are wrapped in a top-level "data" object, while others are
+   * already flattened at the root level.
+   */
+  private function normalizePayload(array $vatsimData): array {
+    if (isset($vatsimData['data']) && is_array($vatsimData['data'])) {
+      return $vatsimData['data'];
+    }
+
+    return $vatsimData;
+  }
+
+  /**
+   * Reads a nested value from the payload using dot-delimited paths.
+   */
+  private function readValue(array $data, array $paths): mixed {
+    foreach ($paths as $path) {
+      $value = $data;
+      $segments = explode('.', $path);
+      $found = TRUE;
+
+      foreach ($segments as $segment) {
+        if (!is_array($value) || !array_key_exists($segment, $value)) {
+          $found = FALSE;
+          break;
+        }
+        $value = $value[$segment];
+      }
+
+      if ($found) {
+        return $value;
+      }
+    }
+
+    return NULL;
+  }
 
 }
