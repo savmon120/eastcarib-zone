@@ -115,7 +115,57 @@ ddev drush cr
 ```
 
 ---
+## Cloud86 Deployment Commands
 
+This project includes custom DDEV commands to simplify deployment to the Cloud86 production environment.
+
+### Push Database to Production
+
+Exports the local DDEV database, uploads it to production, imports it, rebuilds Drupal caches, and removes the temporary dump file.
+
+```bash
+ddev push-db
+```
+
+Requirements:
+
+- SSH access to production
+- SSH key configured for the production server
+- Drupal and Drush installed on production
+
+The deployment commands assume SSH key authentication is configured.
+Password-based SSH authentication is not supported by the automated workflow.
+
+⚠️ Warning
+ 
+`ddev push-db` completely replaces the production database with the local DDEV database.
+ 
+Always ensure your local environment contains the correct content before running this command.
+
+### Push Uploaded Files to Production
+
+Synchronises uploaded files from the local environment to production.
+
+```bash
+ddev push-files
+```
+
+Notes:
+
+- Drupal-generated cache directories (`css`, `js`, `php`, `styles`, `translations`) are excluded.
+- Production-only files are not deleted.
+- Safe for routine content deployment.
+
+### Command Locations
+
+```text
+.ddev/commands/host/push-db
+.ddev/commands/host/push-files
+```
+
+These commands are project-specific deployment helpers for the Cloud86 production environment.
+
+---
 ## Deployment Workflow
 
 ### 1. Local Build
@@ -144,7 +194,7 @@ When changes are pushed to the main branch:
 - The repository is pulled or updated automatically  
 - The latest code becomes active without manual intervention  
 
-No manual deployment steps are required unless the hosting environment is being reconfigured.
+No manual deployment steps are required unless the hosting environment is being reconfigured or a database / files overwrite is required.
 
 ### 5. Post‑Deployment Tasks
 
