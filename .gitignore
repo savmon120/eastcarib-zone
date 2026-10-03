@@ -31,6 +31,10 @@ drush/sites/
 # DDEV can manage it freely without git noise.
 .ddev/*
 !.ddev/config.yaml
+!.ddev/commands/
+!.ddev/commands/host/
+!.ddev/commands/host/push-db
+!.ddev/commands/host/push-files
 
 # -----------------------------------------------
 # OS / editor artifacts

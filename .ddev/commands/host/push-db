@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e
+
+read -p "Overwrite PRODUCTION database? [y/N] " confirm
+[[ "$confirm" == "y" ]] || exit 1
+
+echo "Exporting local database..."
+ddev export-db --file=/tmp/prod.sql.gz
+
+echo "Uploading..."
+scp /tmp/prod.sql.gz \
+  eastcaribzone@eastcaribzone.sunnywingsvirtual.com:~/prod.sql.gz
+
+echo "Importing on production..."
+
+ssh eastcaribzone@eastcaribzone.sunnywingsvirtual.com '
+cd ~/eastcaribzone.sunnywingsvirtual.com
+
+CONN=$(/opt/plesk/php/8.4/bin/php vendor/drush/drush/drush.php sql:connect)
+
+gunzip -c ~/prod.sql.gz | eval "$CONN"
+
+/opt/plesk/php/8.4/bin/php vendor/drush/drush/drush.php cr
+
+rm -f ~/prod.sql.gz
+echo "Removed uploaded dump"
+'
+
+echo "Done"
