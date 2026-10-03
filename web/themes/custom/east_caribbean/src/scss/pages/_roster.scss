@@ -1,0 +1,39 @@
+.custom-roster-tabs {
+    display: flex;
+    gap: 8px;
+    border-bottom: 2px solid #e2e8f0;
+    list-style: none;
+    padding-left: 0;
+    max-width: 1200px;
+    margin: 2rem auto 1.5rem auto;
+
+    li {
+        margin: 0;
+    }
+
+    li a {
+        display: block;
+        padding: 10px 20px;
+        font-weight: 700;
+        color: #64748b;
+        text-decoration: none;
+        border-radius: 5px 5px 0 0;
+        background-color: #f1f5f9;
+        transition: all 0.2s ease;
+        border: none;
+
+        &:hover {
+            background-color: #e2e8f0;
+            color: #0f172a;
+        }
+
+        &.is-active,
+        &.active {
+            background-color: #3e8e8e;
+            color: #ffffff;
+        }
+    }
+}
+#views-exposed-form-roster-page-1 {
+display: none;
+}

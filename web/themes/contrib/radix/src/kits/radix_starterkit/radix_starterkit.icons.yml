@@ -1,7 +1,7 @@
 bootstrap_icons:
   enabled: true
   label: Bootstrap Icons
-  description: "Official open source SVG icon library for Bootstrap. Run `npm install && npm run dev` to populate the SVGs from node_modules."
+  description: 'Official open source SVG icon library for Bootstrap. Run `npm install && npm run dev` to populate the SVGs from node_modules.'
   links:
     - https://icons.getbootstrap.com
   license:
@@ -14,20 +14,20 @@ bootstrap_icons:
       - assets/icons/bootstrap-icons/{icon_id}.svg
   settings:
     size:
-      title: "Size"
-      description: "Icon size in pixels."
-      type: "integer"
+      title: 'Size'
+      description: 'Icon size in pixels.'
+      type: 'integer'
       default: 32
       minimum: 8
       maximum: 256
     color:
-      title: "Color"
-      type: "string"
-      format: "color"
+      title: 'Color'
+      type: 'string'
+      format: 'color'
     alt:
-      title: "Alt text"
-      description: "Accessibility alternative text. Leave empty for a decorative icon."
-      type: "string"
+      title: 'Alt text'
+      description: 'Accessibility alternative text. Leave empty for a decorative icon.'
+      type: 'string'
   template: >-
     <svg
       xmlns="http://www.w3.org/2000/svg"

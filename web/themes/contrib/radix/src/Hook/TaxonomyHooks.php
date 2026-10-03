@@ -15,9 +15,12 @@ class TaxonomyHooks {
 
   /**
    * Implements hook_theme_suggestions_taxonomy_term_alter().
+   *
+   * @phpstan-param list<string> $suggestions
+   * @phpstan-param array<string, mixed> $variables
    */
   #[Hook('theme_suggestions_taxonomy_term_alter')]
-  public static function themeSuggestionsTaxonomyTermAlter(array &$suggestions, array $variables) {
+  public static function themeSuggestionsTaxonomyTermAlter(array &$suggestions, array $variables): void {
     /** @var \Drupal\taxonomy\TermInterface $term */
     $term = $variables['elements']['#taxonomy_term'];
     $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');

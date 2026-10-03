@@ -27,4 +27,6 @@ variables:
 #   SKIP_ESLINT: '1'
 #   OPT_IN_TEST_NEXT_MAJOR: '1'
   _CSPELL_WORDS: 'readmore'
+  _PHPSTAN_LEVEL: '6'
+  _ALL_VALIDATE_ALLOW_FAILURE: '0'
 #   _CURL_TEMPLATES_REF: 'main'

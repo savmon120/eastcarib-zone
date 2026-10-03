@@ -15,9 +15,11 @@ class FieldHooks {
 
   /**
    * Implements hook_preprocess_field().
+   *
+   * @phpstan-param array<string, mixed> $variables
    */
   #[Hook('preprocess_field')]
-  public static function preprocessField(&$variables) {
+  public static function preprocessField(array &$variables): void {
     $element = $variables['element'];
     $field_name = $element['#field_name'];
     $bundle = $element['#bundle'];

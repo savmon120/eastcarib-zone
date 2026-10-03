@@ -12,23 +12,29 @@ use Drupal\Component\Utility\Xss;
 
 /**
  * Implements hook_preprocess_menu().
+ *
+ * @phpstan-param array<string, mixed> $variables
  */
 #[LegacyHook]
-function radix_preprocess_menu(&$variables, $hook) {
+function radix_preprocess_menu(array &$variables, string $hook): void {
   MenuHooks::preprocessMenu($variables, $hook);
 }
 
 /**
  * Implements template_preprocess_menu_local_task.
+ *
+ * @phpstan-param array<string, mixed> $variables
  */
-function radix_preprocess_menu_local_task(&$variables) {
+function radix_preprocess_menu_local_task(array &$variables): void {
   radix_link_fixer($variables);
 }
 
 /**
  * Implements template_preprocess_menu_local_action().
+ *
+ * @phpstan-param array<string, mixed> $variables
  */
-function radix_preprocess_menu_local_action(&$variables) {
+function radix_preprocess_menu_local_action(array &$variables): void {
   // Add button classes.
   $variables['link']['#options']['attributes']['class'][] = 'btn';
   $variables['link']['#options']['attributes']['class'][] = 'btn-primary';
@@ -36,8 +42,10 @@ function radix_preprocess_menu_local_action(&$variables) {
 
 /**
  * Implements template_preprocess_links__dropbutton().
+ *
+ * @phpstan-param array<string, mixed> $variables
  */
-function radix_preprocess_links__dropbutton(&$variables) {
+function radix_preprocess_links__dropbutton(array &$variables): void {
   $links = &$variables['links'];
 
   // Ensure the dropdown SDC always receives valid (non-NULL) props, even when
@@ -59,7 +67,7 @@ function radix_preprocess_links__dropbutton(&$variables) {
 
   // Get the first link and use it for the dropbutton.
   $link = reset($links);
-  /** @var \Drupal\Core\Url $link_url */
+  /** @var \Drupal\Core\Url|null $link_url */
   $link_url = $link['link']['#url'] ?? NULL;
 
   // Apply the link's options (e.g. the "destination" query parameter added by
@@ -92,10 +100,10 @@ function radix_preprocess_links__dropbutton(&$variables) {
 /**
  * Fixes link render arrays to avoid a loss of classes due to care bug #3494015.
  *
- * @param &array $link_variable
+ * @param array<string, mixed> $link_variable
  *   Render array containing a 'link' element.
  */
-function radix_link_fixer(&$link_variable) {
+function radix_link_fixer(array &$link_variable): void {
   // Link element is optional.
   if (empty($link_variable['link'])) {
     return;

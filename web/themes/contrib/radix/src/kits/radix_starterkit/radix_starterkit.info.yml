@@ -25,7 +25,7 @@ libraries:
 ckeditor5-stylesheets:
   - build/css/main.style.css
 
-# Information added by Drupal.org packaging script on 2026-06-19
-version: '6.0.8'
+# Information added by Drupal.org packaging script on 2026-09-17
+version: '6.0.9'
 project: 'radix'
-datestamp: 1781864350
+datestamp: 1789652915

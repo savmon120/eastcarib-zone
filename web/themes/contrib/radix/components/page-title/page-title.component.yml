@@ -9,9 +9,9 @@ props:
       type: string
       title: Display Heading
       description: When you need a heading to stand out, consider using a display heading—a larger, slightly more opinionated heading style.
-      default: ""
+      default: ''
       enum:
-        - ""
+        - ''
         - display-1
         - display-2
         - display-3
@@ -28,8 +28,8 @@ props:
     title_attributes:
       type: Drupal\Core\Template\Attribute
     title_prefix:
-      type: ["array", "null", "string", "object"]
-      description: "An array of renderable elements that are displayed before the title."
+      type: ['array', 'null', 'string', 'object']
+      description: 'An array of renderable elements that are displayed before the title.'
     title_suffix:
-      type: ["array", "null", "string", "object"]
-      description: "An array of renderable elements that are displayed after the title."
+      type: ['array', 'null', 'string', 'object']
+      description: 'An array of renderable elements that are displayed after the title.'

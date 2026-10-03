@@ -24,7 +24,7 @@ props:
       type: ['array', 'string', 'null']
       description: The type of the element.
     name:
-      type: ['array', 'string', 'null']
+      type: ['array', 'string', 'integer', 'null']
       description: The name of the element.
     label:
       type: ['array', 'string', 'null']
