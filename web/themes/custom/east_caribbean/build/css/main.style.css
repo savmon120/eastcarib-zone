@@ -14463,6 +14463,9 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
   color: var(--wx-on-color);
   background-color: var(--wx-red);
 }
+.wx-monitor__error.is-info {
+  background-color: var(--wx-bar-tab-active);
+}
 .wx-monitor {
 }
 .wx-monitor__grid {
@@ -14913,6 +14916,137 @@ html[data-theme=dark] .wx-monitor__theme .wx-monitor__theme-light {
 }
 .wx-monitor.is-switching .wx-monitor__grid {
   opacity: 0.45;
+}
+.wx-airport-slot,
+.wx-airport-slot > .wx-airport {
+  display: contents;
+}
+.wx-airport__head {
+  display: none;
+}
+.wx-multi {
+  display: none;
+  grid-area: multi;
+}
+.wx-monitor.is-multi .wx-airport-slot,
+.wx-monitor.is-multi .wx-panel--map,
+.wx-monitor.is-multi .wx-panel--table,
+.wx-monitor.is-multi .wx-monitor__category {
+  display: none;
+}
+.wx-monitor.is-multi:not(.is-fir-selected) .wx-monitor__select {
+  display: none;
+}
+.wx-monitor.is-multi .wx-monitor__grid {
+  grid-template-areas: "multi" "metar" "msgs";
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto auto;
+}
+.wx-monitor.is-multi .wx-multi {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 10px;
+  min-height: 0;
+}
+.wx-monitor.is-multi .wx-airport {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  min-height: 0;
+}
+.wx-monitor.is-multi .wx-airport__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  align-items: center;
+  padding: 6px 10px;
+  background-color: var(--wx-panel);
+  border: 1px solid var(--wx-line);
+  border-radius: 4px;
+}
+.wx-monitor.is-multi .wx-airport__head .wx-monitor__category {
+  display: inline-block;
+}
+.wx-monitor.is-multi .wx-airport__head .wx-monitor__category:empty {
+  display: none;
+}
+.wx-monitor.is-multi .wx-airport__icao {
+  font-family: var(--wx-mono);
+  font-size: clamp(1.1rem, 2.2vh, 1.8rem);
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.wx-monitor.is-multi .wx-airport__name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: clamp(0.75rem, 1.2vh, 1rem);
+  color: var(--wx-label);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wx-monitor.is-multi .wx-airport__observed {
+  font-family: var(--wx-mono);
+  font-size: clamp(0.75rem, 1.2vh, 1rem);
+  color: var(--wx-label);
+}
+.wx-monitor.is-multi .wx-airport__head {
+  order: 0;
+}
+.wx-monitor.is-multi .wx-panel--wind {
+  order: 1;
+}
+.wx-monitor.is-multi .wx-panel--values {
+  order: 2;
+}
+.wx-monitor.is-multi .wx-panel--cloud {
+  order: 3;
+}
+.wx-monitor.is-multi .wx-panel--station {
+  order: 4;
+}
+.wx-monitor.is-multi .wx-panel--wind {
+  flex: 1 1 0;
+  min-height: max(180px, 24vh);
+  overflow: hidden;
+}
+.wx-monitor.is-multi .wx-wind {
+  min-height: 0;
+}
+.wx-monitor.is-multi .wx-panel--values {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+.wx-monitor.is-multi .wx-value {
+  gap: 2px;
+}
+.wx-monitor.is-multi .wx-value__num {
+  padding: max(3px, 0.4vh) 4px;
+  font-size: clamp(0.8rem, min(0.95vw, 2vh), 1.6rem);
+}
+.wx-monitor.is-multi .wx-value__label {
+  font-size: clamp(0.65rem, 1vh, 0.8rem);
+}
+.wx-monitor.is-multi .wx-panel--cloud {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 6px;
+}
+.wx-monitor.is-multi .wx-panel--station {
+  gap: 10px;
+}
+.wx-monitor.is-multi .wx-station__code {
+  width: clamp(52px, 6.5vh, 100px);
+  height: clamp(52px, 6.5vh, 100px);
+  font-size: clamp(2rem, 4.6vh, 4rem);
+}
+.wx-monitor.is-multi .wx-positions__item {
+  padding: 3px 4px;
+}
+.wx-monitor.is-multi .wx-strip--messages .wx-strip__screen {
+  max-height: 17vh;
+  overflow-y: auto;
 }
 .view-wiki-main-page .view-content {
   background-color: var(--bs-body-bg) !important;
@@ -16365,8 +16499,6 @@ nav.navbar {
   -webkit-backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--nav-border);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  padding-top: 15px;
-  padding-bottom: 15px;
 }
 @media (min-width: 992px) {
   nav.navbar .navbar-collapse .ms-auto {
@@ -16476,6 +16608,10 @@ nav.navbar .navbar-brand span {
 }
 nav.navbar .navbar-brand img {
   margin-right: 12px;
+}
+nav.navbar .navbar-brand__logo img {
+  height: auto;
+  width: 200px;
 }
 nav.navbar li.navbar-text {
   padding: 0;

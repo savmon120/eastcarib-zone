@@ -54,6 +54,14 @@ class VatsimSettingsForm extends ConfigFormBase {
             '#default_value' => $config->get('prefixes') ?: 'TNCA, TNCB, TNCC, TNCM, TQPF, TNCS, TNCE, TNCF, TBPB, TFFF, TFFR, TAPA, TGPY, TVSA, TLPL, TDPD, TKPK, TTPP',
         ];
 
+        $form['fir_airports'] = [
+            '#type' => 'textarea',
+            '#title' => $this->t('FIR airports (weather dashboard)'),
+            '#description' => $this->t('One FIR per line: the FIR code, a colon, then up to 4 airports. When a controller on that FIR\'s centre (e.g. TNCF_CTR) fullscreens the dashboard, it shows the airports they run an ATIS for side by side; these airports are used until they open one, and when the FIR is picked from the dropdown with no centre controller online. Only FIRs listed here get the side-by-side view. Airports must also be covered by the prefixes above. Example: <code>TNCF: TNCA, TNCC, TNCB</code>'),
+            '#default_value' => $config->get('fir_airports') ?: "TNCF: TNCA, TNCC, TNCB\nTTZP: TBPB, TTPP, TLPL, TGPY",
+            '#rows' => 4,
+        ];
+
         $form['refresh_rate'] = [
             '#type' => 'number',
             '#title' => $this->t('Refresh Interval (Seconds)'),
@@ -70,6 +78,7 @@ class VatsimSettingsForm extends ConfigFormBase {
             ->set('bookings_url', $form_state->getValue('bookings_url'))
             ->set('events_url', $form_state->getValue('events_url'))
             ->set('prefixes', $form_state->getValue('prefixes'))
+            ->set('fir_airports', $form_state->getValue('fir_airports'))
             ->set('refresh_rate', $form_state->getValue('refresh_rate'))
             ->save();
 

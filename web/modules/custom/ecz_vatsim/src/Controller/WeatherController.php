@@ -49,6 +49,7 @@ class WeatherController extends ControllerBase {
           'eczWeather' => [
             'icao' => $icao,
             'refreshRate' => self::CACHE_TTL,
+            'firAirports' => $this->getFirAirports(),
           ],
         ],
       ],
@@ -330,6 +331,40 @@ class WeatherController extends ControllerBase {
       }
     }
     throw new NotFoundHttpException();
+  }
+
+  /**
+   * Parses the "FIR airports" setting into ['TNCF' => ['TNCC', ...], ...].
+   *
+   * Keeps at most 4 airports per FIR, and only ones the weather endpoint
+   * will serve (i.e. covered by the configured prefixes).
+   */
+  protected function getFirAirports(): array {
+    $raw = $this->config('ecz_vatsim.settings')->get('fir_airports')
+      ?: "TNCF: TNCA, TNCC, TNCB\nTTZP: TBPB, TTPP, TLPL, TGPY";
+    $prefixes = $this->getPrefixes();
+
+    $firs = [];
+    foreach (preg_split('/\R/', $raw) as $line) {
+      if (!preg_match('/^\s*([A-Z]{4})\s*:\s*(.+)$/i', $line, $match)) {
+        continue;
+      }
+      $airports = array_filter(array_map(fn($a) => strtoupper(trim($a)), explode(',', $match[2])), function ($icao) use ($prefixes) {
+        if (!preg_match('/^[A-Z]{4}$/', $icao)) {
+          return FALSE;
+        }
+        foreach ($prefixes as $prefix) {
+          if (strpos($icao, $prefix) === 0) {
+            return TRUE;
+          }
+        }
+        return FALSE;
+      });
+      if ($airports) {
+        $firs[strtoupper($match[1])] = array_slice(array_values($airports), 0, 4);
+      }
+    }
+    return $firs;
   }
 
   protected function getPrefixes(): array {

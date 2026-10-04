@@ -32,7 +32,8 @@ class VatsimUserManager {
   /**
    * Creates or loads a Drupal user and syncs VATSIM profile fields.
    *
-   * New accounts are given the 'controller' role. All accounts have their
+   * Accounts get the 'controller' or 'pilot' role based on rating and
+   * division; other roles are left untouched. All accounts have their
    * VATSIM profile fields updated on every login so data stays current.
    *
    * @param array $vatsimData
@@ -63,6 +64,16 @@ class VatsimUserManager {
     $storage = $this->entityTypeManager->getStorage('user');
     $existing = $storage->loadByProperties(['field_vatsim_cid' => $cid]);
 
+    // Accounts are created with the CID as username. If the CID field no
+    // longer matches (e.g. it was edited by hand), fall back to the username
+    // so we re-link the account instead of failing on a duplicate name.
+    if (empty($existing)) {
+      $existing = $storage->loadByProperties(['name' => $cid]);
+      if (!empty($existing)) {
+        $this->logger->warning('No account had field_vatsim_cid @cid; re-linked the account with username @cid.', ['@cid' => $cid]);
+      }
+    }
+
     /** @var \Drupal\user\UserInterface $account */
     if (empty($existing)) {
       $account = $storage->create([
@@ -85,7 +96,6 @@ class VatsimUserManager {
     $account->set('field_vatsim_division', $division);
     $account->set('field_vatsim_subdivision', $subdivision);
 
-    $roles = ['authenticated'];
     $ratingMap = [
       'OBS' => 1,
       'S1' => 2,
@@ -117,14 +127,13 @@ class VatsimUserManager {
       $isController = TRUE;
     }
 
-    if ($isController) {
-      $roles[] = 'controller';
-    }
-    else {
-      $roles[] = 'pilot';
-    }
+    // Only manage the controller/pilot roles. Everything else (administrator,
+    // visiting_controller, mentor, ...) is assigned by hand and must survive
+    // logins, so don't overwrite the whole role list.
+    $account->removeRole('controller');
+    $account->removeRole('pilot');
+    $account->addRole($isController ? 'controller' : 'pilot');
 
-    $account->set('roles', $roles);
     $account->save();
 
     return $account;

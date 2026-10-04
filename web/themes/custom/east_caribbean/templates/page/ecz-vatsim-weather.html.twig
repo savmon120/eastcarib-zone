@@ -3,8 +3,7 @@
   <header class="wx-monitor__bar">
     <div class="wx-monitor__tabs">
       <span class="wx-monitor__tab is-active">{{ 'METAR'|t }}</span>
-      <span class="wx-monitor__category" data-wx="category"></span>
-    </div>
+      <span class="wx-monitor__category" data-wx="category"></span>    </div>
     <h2 class="wx-monitor__title">
       <strong data-wx="icao">{{ icao }}</strong>
       <span class="wx-monitor__name" data-wx="name"></span>
@@ -33,29 +32,76 @@
 
   <div class="wx-monitor__error" data-wx="error" role="alert" hidden></div>
 
+  {#
+    One airport's instruments. weather-dashboard.js clones this once for the
+    normal view (into the main-airport slot, where its sections slot into the
+    grid) and four times for the CTR multi-airport view (one column each).
+  #}
+  <template data-wx="airport-template">
+    <div class="wx-airport">
+      <header class="wx-airport__head">
+        <strong class="wx-airport__icao" data-wx="col-icao"></strong>
+        <span class="wx-monitor__category" data-wx="col-category"></span>
+        <span class="wx-airport__name" data-wx="col-name"></span>
+        <span class="wx-airport__observed" data-wx="col-observed"></span>
+      </header>
+
+      <section class="wx-panel wx-panel--wind" aria-label="{{ 'Wind'|t }}">
+        <div class="wx-wind">
+          <div class="wx-gauge" data-wx="speed-gauge" title="{{ 'Wind speed (0–40 kt)'|t }}"></div>
+          <svg class="wx-dial" viewBox="0 0 200 200" role="img" aria-label="{{ 'Wind direction and speed'|t }}">
+            <circle class="wx-dial__face" cx="100" cy="100" r="98" />
+            <g data-wx="ring"></g>
+            <g data-wx="labels"></g>
+            <g class="wx-dial__pointer" data-wx="pointer">
+              <path d="M100 6 L107 24 L100 38 L93 24 Z" />
+            </g>
+            <text class="wx-dial__runway" x="100" y="80" data-wx="runway"></text>
+            <text class="wx-dial__wind" x="100" y="108" data-wx="wind">---</text>
+            <text class="wx-dial__gust" x="100" y="134" data-wx="gust"></text>
+          </svg>
+        </div>
+        <div class="wx-xwind">
+          <div class="wx-xwind__bar" data-wx="xwind-bar"></div>
+          <div class="wx-xwind__label" data-wx="xwind-label"></div>
+        </div>
+      </section>
+
+      <section class="wx-panel wx-panel--values" aria-label="{{ 'Conditions'|t }}">
+        <div class="wx-value"><span class="wx-value__num" data-wx="visibility">--</span><span class="wx-value__label">{{ 'Visibility'|t }}</span></div>
+        <div class="wx-value"><span class="wx-value__num" data-wx="ceiling">--</span><span class="wx-value__label">{{ 'Ceiling'|t }}</span></div>
+        <div class="wx-value"><span class="wx-value__num" data-wx="temperature">--</span><span class="wx-value__label">{{ 'Temperature'|t }}</span></div>
+        <div class="wx-value"><span class="wx-value__num" data-wx="dewpoint">--</span><span class="wx-value__label">{{ 'Dew point'|t }}</span></div>
+        <div class="wx-value"><span class="wx-value__num" data-wx="qnh-hpa">--</span><span class="wx-value__label">{{ 'QNH'|t }}</span></div>
+        <div class="wx-value"><span class="wx-value__num" data-wx="qnh-inhg">--</span><span class="wx-value__label">{{ 'QNH'|t }}</span></div>
+        <div class="wx-value"><span class="wx-value__num" data-wx="qfe-hpa">--</span><span class="wx-value__label">{{ 'QFE'|t }}</span></div>
+        <div class="wx-value"><span class="wx-value__num" data-wx="qfe-inhg">--</span><span class="wx-value__label">{{ 'QFE'|t }}</span></div>
+      </section>
+
+      <section class="wx-panel wx-panel--station" aria-label="{{ 'ATIS and online positions'|t }}">
+        <div class="wx-station__atis">
+          <span class="wx-station__code" data-wx="atis-code">–</span>
+        </div>
+        <ul class="wx-positions">
+          {% for position in ['DEL', 'GND', 'TWR', 'APP', 'DEP', 'CTR'] %}
+            <li class="wx-positions__item" data-position="{{ position }}">
+              <span class="wx-positions__name">{{ position }}</span>
+              <span class="wx-positions__freq">–</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section class="wx-panel wx-panel--cloud" aria-label="{{ 'Clouds'|t }}">
+        <div class="wx-value wx-value--wide"><span class="wx-value__num" data-wx="clouds">--</span><span class="wx-value__label">{{ 'Clouds'|t }}</span></div>
+        <div class="wx-value wx-value--wide"><span class="wx-value__num" data-wx="weather">--</span><span class="wx-value__label">{{ 'Present weather'|t }}</span></div>
+      </section>
+    </div>
+  </template>
+
   <div class="wx-monitor__grid">
 
-    <section class="wx-panel wx-panel--wind" aria-label="{{ 'Wind'|t }}">
-      <div class="wx-wind">
-        <div class="wx-gauge" data-wx="speed-gauge" title="{{ 'Wind speed (0–40 kt)'|t }}"></div>
-        <svg class="wx-dial" viewBox="0 0 200 200" role="img" aria-labelledby="wx-dial-label">
-          <title id="wx-dial-label">{{ 'Wind direction and speed'|t }}</title>
-          <circle class="wx-dial__face" cx="100" cy="100" r="98" />
-          <g data-wx="ring"></g>
-          <g data-wx="labels"></g>
-          <g class="wx-dial__pointer" data-wx="pointer">
-            <path d="M100 6 L107 24 L100 38 L93 24 Z" />
-          </g>
-          <text class="wx-dial__runway" x="100" y="80" data-wx="runway"></text>
-          <text class="wx-dial__wind" x="100" y="108" data-wx="wind">---</text>
-          <text class="wx-dial__gust" x="100" y="134" data-wx="gust"></text>
-        </svg>
-      </div>
-      <div class="wx-xwind">
-        <div class="wx-xwind__bar" data-wx="xwind-bar"></div>
-        <div class="wx-xwind__label" data-wx="xwind-label"></div>
-      </div>
-    </section>
+    <div class="wx-airport-slot" data-wx="main-airport"></div>
 
     <section class="wx-panel wx-panel--map" aria-label="{{ 'Map'|t }}">
       <div class="wx-map" data-wx="map"></div>
@@ -77,35 +123,8 @@
       </table>
     </section>
 
-    <section class="wx-panel wx-panel--values" aria-label="{{ 'Conditions'|t }}">
-      <div class="wx-value"><span class="wx-value__num" data-wx="visibility">--</span><span class="wx-value__label">{{ 'Visibility'|t }}</span></div>
-      <div class="wx-value"><span class="wx-value__num" data-wx="ceiling">--</span><span class="wx-value__label">{{ 'Ceiling'|t }}</span></div>
-      <div class="wx-value"><span class="wx-value__num" data-wx="temperature">--</span><span class="wx-value__label">{{ 'Temperature'|t }}</span></div>
-      <div class="wx-value"><span class="wx-value__num" data-wx="dewpoint">--</span><span class="wx-value__label">{{ 'Dew point'|t }}</span></div>
-      <div class="wx-value"><span class="wx-value__num" data-wx="qnh-hpa">--</span><span class="wx-value__label">{{ 'QNH'|t }}</span></div>
-      <div class="wx-value"><span class="wx-value__num" data-wx="qnh-inhg">--</span><span class="wx-value__label">{{ 'QNH'|t }}</span></div>
-      <div class="wx-value"><span class="wx-value__num" data-wx="qfe-hpa">--</span><span class="wx-value__label">{{ 'QFE'|t }}</span></div>
-      <div class="wx-value"><span class="wx-value__num" data-wx="qfe-inhg">--</span><span class="wx-value__label">{{ 'QFE'|t }}</span></div>
-    </section>
-
-    <section class="wx-panel wx-panel--station" aria-label="{{ 'ATIS and online positions'|t }}">
-      <div class="wx-station__atis">
-        <span class="wx-station__code" data-wx="atis-code">–</span>
-      </div>
-      <ul class="wx-positions" data-wx="positions">
-        {% for position in ['DEL', 'GND', 'TWR', 'APP', 'DEP', 'CTR'] %}
-          <li class="wx-positions__item" data-position="{{ position }}">
-            <span class="wx-positions__name">{{ position }}</span>
-            <span class="wx-positions__freq">–</span>
-          </li>
-        {% endfor %}
-      </ul>
-    </section>
-
-    <section class="wx-panel wx-panel--cloud" aria-label="{{ 'Clouds'|t }}">
-      <div class="wx-value wx-value--wide"><span class="wx-value__num" data-wx="clouds">--</span><span class="wx-value__label">{{ 'Clouds'|t }}</span></div>
-      <div class="wx-value wx-value--wide"><span class="wx-value__num" data-wx="weather">--</span><span class="wx-value__label">{{ 'Present weather'|t }}</span></div>
-    </section>
+    {# CTR multi-airport view: filled by weather-dashboard.js when active. #}
+    <div class="wx-multi" data-wx="multi"></div>
 
     <section class="wx-strip wx-strip--metar">
       <h3 class="wx-strip__title">{{ 'METAR / Remarks'|t }}</h3>

@@ -17,8 +17,6 @@ nav.navbar {
     -webkit-backdrop-filter: blur(6px);
     border-bottom: 1px solid var(--nav-border);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    padding-top: 15px;
-    padding-bottom: 15px;
 
     @media (min-width: 992px) {
         .navbar-collapse .ms-auto {
@@ -131,6 +129,11 @@ nav.navbar {
         img {
             margin-right: 12px;
         }
+    }
+
+    .navbar-brand__logo img {
+        height: auto;
+        width: 200px;
     }
 
     li.navbar-text {

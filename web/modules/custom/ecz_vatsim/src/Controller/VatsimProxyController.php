@@ -73,6 +73,9 @@ class VatsimProxyController extends ControllerBase {
                     foreach ($target_prefixes as $prefix) {
                         if (strpos($callsign, $prefix) === 0) {
                             $filtered_atis[] = [
+                                // Who runs it: the weather dashboard shows a
+                                // centre controller's own ATISes in FIR view.
+                                'cid' => $atis['cid'] ?? NULL,
                                 'callsign' => $atis['callsign'],
                                 'frequency' => $atis['frequency'] ?? '',
                                 'code' => $atis['atis_code'] ?? NULL,
