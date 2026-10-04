@@ -48,6 +48,14 @@ function ecz_vatsim_theme($existing, $type, $theme, $path) {
       'path' => $path . '/templates',
       'template' => 'ecz-vatsim-events-page',
     ],
+    'ecz_vatsim_weather' => [
+      'variables' => [
+        'icao' => NULL,
+        'airports' => [],
+      ],
+      'path' => $path . '/templates',
+      'template' => 'ecz-vatsim-weather',
+    ],
   ];
 }
 use Drupal\user\Entity\User;

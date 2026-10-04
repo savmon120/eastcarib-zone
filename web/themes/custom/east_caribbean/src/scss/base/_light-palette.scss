@@ -29,3 +29,52 @@ $brand-red: #e11d48;
 
 /* Shadows */
 $light-shadow: rgba(0, 0, 0, 0.05); // Soft, elegant drop shadow
+
+/* ------------------------------------------
+   WEATHER DASHBOARD (pages/_weather-dashboard.scss)
+   ------------------------------------------ */
+
+/* Shared by both modes */
+$wx-green: #34b24f;               // wind ring, VFR, online positions
+$wx-amber: #f2c230;               // variable wind, gauge mid-range
+$wx-red: #e0453a;                 // wind sector, IFR, errors, map marker
+$wx-mvfr: #2f7bd6;
+$wx-lifr: #b84fcf;
+$wx-unknown: #6b7580;             // flight category not reported
+$wx-on-color: #fff;               // text on coloured backgrounds
+$wx-bar: #1f3f6b;                 // header bar gradient (bottom)
+$wx-bar-light: #2c5a92;           // header bar gradient (top)
+$wx-bar-border: #0f2140;
+$wx-bar-text: #e8eef6;
+$wx-bar-text-muted: #b9c8db;
+$wx-bar-tab-text: #dce6f3;
+$wx-bar-tab-active: #3a6aa6;
+$wx-bar-overlay: rgba(0, 0, 0, 0.25);          // tabs/buttons on the bar
+$wx-bar-overlay-border: rgba(255, 255, 255, 0.2);
+$wx-bar-overlay-hover: rgba(255, 255, 255, 0.15);
+$wx-control-bg: #07090a;          // clock and airport select
+$wx-control-text: #f3f5f6;
+$wx-clock: #5ee37a;
+$wx-map-bg: #0b2a4a;              // shown while map tiles load
+$wx-map-credit: #cfd6dd;
+$wx-map-credit-bg: rgba(0, 0, 0, 0.55);
+
+/* Light mode: muted blue-greys rather than white, to go easy on the eyes */
+$wx-light-bezel: #cfd8e2;
+$wx-light-panel: #dfe6ed;
+$wx-light-screen: #eaeff4;
+$wx-light-line: #bac5d1;
+$wx-light-edge: #b3bfcc;
+$wx-light-shadow: rgba(0, 0, 0, 0.1);
+$wx-light-label: #4f5f73;
+$wx-light-head: #d2dbe4;
+$wx-light-footer: #c6d0db;
+$wx-light-row-line: #cdd6df;
+$wx-light-row-alt: rgba(10, 27, 42, 0.03);
+$wx-light-row-hover: rgba(40, 108, 176, 0.12);
+$wx-light-row-current: rgba(40, 108, 176, 0.22);
+$wx-light-face: #eaeff4;
+$wx-light-face-stroke: #aab6c3;
+$wx-light-gust: #1e8a3a;
+$wx-light-console: #11702c;
+$wx-light-atis: #b7791f;

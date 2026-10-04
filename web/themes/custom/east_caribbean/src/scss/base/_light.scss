@@ -62,4 +62,54 @@
     --nav-bg: rgba(255, 255, 255, 0.8);
     --nav-border: rgba(124, 124, 124, 0.8);
     --nav-dropdown-bg: rgba(255, 255, 255, 0.9);
+
+    /* Weather dashboard (pages/_weather-dashboard.scss): shared by both modes */
+    --wx-green: #{$wx-green};
+    --wx-amber: #{$wx-amber};
+    --wx-red: #{$wx-red};
+    --wx-mvfr: #{$wx-mvfr};
+    --wx-lifr: #{$wx-lifr};
+    --wx-unknown: #{$wx-unknown};
+    --wx-on-color: #{$wx-on-color};
+    --wx-bar: #{$wx-bar};
+    --wx-bar-light: #{$wx-bar-light};
+    --wx-bar-border: #{$wx-bar-border};
+    --wx-bar-text: #{$wx-bar-text};
+    --wx-bar-text-muted: #{$wx-bar-text-muted};
+    --wx-bar-tab-text: #{$wx-bar-tab-text};
+    --wx-bar-tab-active: #{$wx-bar-tab-active};
+    --wx-bar-overlay: #{$wx-bar-overlay};
+    --wx-bar-overlay-border: #{$wx-bar-overlay-border};
+    --wx-bar-overlay-hover: #{$wx-bar-overlay-hover};
+    --wx-control-bg: #{$wx-control-bg};
+    --wx-control-text: #{$wx-control-text};
+    --wx-clock: #{$wx-clock};
+    --wx-map-bg: #{$wx-map-bg};
+    --wx-map-credit: #{$wx-map-credit};
+    --wx-map-credit-bg: #{$wx-map-credit-bg};
+
+    /* Weather dashboard: light mode */
+    --wx-bezel: #{$wx-light-bezel};
+    --wx-panel: #{$wx-light-panel};
+    --wx-screen: #{$wx-light-screen};
+    --wx-line: #{$wx-light-line};
+    --wx-edge: #{$wx-light-edge};
+    --wx-shadow: #{$wx-light-shadow};
+    --wx-text: #{$light-text};
+    --wx-label: #{$wx-light-label};
+    --wx-table-text: #{$light-text-muted};
+    --wx-head: #{$wx-light-head};
+    --wx-footer: #{$wx-light-footer};
+    --wx-row-line: #{$wx-light-row-line};
+    --wx-row-alt: #{$wx-light-row-alt};
+    --wx-row-hover: #{$wx-light-row-hover};
+    --wx-row-current: #{$wx-light-row-current};
+    --wx-face: #{$wx-light-face};
+    --wx-face-stroke: #{$wx-light-face-stroke};
+    --wx-dial-label: #{$wx-light-label};
+    --wx-pointer: #{$light-text};
+    --wx-gust: #{$wx-light-gust};
+    --wx-console: #{$wx-light-console};
+    --wx-glow: transparent;
+    --wx-atis: #{$wx-light-atis};
 }

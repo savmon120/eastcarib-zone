@@ -1,0 +1,132 @@
+<div class="wx-monitor" data-icao="{{ icao }}">
+
+  <header class="wx-monitor__bar">
+    <div class="wx-monitor__tabs">
+      <a class="wx-monitor__button" href="{{ path('<front>') }}" data-wx="back">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
+        {{ 'Back'|t }}
+      </a>
+      <span class="wx-monitor__tab is-active">{{ 'METAR'|t }}</span>
+      <span class="wx-monitor__category" data-wx="category"></span>
+    </div>
+    <h2 class="wx-monitor__title">
+      {{ 'Air Traffic Control Monitor'|t }} <strong>{{ icao }}</strong>
+      <span class="wx-monitor__name" data-wx="name"></span>
+    </h2>
+    <div class="wx-monitor__controls">
+      <span class="wx-monitor__clock" data-wx="clock">--:--:--Z</span>
+      {% if airports|length > 1 %}
+        <label class="visually-hidden" for="weather-airport-select">{{ 'Airport'|t }}</label>
+        <select id="weather-airport-select" class="wx-monitor__select">
+          {% for airport in airports %}
+            <option value="{{ airport }}"{{ airport == icao ? ' selected' }}>{{ airport }}</option>
+          {% endfor %}
+        </select>
+      {% endif %}
+      {# Handled by js/theme-toggle.js, same as the site navbar's toggle. #}
+      <button type="button" id="theme-toggle" class="wx-monitor__button wx-monitor__theme" title="{{ 'Toggle light/dark mode'|t }}">
+        <svg class="wx-monitor__theme-dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+        <svg class="wx-monitor__theme-light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+        <span class="visually-hidden">{{ 'Toggle light/dark mode'|t }}</span>
+      </button>
+      <button type="button" class="wx-monitor__button" data-wx="fullscreen" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
+        <span data-wx="fullscreen-label">{{ 'Fullscreen'|t }}</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="wx-monitor__error" data-wx="error" role="alert" hidden></div>
+
+  <div class="wx-monitor__grid">
+
+    {# Wind: speed gauge, dial, crosswind bar #}
+    <section class="wx-panel wx-panel--wind" aria-label="{{ 'Wind'|t }}">
+      <div class="wx-wind">
+        <div class="wx-gauge" data-wx="speed-gauge" title="{{ 'Wind speed (0–40 kt)'|t }}"></div>
+        <svg class="wx-dial" viewBox="0 0 200 200" role="img" aria-labelledby="wx-dial-label">
+          <title id="wx-dial-label">{{ 'Wind direction and speed'|t }}</title>
+          <circle class="wx-dial__face" cx="100" cy="100" r="98" />
+          <g data-wx="ring"></g>
+          <g data-wx="labels"></g>
+          <g class="wx-dial__pointer" data-wx="pointer">
+            <path d="M100 6 L107 24 L100 38 L93 24 Z" />
+          </g>
+          <text class="wx-dial__runway" x="100" y="80" data-wx="runway"></text>
+          <text class="wx-dial__wind" x="100" y="108" data-wx="wind">---</text>
+          <text class="wx-dial__gust" x="100" y="134" data-wx="gust"></text>
+        </svg>
+      </div>
+      <div class="wx-xwind">
+        <div class="wx-xwind__bar" data-wx="xwind-bar"></div>
+        <div class="wx-xwind__label" data-wx="xwind-label"></div>
+      </div>
+    </section>
+
+    <section class="wx-panel wx-panel--map" aria-label="{{ 'Map'|t }}">
+      <div class="wx-map" data-wx="map"></div>
+    </section>
+
+    <section class="wx-panel wx-panel--table" aria-label="{{ 'Regional METARs'|t }}">
+      <table class="wx-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ 'ICAO'|t }}</th>
+            <th scope="col">{{ 'Wind'|t }}</th>
+            <th scope="col">{{ 'Vis'|t }}</th>
+            <th scope="col">{{ 'Cloud'|t }}</th>
+            <th scope="col">{{ 'Temp'|t }}</th>
+            <th scope="col">{{ 'QNH'|t }}</th>
+          </tr>
+        </thead>
+        <tbody data-wx="overview"></tbody>
+      </table>
+    </section>
+
+    <section class="wx-panel wx-panel--values" aria-label="{{ 'Conditions'|t }}">
+      <div class="wx-value"><span class="wx-value__num" data-wx="visibility">--</span><span class="wx-value__label">{{ 'Visibility'|t }}</span></div>
+      <div class="wx-value"><span class="wx-value__num" data-wx="ceiling">--</span><span class="wx-value__label">{{ 'Ceiling'|t }}</span></div>
+      <div class="wx-value"><span class="wx-value__num" data-wx="temperature">--</span><span class="wx-value__label">{{ 'Temperature'|t }}</span></div>
+      <div class="wx-value"><span class="wx-value__num" data-wx="dewpoint">--</span><span class="wx-value__label">{{ 'Dew point'|t }}</span></div>
+      <div class="wx-value"><span class="wx-value__num" data-wx="qnh-hpa">--</span><span class="wx-value__label">{{ 'QNH'|t }}</span></div>
+      <div class="wx-value"><span class="wx-value__num" data-wx="qnh-inhg">--</span><span class="wx-value__label">{{ 'QNH'|t }}</span></div>
+      <div class="wx-value"><span class="wx-value__num" data-wx="qfe-hpa">--</span><span class="wx-value__label">{{ 'QFE'|t }}</span></div>
+      <div class="wx-value"><span class="wx-value__num" data-wx="qfe-inhg">--</span><span class="wx-value__label">{{ 'QFE'|t }}</span></div>
+    </section>
+
+    <section class="wx-panel wx-panel--station" aria-label="{{ 'ATIS and online positions'|t }}">
+      <div class="wx-station__atis">
+        <span class="wx-station__code" data-wx="atis-code">–</span>
+      </div>
+      <ul class="wx-positions" data-wx="positions">
+        {% for position in ['DEL', 'GND', 'TWR', 'APP', 'DEP', 'CTR'] %}
+          <li class="wx-positions__item" data-position="{{ position }}">
+            <span class="wx-positions__name">{{ position }}</span>
+            <span class="wx-positions__freq">–</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="wx-panel wx-panel--cloud" aria-label="{{ 'Clouds'|t }}">
+      <div class="wx-value wx-value--wide"><span class="wx-value__num" data-wx="clouds">--</span><span class="wx-value__label">{{ 'Clouds'|t }}</span></div>
+      <div class="wx-value wx-value--wide"><span class="wx-value__num" data-wx="weather">--</span><span class="wx-value__label">{{ 'Present weather'|t }}</span></div>
+    </section>
+
+    <section class="wx-strip wx-strip--metar">
+      <h3 class="wx-strip__title">{{ 'METAR / Remarks'|t }}</h3>
+      <pre class="wx-strip__screen" data-wx="metar">…</pre>
+    </section>
+
+    <section class="wx-strip wx-strip--messages">
+      <h3 class="wx-strip__title">{{ 'System messages'|t }}</h3>
+      <pre class="wx-strip__screen" data-wx="messages">…</pre>
+    </section>
+
+  </div>
+
+  <footer class="wx-monitor__footer">
+    <span data-wx="observed">{{ 'Loading…'|t }}</span>
+    <span>{{ 'Weather: aviationweather.gov · For flight simulation use only.'|t }}</span>
+  </footer>
+</div>

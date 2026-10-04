@@ -43,3 +43,26 @@ ecz_vatsim.atc:
     _controller: '\Drupal\ecz_vatsim\Controller\VatsimStatsController::getAtc'
   requirements:
     _permission: 'access content'
+
+ecz_vatsim.weather_page:
+  path: '/dashboard/{icao}'
+  defaults:
+    _controller: '\Drupal\ecz_vatsim\Controller\WeatherController::page'
+    _title_callback: '\Drupal\ecz_vatsim\Controller\WeatherController::title'
+    icao: 'TBPB'
+  requirements:
+    _permission: 'access content'
+
+ecz_vatsim.weather_data:
+  path: '/api/weather/{icao}'
+  defaults:
+    _controller: '\Drupal\ecz_vatsim\Controller\WeatherController::data'
+  requirements:
+    _permission: 'access content'
+
+ecz_vatsim.weather_overview:
+  path: '/api/weather-overview'
+  defaults:
+    _controller: '\Drupal\ecz_vatsim\Controller\WeatherController::overview'
+  requirements:
+    _permission: 'access content'

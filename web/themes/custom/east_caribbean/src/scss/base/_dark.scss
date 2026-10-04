@@ -61,4 +61,29 @@ html[data-theme="dark"] {
   --nav-bg: rgba(14, 27, 46, 0.8);
   --nav-border: rgba(30, 42, 58, 0.8);
   --nav-dropdown-bg: rgba(30, 42, 58, 0.95);
+
+  /* Weather dashboard (pages/_weather-dashboard.scss): dark mode overrides */
+  --wx-bezel: #{$wx-dark-bezel};
+  --wx-panel: #{$wx-dark-panel};
+  --wx-screen: #{$wx-dark-screen};
+  --wx-line: #{$wx-dark-line};
+  --wx-edge: #{$wx-dark-edge};
+  --wx-shadow: #{$wx-dark-shadow};
+  --wx-text: #{$wx-dark-text};
+  --wx-label: #{$wx-dark-label};
+  --wx-table-text: #{$wx-dark-table-text};
+  --wx-head: #{$wx-dark-head};
+  --wx-footer: #{$wx-dark-footer};
+  --wx-row-line: #{$wx-dark-row-line};
+  --wx-row-alt: #{$wx-dark-row-alt};
+  --wx-row-hover: #{$wx-dark-row-hover};
+  --wx-row-current: #{$wx-dark-row-current};
+  --wx-face: #{$wx-dark-face};
+  --wx-face-stroke: #{$wx-dark-face-stroke};
+  --wx-dial-label: #{$wx-dark-dial-label};
+  --wx-pointer: #{$wx-dark-pointer};
+  --wx-gust: #{$wx-dark-console};
+  --wx-console: #{$wx-dark-console};
+  --wx-glow: #{$wx-dark-glow};
+  --wx-atis: #{$wx-dark-atis};
 }

@@ -34,3 +34,31 @@ $dark-shadow: rgba(0, 0, 0, 0.45);
 $status-auth: #7FBE48;  // green - authorised
 $status-solo: #F59E0B;  // amber - solo
 $status-tier2: #6366F1; // indigo - tier 2
+
+/* ------------------------------------------
+   WEATHER DASHBOARD (pages/_weather-dashboard.scss)
+   Dark mode: the tower-console look. Shared colours are in _light-palette.scss.
+   ------------------------------------------ */
+
+$wx-dark-bezel: #2b3035;
+$wx-dark-panel: #1d2125;
+$wx-dark-screen: #07090a;
+$wx-dark-line: #3c434a;
+$wx-dark-edge: #16191c;
+$wx-dark-shadow: rgba(0, 0, 0, 0.35);
+$wx-dark-text: #f3f5f6;
+$wx-dark-label: #a3adb6;
+$wx-dark-table-text: #dfe5ea;
+$wx-dark-head: #2a2f35;
+$wx-dark-footer: #202428;
+$wx-dark-row-line: #2c3238;
+$wx-dark-row-alt: rgba(255, 255, 255, 0.025);
+$wx-dark-row-hover: rgba(44, 90, 146, 0.35);
+$wx-dark-row-current: rgba(44, 90, 146, 0.6);
+$wx-dark-face: #07090a;
+$wx-dark-face-stroke: #444b52;
+$wx-dark-dial-label: #9aa4ad;
+$wx-dark-pointer: #fff;
+$wx-dark-console: #5ee37a;        // also used for gust text
+$wx-dark-glow: rgba(94, 227, 122, 0.35);
+$wx-dark-atis: #f2c230;

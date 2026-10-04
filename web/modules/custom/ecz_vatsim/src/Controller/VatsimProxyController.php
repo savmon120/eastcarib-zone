@@ -62,6 +62,25 @@ class VatsimProxyController extends ControllerBase {
                 }
             }
 
+            // Filter ATIS stations
+            $filtered_atis = [];
+            if (!empty($raw_data['atis']) && is_array($raw_data['atis'])) {
+                foreach ($raw_data['atis'] as $atis) {
+                    $callsign = strtoupper($atis['callsign'] ?? '');
+                    foreach ($target_prefixes as $prefix) {
+                        if (strpos($callsign, $prefix) === 0) {
+                            $filtered_atis[] = [
+                                'callsign' => $atis['callsign'],
+                                'frequency' => $atis['frequency'] ?? '',
+                                'code' => $atis['atis_code'] ?? NULL,
+                                'text' => implode(' ', $atis['text_atis'] ?? []),
+                            ];
+                            break;
+                        }
+                    }
+                }
+            }
+
             if (!empty($raw_data['pilots']) && is_array($raw_data['pilots'])) {
                 foreach ($raw_data['pilots'] as $pilot) {
                     if (empty($pilot['flight_plan'])) {
@@ -106,6 +125,7 @@ class VatsimProxyController extends ControllerBase {
 
             $payload = [
                 'controllers' => $filtered_controllers,
+                'atis' => $filtered_atis,
                 'inbounds' => $inbounds,
                 'outbounds' => $outbounds,
             ];

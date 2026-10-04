@@ -34,3 +34,14 @@ lucide:
     js/lucide-init.js: {}
   dependencies:
     - core/drupal
+
+weather:
+  css:
+    component:
+      https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css: { type: external, minified: true }
+  js:
+    https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js: { type: external, minified: true }
+    js/weather-dashboard.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
