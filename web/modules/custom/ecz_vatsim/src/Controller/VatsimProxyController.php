@@ -54,6 +54,9 @@ class VatsimProxyController extends ControllerBase {
 
                     if ($matches && $is_not_obs) {
                         $filtered_controllers[] = [
+                            // Public in the VATSIM feed too; lets the weather
+                            // dashboard follow the logged-in controller.
+                            'cid' => $controller['cid'] ?? NULL,
                             'callsign' => $controller['callsign'],
                             'name' => $controller['name'],
                             'frequency' => $controller['frequency'],
@@ -130,7 +133,10 @@ class VatsimProxyController extends ControllerBase {
                 'outbounds' => $outbounds,
             ];
 
-            \Drupal::cache()->set($cid, $payload, time() + 60);
+            // Cache for the configured refresh interval, so the server never
+            // holds data longer than clients wait between polls.
+            $ttl = max(15, (int) ($config->get('refresh_rate') ?: 60));
+            \Drupal::cache()->set($cid, $payload, time() + $ttl);
 
             return new JsonResponse($payload);
 

@@ -9,13 +9,11 @@
 
     const pad = (n, len = 2) => String(n).padStart(len, '0');
 
-    // Point on the dial for a compass bearing (0 = up, clockwise).
     function polar(deg, r) {
         const rad = (deg - 90) * Math.PI / 180;
         return [100 + r * Math.cos(rad), 100 + r * Math.sin(rad)];
     }
 
-    // Ring segment (annulus sector) between two bearings.
     function sectorPath(from, to, r1, r2) {
         const [ax, ay] = polar(from, r2);
         const [bx, by] = polar(to, r2);
@@ -31,10 +29,8 @@
         return node;
     }
 
-    // Angular distance between two bearings, 0–180.
     const angleDiff = (a, b) => Math.abs(((a - b + 540) % 360) - 180);
 
-    // Whether a bearing lies inside a clockwise sector (e.g. 350V030).
     const inSector = (deg, from, to) => ((deg - from + 360) % 360) <= ((to - from + 360) % 360);
 
     function speedZone(kt) {
@@ -50,7 +46,6 @@
         return vis.statute_miles ? `${vis.statute_miles} SM` : '--';
     }
 
-    // Cloud groups straight from the raw report, so CB/TCU are kept.
     function cloudGroups(rawMetar) {
         const groups = rawMetar.match(/\b(FEW|SCT|BKN|OVC|VV)(\d{3}|\/{3})(CB|TCU)?\b/g);
         if (groups) return groups.join(' ');
@@ -64,7 +59,6 @@
         return `${dir}/${pad(wind.speed)}KT`;
     }
 
-    // Breaks the TAF onto a new line at each change group.
     function formatTaf(taf) {
         return taf.replace(/\s+(?=FM\d{6}|BECMG|PROB\d{2}|(?<!PROB\d{2}\s)TEMPO)/g, '\n    ');
     }
@@ -78,7 +72,6 @@
             root.dataset.initialized = 'true';
 
             const settings = drupalSettings.eczWeather || {};
-            // Changes when switching airports in place (see switchAirport()).
             let icao = settings.icao || root.dataset.icao;
             const refreshRate = (settings.refreshRate || 300) * 1000;
             const el = (name) => root.querySelector(`[data-wx="${name}"]`);
@@ -147,10 +140,7 @@
                 select.addEventListener('change', () => switchAirport(select.value));
             }
 
-            // Switches airport without reloading the page. A page load would
-            // drop the browser out of fullscreen, so update everything in
-            // place and only change the URL (back/forward still work).
-            function switchAirport(next, pushHistory = true) {
+            function switchAirport(next, historyMode = 'push') {
                 if (!next || next === icao) return;
                 const previous = icao;
                 icao = next;
@@ -160,14 +150,14 @@
                 el('name').textContent = '';
                 el('observed').textContent = Drupal.t('Loading…');
                 observedAt = null;
-                // Dim the previous airport's readings until the new ones arrive.
                 root.classList.add('is-switching');
                 document.title = document.title.replace(previous, icao);
-                if (pushHistory) {
+                if (historyMode === 'push') {
                     window.history.pushState({ icao }, '', Drupal.url(`dashboard/${icao}`));
+                } else if (historyMode === 'replace') {
+                    window.history.replaceState({ icao }, '', Drupal.url(`dashboard/${icao}`));
                 }
                 if (lastOverview) renderOverview(lastOverview);
-                // Restart the refresh timer so the new airport gets a full interval.
                 stopPolling();
                 startPolling();
             }
@@ -175,7 +165,7 @@
             window.history.replaceState({ icao }, '');
             window.addEventListener('popstate', (event) => {
                 if (event.state && event.state.icao) {
-                    switchAirport(event.state.icao, false);
+                    switchAirport(event.state.icao, 'none');
                 }
             });
 
@@ -224,7 +214,6 @@
                     cell.classList.toggle('is-gust', !!wind.gust && kt > wind.speed && kt <= wind.gust);
                 });
 
-                // Light cells from the centre toward the side the wind comes from.
                 const xw = runway ? runway.crosswind : 0;
                 const litCells = Math.round(Math.min(Math.abs(xw), XWIND_MAX) * half / XWIND_MAX);
                 xwindCells.forEach(({ cell, offset }) => {
@@ -251,8 +240,6 @@
                     return;
                 }
                 if (map) {
-                    // Only recentre when the airport changed, so a refresh
-                    // doesn't undo the visitor's own panning.
                     const position = window.L.latLng(data.lat, data.lon);
                     if (!marker.getLatLng().equals(position)) {
                         map.setView(position, 10);
@@ -271,7 +258,6 @@
                     maxZoom: 17,
                     attribution: 'Imagery &copy; Esri',
                 }).addTo(map);
-                // Marker colours come from the theme (base/_light.scss).
                 const css = getComputedStyle(root);
                 marker = window.L.circleMarker([data.lat, data.lon], {
                     radius: 7,
@@ -288,7 +274,6 @@
                     lines.push(lastWeather.raw_taf ? formatTaf(lastWeather.raw_taf) : `NO TAF ISSUED FOR ${icao}`);
                 }
                 if (lastVatsim) {
-                    // coverage() only returns an ATIS while ATC is online.
                     const { atis } = coverage();
                     if (atis) {
                         lines.push(`ATIS ${atis.code || '-'} ${atis.callsign} ${atis.frequency} ${atis.text}`.trim());
@@ -297,8 +282,6 @@
                 el('messages').textContent = lines.join('\n') || '…';
             }
 
-            // Controllers covering this airport: its own positions plus its FIR's
-            // centre. ATIS only counts while one of them is online.
             function coverage() {
                 const prefixes = [`${icao}_`];
                 if (lastWeather && lastWeather.fir) {
@@ -317,8 +300,6 @@
                 const { atis, controllers } = coverage();
                 el('atis-code').textContent = atis && atis.code ? atis.code : '–';
 
-                // Light each position by its callsign suffix, e.g. TNCC_TWR or
-                // TNCC_N_APP → TWR / APP. CTR also covers the FIR's centre.
                 const online = {};
                 controllers.forEach(c => {
                     const suffix = c.callsign.toUpperCase().split('_').pop();
@@ -368,8 +349,31 @@
 
             function renderVatsim(data) {
                 lastVatsim = data;
+                followController(data);
                 renderStation();
                 renderMessages();
+            }
+
+            const myCid = String((drupalSettings.eczUser || {}).cid || '');
+            const airports = select ? [...select.options].map(o => o.value) : [];
+            let followedAirport = null;
+
+            function followController(data) {
+                if (!myCid) return;
+                const mine = (data.controllers || []).find(c => String(c.cid) === myCid);
+                if (!mine) {
+                    followedAirport = null;
+                    return;
+                }
+                const callsign = mine.callsign.toUpperCase();
+
+                const parts = callsign.split('_');
+                const isEnroute = ['CTR', 'FSS'].includes(parts[parts.length - 1]);
+                const airport = parts[0];
+                if (isEnroute || !airports.includes(airport) || airport === followedAirport) return;
+
+                followedAirport = airport;
+                switchAirport(airport, 'replace');
             }
 
             function renderOverview(data) {
@@ -417,7 +421,6 @@
                 const requested = icao;
                 try {
                     const data = await getJson(`api/weather/${requested}`);
-                    // Ignore a late response for an airport we've since left.
                     if (requested === icao) render(data);
                 } catch (error) {
                     if (requested !== icao) return;
@@ -430,22 +433,33 @@
 
             function refresh() {
                 fetchWeather();
-                getJson('api/vatsim/live').then(renderVatsim).catch(e => console.error('Error fetching VATSIM data:', e));
                 getJson('api/weather-overview').then(renderOverview).catch(e => console.error('Error fetching METAR overview:', e));
             }
 
+            function fetchVatsim() {
+                getJson('api/vatsim/live').then(renderVatsim).catch(e => console.error('Error fetching VATSIM data:', e));
+            }
+
+            const vatsimRate = (parseInt((drupalSettings.eczVatsim || {}).refreshRate, 10) || 60) * 1000;
             let intervalId = null;
+            let vatsimIntervalId = null;
 
             function startPolling() {
                 refresh();
+                fetchVatsim();
                 if (!intervalId) {
                     intervalId = setInterval(refresh, refreshRate);
+                }
+                if (!vatsimIntervalId) {
+                    vatsimIntervalId = setInterval(fetchVatsim, vatsimRate);
                 }
             }
 
             function stopPolling() {
                 clearInterval(intervalId);
+                clearInterval(vatsimIntervalId);
                 intervalId = null;
+                vatsimIntervalId = null;
             }
 
             setInterval(tickClock, 1000);
