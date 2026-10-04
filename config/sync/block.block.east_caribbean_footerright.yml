@@ -6,6 +6,7 @@ dependencies:
     - 'block_content:basic:2c50ee57-efa5-4be9-8567-affc83dab082'
   module:
     - block_content
+    - system
   theme:
     - east_caribbean
 id: east_caribbean_footerright
@@ -20,4 +21,8 @@ settings:
   label_display: '0'
   provider: block_content
   view_mode: full
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '/dashboard*'

@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - fir_sso
+    - system
   theme:
     - east_caribbean
 id: east_caribbean_vatsimusermenu
@@ -17,4 +18,8 @@ settings:
   label: 'VATSIM User Menu'
   label_display: '0'
   provider: fir_sso
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '/dashboard*'
