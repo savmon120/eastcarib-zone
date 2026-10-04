@@ -14908,6 +14908,12 @@ html[data-theme=dark] .wx-monitor__theme .wx-monitor__theme-dark {
 html[data-theme=dark] .wx-monitor__theme .wx-monitor__theme-light {
   display: block;
 }
+.wx-monitor__grid {
+  transition: opacity 0.2s ease;
+}
+.wx-monitor.is-switching .wx-monitor__grid {
+  opacity: 0.45;
+}
 .view-wiki-main-page .view-content {
   background-color: var(--bs-body-bg) !important;
   width: 100%;

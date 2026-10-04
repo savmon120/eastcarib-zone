@@ -78,14 +78,17 @@
             root.dataset.initialized = 'true';
 
             const settings = drupalSettings.eczWeather || {};
-            const icao = settings.icao || root.dataset.icao;
+            // Changes when switching airports in place (see switchAirport()).
+            let icao = settings.icao || root.dataset.icao;
             const refreshRate = (settings.refreshRate || 300) * 1000;
             const el = (name) => root.querySelector(`[data-wx="${name}"]`);
 
             let observedAt = null;
             let lastWeather = null;
             let lastVatsim = null;
+            let lastOverview = null;
             let map = null;
+            let marker = null;
 
             // ---- Static parts of the instruments --------------------------
 
@@ -124,17 +127,6 @@
                 xwindCells.push({ cell, offset });
             }
 
-            // Back returns to the site page the visitor came from; switching
-            // airports doesn't count, so skip other dashboard pages.
-            try {
-                const referrer = new URL(document.referrer);
-                if (referrer.origin === window.location.origin && !referrer.pathname.startsWith(Drupal.url('dashboard'))) {
-                    el('back').href = referrer.href;
-                }
-            } catch (e) {
-                // No or invalid referrer: keep the homepage link.
-            }
-
             const fullscreen = el('fullscreen');
             if (document.fullscreenEnabled) {
                 fullscreen.hidden = false;
@@ -152,10 +144,40 @@
 
             const select = root.querySelector('#weather-airport-select');
             if (select) {
-                select.addEventListener('change', () => {
-                    window.location.href = Drupal.url(`dashboard/${select.value}`);
-                });
+                select.addEventListener('change', () => switchAirport(select.value));
             }
+
+            // Switches airport without reloading the page. A page load would
+            // drop the browser out of fullscreen, so update everything in
+            // place and only change the URL (back/forward still work).
+            function switchAirport(next, pushHistory = true) {
+                if (!next || next === icao) return;
+                const previous = icao;
+                icao = next;
+                root.dataset.icao = icao;
+                if (select) select.value = icao;
+                el('icao').textContent = icao;
+                el('name').textContent = '';
+                el('observed').textContent = Drupal.t('Loading…');
+                observedAt = null;
+                // Dim the previous airport's readings until the new ones arrive.
+                root.classList.add('is-switching');
+                document.title = document.title.replace(previous, icao);
+                if (pushHistory) {
+                    window.history.pushState({ icao }, '', Drupal.url(`dashboard/${icao}`));
+                }
+                if (lastOverview) renderOverview(lastOverview);
+                // Restart the refresh timer so the new airport gets a full interval.
+                stopPolling();
+                startPolling();
+            }
+
+            window.history.replaceState({ icao }, '');
+            window.addEventListener('popstate', (event) => {
+                if (event.state && event.state.icao) {
+                    switchAirport(event.state.icao, false);
+                }
+            });
 
             // ---- Rendering ------------------------------------------------
 
@@ -228,7 +250,16 @@
                     container.textContent = `${data.lat.toFixed(3)}, ${data.lon.toFixed(3)}`;
                     return;
                 }
-                if (map) return;
+                if (map) {
+                    // Only recentre when the airport changed, so a refresh
+                    // doesn't undo the visitor's own panning.
+                    const position = window.L.latLng(data.lat, data.lon);
+                    if (!marker.getLatLng().equals(position)) {
+                        map.setView(position, 10);
+                        marker.setLatLng(position).setTooltipContent(data.icao);
+                    }
+                    return;
+                }
 
                 map = window.L.map(container, {
                     center: [data.lat, data.lon],
@@ -242,7 +273,7 @@
                 }).addTo(map);
                 // Marker colours come from the theme (base/_light.scss).
                 const css = getComputedStyle(root);
-                window.L.circleMarker([data.lat, data.lon], {
+                marker = window.L.circleMarker([data.lat, data.lon], {
                     radius: 7,
                     color: css.getPropertyValue('--wx-on-color').trim(),
                     weight: 2,
@@ -303,6 +334,7 @@
 
             function render(data) {
                 el('error').hidden = true;
+                root.classList.remove('is-switching');
                 observedAt = data.observed;
                 lastWeather = data;
 
@@ -341,6 +373,7 @@
             }
 
             function renderOverview(data) {
+                lastOverview = data;
                 const body = el('overview');
                 body.replaceChildren();
                 (data.airports || []).forEach(a => {
@@ -366,9 +399,7 @@
                         td.append(String(text));
                         tr.appendChild(td);
                     });
-                    tr.addEventListener('click', () => {
-                        window.location.href = Drupal.url(`dashboard/${a.icao}`);
-                    });
+                    tr.addEventListener('click', () => switchAirport(a.icao));
                     body.appendChild(tr);
                 });
             }
@@ -383,9 +414,14 @@
             }
 
             async function fetchWeather() {
+                const requested = icao;
                 try {
-                    render(await getJson(`api/weather/${icao}`));
+                    const data = await getJson(`api/weather/${requested}`);
+                    // Ignore a late response for an airport we've since left.
+                    if (requested === icao) render(data);
                 } catch (error) {
+                    if (requested !== icao) return;
+                    root.classList.remove('is-switching');
                     const box = el('error');
                     box.textContent = Drupal.t('Weather unavailable: @msg', { '@msg': error.message });
                     box.hidden = false;

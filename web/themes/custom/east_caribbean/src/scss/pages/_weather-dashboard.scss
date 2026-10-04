@@ -616,3 +616,11 @@ html[data-theme="dark"] .wx-monitor__theme {
   .wx-monitor__theme-dark { display: none; }
   .wx-monitor__theme-light { display: block; }
 }
+
+/* Switching airports in place: dim the old readings until the new ones load */
+
+.wx-monitor__grid {
+  transition: opacity 0.2s ease;
+
+  .wx-monitor.is-switching & { opacity: 0.45; }
+}
