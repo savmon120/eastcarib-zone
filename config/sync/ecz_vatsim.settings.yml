@@ -3,3 +3,6 @@ bookings_url: ''
 prefixes: 'TNCA, TNCB, TNCC, TNCM, TQPF, TNCS, TNCE, TNCF, TAPA, TBPB, TFFF, TFFR, TGPY, TVSA, TLPL, TDPD, TKPK, TTPP, TTZP'
 refresh_rate: '30'
 events_url: 'https://my.vatsim.net/api/v2/events/view/division/CAR'
+fir_airports: |-
+  TNCF: TNCA, TNCC, TNCB
+  TTZP: TBPB, TTPP, TLPL, TGPY
