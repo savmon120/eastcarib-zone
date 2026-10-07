@@ -21,6 +21,9 @@ libraries:
   - east_caribbean/live_operations
   - east_caribbean/theme-toggle
   - east_caribbean/lucide
+libraries-extend:
+  toc_node/toc_node:
+    - east_caribbean/wiki-toc
 ckeditor5-stylesheets:
   - build/css/main.style.css
 version: 6.0.8

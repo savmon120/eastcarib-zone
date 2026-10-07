@@ -1,0 +1,686 @@
+<?php
+
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Url;
+use Drupal\Component\Utility\Html;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function toc_node_theme() {
+  return [
+    'toc_node_links' => [
+      'variables' => ['links' => NULL],
+      'template' => 'toc-node-links',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function toc_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (in_array($form_id, ['node_type_add_form', 'node_type_edit_form'])) {
+    _toc_node_node_type_form_alter($form, $form_state);
+    return;
+  }
+
+  // Match node add/edit forms (base form id 'node_form'). A generic
+  // /^node_\w+_form$/ pattern also matches the bulk-delete confirm form
+  // ('node_delete_multiple_confirm_form'), which is not an entity form.
+  if (($form_state->getBuildInfo()['base_form_id'] ?? NULL) === 'node_form') {
+    _toc_node_node_form_alter($form, $form_state);
+  }
+}
+
+/**
+ * Alter node type add/edit forms.
+ */
+function _toc_node_node_type_form_alter(&$form, FormStateInterface $form_state) {
+  $node_type = $form_state->getFormObject()->getEntity();
+  if (!$node_type || !method_exists($node_type, 'getThirdPartySetting')) {
+    return;
+  }
+
+  $form['toc_node'] = [
+    '#type' => 'details',
+    '#title' => t('Table of contents'),
+    '#description' => t('Settings for adding TOC to nodes of this content type.'),
+    '#group' => 'additional_settings',
+    '#tree' => TRUE,
+  ];
+
+  $form['toc_node']['enabled'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable table of contents'),
+    '#default_value' => $node_type->getThirdPartySetting('toc_node', 'enabled', FALSE),
+  ];
+
+  $form['toc_node']['back_to_top_links'] = [
+    '#type' => 'select',
+    '#title' => t('Back to top links'),
+    '#default_value' => $node_type->getThirdPartySetting('toc_node', 'back_to_top_links', 0),
+    '#empty_option' => t('- Select -'),
+    '#options' => [
+      0 => t('Disabled - always'),
+      1 => t('Enabled - always'),
+      2 => t('Enabled - per node option'),
+      3 => t('Disabled - per node option'),
+    ],
+  ];
+
+  $form['toc_node']['level'] = [
+    '#type' => 'select',
+    '#title' => t('Level'),
+    '#description' => t('Up to what heading level to include.'),
+    '#default_value' => $node_type->getThirdPartySetting('toc_node', 'level', 2),
+    '#empty_option' => t('- Select -'),
+    '#options' => [2 => 'h2', 3 => 'h3', 4 => 'h4', 5 => 'h5', 6 => 'h6'],
+  ];
+
+  $form['toc_node']['styles'] = [
+    '#type' => 'checkboxes',
+    '#title' => t('Styles available'),
+    '#default_value' => $node_type->getThirdPartySetting('toc_node', 'styles', ['none', 'bullets', 'numbers']),
+    '#options' => ['none' => t('No TOC'), 'bullets' => t('Bullets'), 'numbers' => t('Numbered')],
+  ];
+
+  $form['toc_node']['style_default'] = [
+    '#type' => 'select',
+    '#title' => t('Display default'),
+    '#default_value' => $node_type->getThirdPartySetting('toc_node', 'style_default', 'bullets'),
+    '#empty_option' => t('- Select -'),
+    '#options' => ['none' => t('No TOC'), 'bullets' => t('Bullets'), 'numbers' => t('Numbered')],
+  ];
+
+  $form['#entity_builders'][] = '_toc_node_node_type_form_builder';
+}
+
+/**
+ * Entity builder for node type TOC settings.
+ */
+function _toc_node_node_type_form_builder($entity_type, $node_type, &$form, FormStateInterface $form_state) {
+  $values = $form_state->getValue('toc_node');
+  if (!is_array($values)) {
+    return;
+  }
+
+  $settings = [
+    'enabled' => (bool) ($values['enabled'] ?? FALSE),
+    'back_to_top_links' => (int) ($values['back_to_top_links'] ?? 0),
+    'level' => _toc_node_clamp_level($values['level'] ?? 2),
+    'styles' => array_values(array_filter($values['styles'] ?? [])),
+    'style_default' => _toc_node_valid_style($values['style_default'] ?? 'bullets'),
+  ];
+
+  foreach ($settings as $key => $value) {
+    $node_type->setThirdPartySetting('toc_node', $key, $value);
+  }
+}
+
+/**
+ * Get TOC settings for a node type.
+ */
+function _toc_node_type_settings($bundle) {
+  $node_type = \Drupal::entityTypeManager()->getStorage('node_type')->load($bundle);
+  if (!$node_type) {
+    return [];
+  }
+  return [
+    'enabled' => $node_type->getThirdPartySetting('toc_node', 'enabled', FALSE),
+    'back_to_top_links' => $node_type->getThirdPartySetting('toc_node', 'back_to_top_links', 0),
+    'level' => $node_type->getThirdPartySetting('toc_node', 'level', 2),
+    'styles' => $node_type->getThirdPartySetting('toc_node', 'styles', ['none', 'bullets', 'numbers']),
+    'style_default' => $node_type->getThirdPartySetting('toc_node', 'style_default', 'bullets'),
+  ];
+}
+
+/**
+ * Alter node edit forms.
+ */
+function _toc_node_node_form_alter(&$form, FormStateInterface $form_state) {
+  $form_object = $form_state->getFormObject();
+  if (!$form_object instanceof EntityFormInterface) {
+    return;
+  }
+  $node = $form_object->getEntity();
+  if (!$node instanceof NodeInterface) {
+    return;
+  }
+
+  $type_settings = _toc_node_type_settings($node->bundle());
+  if (empty($type_settings['enabled'])) {
+    return;
+  }
+
+  $options_all = [
+    'none' => t('No TOC'),
+    'bullets' => t('Bullets'),
+    'numbers' => t('Numbered'),
+  ];
+  $options_enabled = $type_settings['styles'];
+  $options = array_intersect_key($options_all, array_flip($options_enabled));
+  $style = $type_settings['style_default'];
+  $back_to_top_links_defaults = $type_settings['back_to_top_links'];
+  $level = $type_settings['level'];
+
+  $back_to_top_checked = match ($back_to_top_links_defaults) {
+    1, 2 => 1,
+    default => 0,
+  };
+
+  if (!$node->isNew()) {
+    $node_settings = \Drupal::database()->select('toc_node', 'tn')
+      ->fields('tn')
+      ->condition('nid', (int) $node->id())
+      ->execute()
+      ->fetchAssoc();
+
+    if (!empty($node_settings)) {
+      if (isset($options[$node_settings['style']])) {
+        $style = $node_settings['style'];
+        $level = $node_settings['level'];
+      }
+      // Use saved per-node back_links value when editing existing nodes.
+      if ($back_to_top_links_defaults >= 2) {
+        $back_to_top_checked = (int) $node_settings['back_links'];
+      }
+    }
+  }
+
+  $form['toc_node'] = [
+    '#type' => 'details',
+    '#title' => t('Table of contents'),
+    '#group' => 'advanced',
+    '#tree' => TRUE,
+    '#weight' => 100,
+  ];
+
+  $form['toc_node']['style'] = [
+    '#type' => 'select',
+    '#title' => t('TOC Display'),
+    '#default_value' => $style,
+    '#empty_option' => t('- Select -'),
+    '#options' => $options,
+  ];
+
+  $form['toc_node']['back_links'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Back to top links'),
+    '#default_value' => $back_to_top_checked,
+  ];
+
+  if ($back_to_top_links_defaults < 2) {
+    $form['toc_node']['back_links']['#access'] = FALSE;
+  }
+
+  $form['toc_node']['level'] = [
+    '#type' => 'select',
+    '#title' => t('Level'),
+    '#description' => t('Up to what heading level to include.'),
+    '#default_value' => $level,
+    '#empty_option' => t('- Select -'),
+    '#options' => [2 => 'h2', 3 => 'h3', 4 => 'h4', 5 => 'h5', 6 => 'h6'],
+  ];
+
+  $form['#entity_builders'][] = '_toc_node_node_form_builder';
+}
+
+/**
+ * Entity builder for node TOC settings.
+ */
+function _toc_node_node_form_builder($entity_type, $node, &$form, FormStateInterface $form_state) {
+  if (!$node instanceof NodeInterface) {
+    return;
+  }
+
+  $type_settings = _toc_node_type_settings($node->bundle());
+  if (empty($type_settings['enabled'])) {
+    return;
+  }
+
+  $values = $form_state->getValue('toc_node');
+  if (!is_array($values)) {
+    return;
+  }
+
+  $node->toc_node_style = $values['style'] ?? $type_settings['style_default'];
+  $node->toc_node_level = $values['level'] ?? $type_settings['level'];
+  // Only set per-node back_to_top when the checkbox is visible (modes 2/3).
+  if ($type_settings['back_to_top_links'] >= 2) {
+    $node->toc_node_back_to_top_links = (int) ($values['back_links'] ?? 0);
+  }
+}
+
+/**
+ * Validate a TOC display style against the supported whitelist.
+ */
+function _toc_node_valid_style($style, $default = 'bullets'): string {
+  $style = (string) $style;
+  if (!in_array($style, ['none', 'bullets', 'numbers'], TRUE)) {
+    return (string) $default;
+  }
+  return $style;
+}
+
+/**
+ * Clamp a heading level to the supported range (h2 to h6).
+ */
+function _toc_node_clamp_level($level): int {
+  return min(6, max(2, (int) $level));
+}
+
+/**
+ * Build fields array for toc_node database table.
+ */
+function _toc_node_build_fields(NodeInterface $node): array {
+  $type_settings = _toc_node_type_settings($node->bundle());
+  $fields = [
+    'nid' => (int) $node->id(),
+    'style' => _toc_node_valid_style($node->toc_node_style ?? 'bullets'),
+    'level' => _toc_node_clamp_level($node->toc_node_level ?? 2),
+  ];
+  if (($type_settings['back_to_top_links'] ?? 0) >= 2) {
+    $fields['back_links'] = (int) ($node->toc_node_back_to_top_links ?? 0);
+  }
+  else {
+    $fields['back_links'] = (int) ($type_settings['back_to_top_links'] ?? 0);
+  }
+  return $fields;
+}
+
+/**
+ * Resolve effective Back to top value considering content type mode.
+ */
+function _toc_node_back_to_top(NodeInterface $node, array $type_settings): int {
+  $mode = (int) ($type_settings['back_to_top_links'] ?? 0);
+  // Modes 0/1: always disabled/enabled, ignore per-node.
+  if ($mode < 2) {
+    return $mode;
+  }
+  // Modes 2/3: use per-node if set, else mode default (2=1, 3=0).
+  return isset($node->toc_node_back_to_top_links)
+    ? (int) $node->toc_node_back_to_top_links
+    : (int) ($mode === 2);
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function toc_node_node_insert(NodeInterface $node) {
+  if (!isset($node->toc_node_style)) {
+    return;
+  }
+
+  \Drupal::database()->insert('toc_node')
+    ->fields(_toc_node_build_fields($node))
+    ->execute();
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function toc_node_node_update(NodeInterface $node) {
+  if (!isset($node->toc_node_style)) {
+    \Drupal::database()->delete('toc_node')
+      ->condition('nid', (int) $node->id())
+      ->execute();
+    return;
+  }
+
+  \Drupal::database()->merge('toc_node')
+    ->key('nid', (int) $node->id())
+    ->fields(_toc_node_build_fields($node))
+    ->execute();
+}
+
+/**
+ * Implements hook_node_delete().
+ */
+function toc_node_node_delete(NodeInterface $node) {
+  \Drupal::database()->delete('toc_node')
+    ->condition('nid', (int) $node->id())
+    ->execute();
+}
+
+/**
+ * Implements hook_node_load().
+ */
+function toc_node_node_load(array $entities) {
+  $type_settings_cache = [];
+  $nids = [];
+
+  foreach ($entities as $node) {
+    $bundle = $node->bundle();
+    if (!isset($type_settings_cache[$bundle])) {
+      $settings = _toc_node_type_settings($bundle);
+      $type_settings_cache[$bundle] = $settings['enabled'] ?? FALSE;
+    }
+    if (empty($type_settings_cache[$bundle])) {
+      continue;
+    }
+
+    $nids[] = $node->id();
+  }
+
+  if (empty($nids)) {
+    return;
+  }
+
+  $records = \Drupal::database()->select('toc_node', 'tn')
+    ->fields('tn')
+    ->condition('nid', $nids, 'IN')
+    ->execute()
+    ->fetchAllAssoc('nid');
+
+  foreach ($entities as $node) {
+    $nid = (int) $node->id();
+    if (isset($records[$nid])) {
+      $record = $records[$nid];
+      $node->toc_node_style = $record->style;
+      $node->toc_node_level = $record->level;
+      $node->toc_node_back_to_top_links = $record->back_links;
+    }
+  }
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function toc_node_node_view(array &$build, NodeInterface $node, $display, $view_mode) {
+  if ($view_mode !== 'full') {
+    return;
+  }
+
+  $type_settings = _toc_node_type_settings($node->bundle());
+  if (empty($type_settings['enabled'])) {
+    return;
+  }
+
+  $style = $node->toc_node_style ?? $type_settings['style_default'];
+
+  $route_match = \Drupal::routeMatch();
+  if ($route_match->getRouteName() !== 'entity.node.canonical') {
+    return;
+  }
+
+  $current = $route_match->getParameter('node');
+  if (!$current instanceof NodeInterface || $current->id() !== $node->id()) {
+    return;
+  }
+
+  $build['#attached']['library'][] = 'toc_node/toc_node';
+
+  $back_to_top = _toc_node_back_to_top($node, $type_settings);
+  if ($back_to_top) {
+    $build['#attached']['library'][] = 'toc_node/back_to_top';
+  }
+
+  // The post-render TOC output depends on the current request path (links use
+  // the path alias), so the node render must vary per URL.
+  $build['#cache']['contexts'][] = 'url.path';
+
+  $build['#toc_node_style'] = _toc_node_valid_style($style);
+  $build['#post_render'][] = '\Drupal\toc_node\Render\TocNodeRenderCallbacks::postRender';
+}
+
+/**
+ * Load HTML content into a DOM document for processing.
+ *
+ * Uses the XML encoding hint so UTF-8 content is decoded correctly, and
+ * suppresses libxml diagnostics that are expected when parsing fragments.
+ *
+ * @return \DOMDocument|null
+ *   The parsed document, or NULL if the content could not be parsed.
+ */
+function _toc_node_load_dom($content): ?DOMDocument {
+  $dom_document = new DOMDocument('1.0', 'UTF-8');
+  $previous = libxml_use_internal_errors(TRUE);
+
+  $loaded = $dom_document->loadHTML(
+    '<?xml encoding="UTF-8"><div id="toc-node">' . $content . '</div>',
+    LIBXML_NOERROR | LIBXML_NOWARNING | LIBXML_NONET
+  );
+
+  libxml_clear_errors();
+  libxml_use_internal_errors($previous);
+
+  return $loaded ? $dom_document : NULL;
+}
+
+/**
+ * Serialize the children of the TOC wrapper element back to HTML.
+ */
+function _toc_node_dom_inner_html(DOMDocument $dom_document): string {
+  $wrapper = NULL;
+  foreach ($dom_document->getElementsByTagName('div') as $div) {
+    if ($div->getAttribute('id') === 'toc-node') {
+      $wrapper = $div;
+      break;
+    }
+  }
+
+  if ($wrapper === NULL) {
+    return '';
+  }
+
+  $html = '';
+  foreach ($wrapper->childNodes as $child) {
+    $html .= (string) $dom_document->saveHTML($child);
+  }
+  return $html;
+}
+
+/**
+ * Generate the back-to-top button markup.
+ */
+function _toc_node_back_to_top_button(): string {
+  return '<button id="toc-back-to-top" class="toc-back-to-top" type="button" aria-label="' . t('Back to top') . '">' . t('Back to Top') . '</button>';
+}
+
+/**
+ * Generate the TOC.
+ *
+ * @param string $content
+ *   The rendered HTML content.
+ * @param string $style
+ *   The display style ('none', 'bullets' or 'numbers').
+ * @param int $heading_levels
+ *   Maximum heading depth to process.
+ * @param int $back_to_top_links
+ *   Whether to append a back-to-top button.
+ * @param string $return
+ *   'all' appends the TOC list to the modified content, 'toc_list' returns
+ *   only the list, 'anchors_only' adds anchors without any TOC list.
+ * @param bool $anchor_all
+ *   Whether to add anchors to every heading (h2-h6) regardless of the list
+ *   depth. Ensures block-placed TOCs can link to deeper headings even when
+ *   the node's own TOC is limited to a shallower level.
+ */
+function _toc_node_generate($content, $style, $heading_levels, $back_to_top_links, $return = 'all', $anchor_all = FALSE) {
+  $style = _toc_node_valid_style($style);
+  $heading_levels = _toc_node_clamp_level($heading_levels);
+  $anchor_levels = $anchor_all ? 6 : $heading_levels;
+  $links = [];
+  $anchor_count = 0;
+
+  $dom_document = _toc_node_load_dom($content);
+  if ($dom_document === NULL) {
+    return ($return === 'toc_list') ? '' : $content;
+  }
+
+  for ($level = 2; $level <= $anchor_levels; $level++) {
+    _toc_node_add_anchors($dom_document, $anchor_count, $links, $level, $level <= $heading_levels);
+  }
+
+  // No headings at all: nothing to do.
+  if ($anchor_count === 0) {
+    return ($return === 'toc_list') ? '' : $content;
+  }
+
+  // anchors_only: add anchors and remove marker tags, but do not generate
+  // a TOC list or back-to-top button. Used when node style is 'none'.
+  if ($return === 'anchors_only') {
+    _toc_node_remove_toc_tags($dom_document);
+    return _toc_node_dom_inner_html($dom_document);
+  }
+
+  if (empty($links)) {
+    // Only deeper headings were found (anchor_all): still anchor them so
+    // block TOCs can link, but omit the inline list.
+    _toc_node_remove_toc_tags($dom_document);
+    return ($return === 'toc_list') ? '' : _toc_node_dom_inner_html($dom_document);
+  }
+
+  $toc = _toc_node_links($dom_document, $links, $style);
+  _toc_node_remove_toc_tags($dom_document);
+
+  $output = _toc_node_dom_inner_html($dom_document);
+
+  if ($return === 'toc_list') {
+    return $toc;
+  }
+
+  if (!empty($toc)) {
+    $output = $toc . $output;
+  }
+
+  if (!empty($back_to_top_links)) {
+    $output .= _toc_node_back_to_top_button();
+  }
+
+  return $output;
+}
+
+/**
+ * Add anchors and gather link data.
+ *
+ * @param \DOMDocument $dom_document
+ *   The document being processed.
+ * @param int $anchor_count
+ *   Running counter used to generate unique anchor ids.
+ * @param array $links
+ *   Collected TOC list entries, keyed by anchor id.
+ * @param int $heading_level
+ *   The heading level ('h' . $heading_level) being processed.
+ * @param bool $collect
+ *   Whether this heading should be recorded in the TOC list. Anchors and
+ *   list markers are always added so deeper headings remain linkable.
+ */
+function _toc_node_add_anchors(&$dom_document, &$anchor_count, &$links, $heading_level, $collect = TRUE) {
+  $headers = $dom_document->getElementsByTagName('h' . $heading_level);
+
+  foreach ($headers as $header) {
+    $anchor_count++;
+
+    $header->setAttribute('id', 'toc-' . $anchor_count);
+
+    $classes = $header->getAttribute('class');
+    $header->setAttribute('class', trim($classes . ' toc-headings'));
+
+    $toc_tag = $dom_document->createElement('toc');
+    $toc_tag->setAttribute('class', 'toc-' . $anchor_count);
+    $header->appendChild($toc_tag);
+
+    if ($collect) {
+      $links['toc-' . $anchor_count]['label'] = trim($header->nodeValue);
+      $links['toc-' . $anchor_count]['level'] = $heading_level;
+    }
+  }
+}
+
+/**
+ * Create the TOC links.
+ */
+function _toc_node_links($dom_document, $links_data, $style) {
+  static $path_cache = [];
+  $style = _toc_node_valid_style($style);
+
+  $request_uri = \Drupal::request()->getRequestUri();
+  $request_path = parse_url($request_uri, PHP_URL_PATH) ?: $request_uri;
+  if (!isset($path_cache[$request_path])) {
+    $path_cache[$request_path] = \Drupal::service('path_alias.manager')
+      ->getAliasByPath($request_path);
+  }
+  $path = $path_cache[$request_path] ?: $request_path;
+
+  $toc_number = [];
+
+  $toc_tags = $dom_document->getElementsByTagName('toc');
+
+  $links = [];
+  foreach ($toc_tags as $toc_tag) {
+    $toc_id_node = $toc_tag->attributes->getNamedItem('class');
+    if (!$toc_id_node) {
+      continue;
+    }
+    $toc_id = $toc_id_node->value;
+    if (!isset($links_data[$toc_id])) {
+      continue;
+    }
+
+    $link = $links_data[$toc_id];
+    $toc_level = $link['level'] - 1;
+    $toc_level_count = count($toc_number);
+
+    for ($i = $link['level']; $i <= $toc_level_count; $i++) {
+      unset($toc_number[$i]);
+    }
+
+    if (empty($toc_number[$toc_level])) {
+      $toc_number[$toc_level] = 1;
+    }
+    else {
+      $toc_number[$toc_level]++;
+    }
+
+    $link_number = implode('.', $toc_number);
+    $data = '';
+
+    if ($style === 'numbers') {
+      $data .= '<span class="toc-number">' . $link_number . '</span> ';
+    }
+
+    $data .= '<span class="toc-text">' . Html::escape($link['label']) . '</span>';
+
+    $link_generator = \Drupal::service('link_generator');
+    $link_html = $link_generator->generate(Markup::create($data), Url::fromUserInput($path, ['fragment' => $toc_id]));
+    $links[] = [
+      'html' => $link_html,
+      'level' => $toc_level,
+    ];
+  }
+
+  if (empty($links)) {
+    return '';
+  }
+
+  $list_items = '';
+  foreach ($links as $item) {
+    $list_items .= '<li class="toc-node-level-' . $item['level'] . '">' . $item['html'] . '</li>';
+  }
+
+  $item_list_html = '<ul class="toc-node-' . $style . '">' . $list_items . '</ul>';
+
+  $links_render = [
+    '#theme' => 'toc_node_links',
+    '#links' => Markup::create($item_list_html),
+  ];
+  return \Drupal::service('renderer')->render($links_render);
+}
+
+/**
+ * Remove TOC tags used for ordering.
+ */
+function _toc_node_remove_toc_tags(&$dom_document) {
+  $toc_tags = [];
+  foreach ($dom_document->getElementsByTagName('toc') as $toc_tag) {
+    $toc_tags[] = $toc_tag;
+  }
+  foreach ($toc_tags as $toc_tag) {
+    $toc_tag->parentNode->removeChild($toc_tag);
+  }
+}

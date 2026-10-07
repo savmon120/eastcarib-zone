@@ -45,3 +45,10 @@ weather:
   dependencies:
     - core/drupal
     - core/drupalSettings
+
+wiki-toc:
+  js:
+    js/wiki-toc.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

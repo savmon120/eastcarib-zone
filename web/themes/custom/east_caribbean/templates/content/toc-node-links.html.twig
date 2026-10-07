@@ -1,0 +1,18 @@
+{#
+/**
+ * @file
+ * Theme override for the toc_node table of contents (wiki articles).
+ *
+ * A collapsible "Contents" box; the numbered/bulleted list itself (links) is
+ * built by the toc_node module. Styled in components/_wiki-toc.scss.
+ *
+ * Available variables:
+ * - links: The rendered TOC list.
+ */
+#}
+<nav class="table-of-contents-links wiki-toc" aria-label="{{ 'Table of contents'|t }}">
+  <details class="wiki-toc__details" open>
+    <summary class="wiki-toc__title">{{ 'Contents'|t }}</summary>
+    {{ links }}
+  </details>
+</nav>

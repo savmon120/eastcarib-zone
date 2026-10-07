@@ -15392,6 +15392,112 @@ html[data-theme=dark] body.node-type--wiki-article .node__content .media--type-i
   -webkit-filter: none !important;
   filter: none !important;
 }
+.wiki-toc {
+  max-width: 560px;
+  margin: 0 0 32px;
+  background-color: var(--bs-card-bg-alt);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 12px;
+}
+.wiki-toc__details {
+  padding: 14px 20px;
+}
+.wiki-toc__title {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--bs-secondary-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  list-style: none;
+}
+.wiki-toc__title::-webkit-details-marker {
+  display: none;
+}
+.wiki-toc__title::after {
+  width: 8px;
+  height: 8px;
+  margin-left: auto;
+  content: "";
+  border-right: 2px solid currentcolor;
+  border-bottom: 2px solid currentcolor;
+  transition: -webkit-transform 0.2s ease;
+  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.wiki-toc__details:not([open]) .wiki-toc__title::after {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.wiki-toc ul.toc-node-numbers,
+.wiki-toc ul.toc-node-bullets {
+  padding: 0;
+  margin: 12px 0 0;
+  list-style: none;
+}
+.wiki-toc li {
+  margin: 0;
+  line-height: 1.45;
+}
+.wiki-toc li.toc-node-level-1 {
+  padding-left: 0;
+  margin-top: 6px;
+  font-weight: 700;
+}
+.wiki-toc li.toc-node-level-2 {
+  padding-left: 22px;
+  font-size: 0.95em;
+}
+.wiki-toc li.toc-node-level-3 {
+  padding-left: 44px;
+  font-size: 0.9em;
+}
+.wiki-toc a {
+  display: inline-flex;
+  gap: 8px;
+  padding: 2px 0;
+  color: var(--bs-body-color);
+  text-decoration: none;
+}
+.wiki-toc a:hover,
+.wiki-toc a:focus-visible {
+  color: var(--bs-link-hover-color);
+}
+.wiki-toc .toc-number {
+  min-width: 2.2em;
+  margin-right: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--bs-secondary-color);
+}
+.toc-headings,
+.paragraph--type--bp-tabs nav {
+  scroll-margin-top: 16px;
+}
+#toc-back-to-top {
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--bs-btn-bg);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+#toc-back-to-top:hover,
+#toc-back-to-top:focus {
+  background: var(--bs-btn-bg-hover);
+}
+.bp-tab-heading {
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
 .custom-hero-banner {
   width: 100vw !important;
   margin-left: calc(50% - 50vw);
