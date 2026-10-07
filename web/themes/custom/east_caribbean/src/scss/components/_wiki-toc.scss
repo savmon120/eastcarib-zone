@@ -125,3 +125,117 @@
   margin: 0;
   overflow: hidden;
 }
+
+/* ------------------------------------------
+   Placement on wiki articles: the TOC never takes width from the article.
+   The TOC and the article are siblings in the main content block.
+
+   - 1900px and wider: the article (max 1476px) leaves an empty margin on the
+     left; the TOC sits there as a sticky sidebar, sized to fit the margin.
+   - Narrower: a "Contents" button pinned bottom-left (mirroring Back to Top
+     bottom-right) that opens the list as a panel over the page.
+
+   Opening/collapsing is the <details> element; wiki-toc.js remembers the
+   sidebar choice and closes the floating panel after a jump or outside click.
+   ------------------------------------------ */
+
+$wiki-toc-content: 1500px;  // the page container's max-width
+$wiki-toc-gap: 16px;        // space between the sidebar and the article
+
+@media (min-width: 1900px) {
+  .node-type--wiki-article .block__content:has(> .wiki-toc) {
+    // A zero-width first column: the TOC overflows into the left margin
+    // instead of taking room, so the article keeps its full width.
+    display: grid;
+    grid-template-columns: 0 minmax(0, 1fr);
+    align-items: start;
+
+    > .wiki-toc {
+      // As wide as the margin allows (180px at 1920 wide, 280px max).
+      --wiki-toc-width: clamp(180px, calc((100vw - #{$wiki-toc-content}) / 2 - 40px), 280px);
+
+      position: sticky;
+      top: 16px;
+      width: var(--wiki-toc-width);
+      max-width: none;
+      max-height: calc(100vh - 32px);
+      margin: 0 0 0 calc(-1 * (var(--wiki-toc-width) + #{$wiki-toc-gap}));
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      font-size: 0.85rem;
+
+      // Compact: the margin can be as narrow as 180px.
+      .wiki-toc__details { padding: 12px 12px 12px 8px; }
+
+      ul.toc-node-numbers li,
+      ul.toc-node-bullets li { padding-left: 6px; }
+
+      ul.toc-node-numbers li.toc-node-level-2,
+      ul.toc-node-bullets li.toc-node-level-2 { padding-left: 16px; }
+
+      ul.toc-node-numbers li.toc-node-level-3,
+      ul.toc-node-bullets li.toc-node-level-3 { padding-left: 26px; }
+
+      a { gap: 5px; }
+
+      .toc-number { min-width: 1.7em; }
+
+      .toc-text { overflow-wrap: break-word; }
+    }
+
+    // Collapsed: just the "Contents" title, still in the margin.
+    > .wiki-toc:has(.wiki-toc__details:not([open])) .wiki-toc__details {
+      padding: 10px 14px;
+    }
+  }
+}
+
+@media (max-width: 1899.98px) {
+  .node-type--wiki-article .block__content > .wiki-toc {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1030;
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 40px);
+    margin: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    font-size: 0.92rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+
+    // Open: a panel growing up from the button.
+    &:has(.wiki-toc__details[open]) {
+      width: min(340px, calc(100vw - 40px));
+    }
+
+    // Closed: a compact pill, like the Back to Top button.
+    &:has(.wiki-toc__details:not([open])) {
+      border-radius: 999px;
+
+      .wiki-toc__details { padding: 8px 16px; }
+    }
+  }
+}
+
+// The section currently being read (set by wiki-toc.js while scrolling).
+.wiki-toc a.is-active {
+  color: var(--bs-link-color);
+
+  .toc-number { color: var(--bs-link-color); }
+}
+
+.wiki-toc li {
+  border-left: 2px solid transparent;
+  transition: border-color 0.2s ease;
+
+  &:has(a.is-active) { border-left-color: var(--bs-link-color); }
+}
+
+.wiki-toc ul.toc-node-numbers,
+.wiki-toc ul.toc-node-bullets {
+  li { padding-left: 10px; }
+  li.toc-node-level-2 { padding-left: 32px; }
+  li.toc-node-level-3 { padding-left: 54px; }
+}

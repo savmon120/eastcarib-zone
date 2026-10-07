@@ -59,8 +59,97 @@
         return true;
     }
 
+    // ---- Sidebar / floating panel ----------------------------------------
+    // 1900px and wider: a sticky sidebar in the left margin. Narrower: a
+    // "Contents" button bottom-left that opens a panel over the page. Either
+    // way the article keeps its full width (see _wiki-toc.scss).
+
+    const SIDEBAR_KEY = 'wikiTocSidebar';
+    const SIDEBAR_QUERY = '(min-width: 1900px)';
+    const isSidebar = () => window.matchMedia(SIDEBAR_QUERY).matches;
+
+    // Sidebar: restore the visitor's last choice (open by default).
+    // Floating panel: always start closed, as it covers the page.
+    function initToggle(nav, details) {
+        let saved = null;
+        try { saved = window.localStorage.getItem(SIDEBAR_KEY); } catch (e) { /* storage blocked */ }
+        const applyMode = () => { details.open = isSidebar() ? saved !== 'closed' : false; };
+        applyMode();
+        // Resizing across the breakpoint switches between the two.
+        window.matchMedia(SIDEBAR_QUERY).addEventListener('change', applyMode);
+
+        details.addEventListener('toggle', () => {
+            if (!isSidebar()) return;
+            saved = details.open ? 'open' : 'closed';
+            try { window.localStorage.setItem(SIDEBAR_KEY, saved); } catch (e) { /* storage blocked */ }
+        });
+
+        // Floating panel: close after picking a section, on a click outside
+        // it, or on Escape.
+        const closePanel = () => { if (!isSidebar()) details.open = false; };
+        nav.addEventListener('click', (event) => {
+            if (event.target.closest('a[href*="#"]')) closePanel();
+        });
+        document.addEventListener('click', (event) => {
+            if (details.open && !nav.contains(event.target)) closePanel();
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && details.open) closePanel();
+        });
+    }
+
+    // Highlights the entry for the section being read: the last heading
+    // that has scrolled past the top of the screen. Headings in closed tabs
+    // are skipped.
+    function initScrollSpy(nav) {
+        const items = [...nav.querySelectorAll('a[href*="#"]')]
+            .map(link => ({ link, target: document.getElementById(decodeURIComponent(new URL(link.href, window.location.href).hash.slice(1))) }))
+            .filter(item => item.target);
+        if (!items.length) return;
+
+        let current = null;
+        let ticking = false;
+
+        function update() {
+            ticking = false;
+            let active = null;
+            for (const item of items) {
+                if (item.target.offsetParent === null) continue;
+                if (item.target.getBoundingClientRect().top > 120) break;
+                active = item;
+            }
+            if (active === current) return;
+            if (current) current.link.classList.remove('is-active');
+            current = active;
+            if (!current) return;
+            current.link.classList.add('is-active');
+
+            // Keep the highlighted entry visible when the sidebar scrolls.
+            const link = current.link.getBoundingClientRect();
+            const box = nav.getBoundingClientRect();
+            if (link.top < box.top) nav.scrollTop -= box.top - link.top + 8;
+            else if (link.bottom > box.bottom) nav.scrollTop += link.bottom - box.bottom + 8;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                ticking = true;
+                window.requestAnimationFrame(update);
+            }
+        }, { passive: true });
+        // Switching tabs changes which headings are visible.
+        document.addEventListener('shown.bs.tab', () => window.requestAnimationFrame(update));
+        update();
+    }
+
     Drupal.behaviors.eczWikiToc = {
         attach: function (context) {
+            once('ecz-wiki-toc-sidebar', '.wiki-toc', context).forEach(nav => {
+                const details = nav.querySelector('.wiki-toc__details');
+                if (details) initToggle(nav, details);
+                initScrollSpy(nav);
+            });
+
             once('ecz-wiki-toc', '.table-of-contents-links a[href*="#"]', context).forEach(link => {
                 link.addEventListener('click', (event) => {
                     const hash = new URL(link.href, window.location.href).hash;
