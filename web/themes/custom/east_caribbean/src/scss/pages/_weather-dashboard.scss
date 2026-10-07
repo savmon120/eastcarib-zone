@@ -18,6 +18,13 @@
   padding-left: 8px;
 }
 
+.wx-is-popout {
+  .wx-page,
+  .wx-page__container {
+    padding: 0;
+  }
+}
+
 .wx-monitor {
   display: flex;
   flex-direction: column;
@@ -30,7 +37,9 @@
   border: 1px solid var(--wx-edge);
   border-radius: 10px;
 
-  &:fullscreen {
+  // Fullscreen, or the popout window: fill it edge to edge.
+  &:fullscreen,
+  &.is-popout {
     height: 100vh;
     min-height: 100vh;
     overflow: auto;

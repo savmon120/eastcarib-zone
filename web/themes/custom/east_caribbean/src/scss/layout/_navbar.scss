@@ -12,11 +12,10 @@ nav.navbar {
 }
 
 nav.navbar {
-    // Bootstrap navbar spacing (defaults in comments)
-    --bs-navbar-padding-y: 0.5rem;              // 0.5rem: space above/below the whole bar
-    --bs-navbar-brand-padding-y: 0;        // ~0.31rem: around the logo/site name
-    --bs-nav-link-padding-y: 0.5rem;       // 0.5rem: around each menu link
-    --bs-navbar-toggler-padding-y: 0.25rem; // 0.25rem: hamburger button (mobile)
+    --bs-navbar-padding-y: 0.5rem;
+    --bs-navbar-brand-padding-y: 0;
+    --bs-nav-link-padding-y: 0.5rem;
+    --bs-navbar-toggler-padding-y: 0.25rem;
     background-color: var(--nav-bg);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);

@@ -14293,6 +14293,10 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
   padding-right: 8px;
   padding-left: 8px;
 }
+.wx-is-popout .wx-page,
+.wx-is-popout .wx-page__container {
+  padding: 0;
+}
 .wx-monitor {
   display: flex;
   flex-direction: column;
@@ -14319,7 +14323,8 @@ html[data-theme=dark] body.path-webform form.webform-submission-form .form-actio
   border: 0;
   border-radius: 0;
 }
-.wx-monitor:fullscreen {
+.wx-monitor:fullscreen,
+.wx-monitor.is-popout {
   height: 100vh;
   min-height: 100vh;
   overflow: auto;

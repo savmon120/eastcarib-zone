@@ -259,6 +259,29 @@
                 });
             }
 
+            // ---- Popout ---------------------------------------------------
+            // "Pop out" opens the dashboard in its own named window (reused if
+            // already open). That window counts as a dedicated screen, like
+            // fullscreen: it fills edge to edge and gets the FIR view.
+            const POPOUT_NAME = 'ecz-wx-popout';
+            const isPopout = window.name === POPOUT_NAME || new URLSearchParams(window.location.search).has('popout');
+            const dashboardUrl = (code) => Drupal.url(`dashboard/${code}`) + (isPopout ? '?popout=1' : '');
+            const isDedicated = () => isPopout || document.fullscreenElement === root;
+
+            if (isPopout) {
+                document.documentElement.classList.add('wx-is-popout');
+                root.classList.add('is-popout');
+            } else {
+                const popout = el('popout');
+                popout.hidden = false;
+                popout.addEventListener('click', () => {
+                    const width = Math.min(1600, window.screen.availWidth || 1600);
+                    const height = Math.min(1000, window.screen.availHeight || 1000);
+                    const win = window.open(`${Drupal.url(`dashboard/${icao}`)}?popout=1`, POPOUT_NAME, `popup=yes,width=${width},height=${height}`);
+                    if (win) win.focus();
+                });
+            }
+
             const select = root.querySelector('#weather-airport-select');
             if (select) {
                 select.addEventListener('change', () => switchAirport(select.value));
@@ -289,9 +312,9 @@
                 }
                 document.title = document.title.replace(previous, icao);
                 if (historyMode === 'push') {
-                    window.history.pushState({ icao }, '', Drupal.url(`dashboard/${icao}`));
+                    window.history.pushState({ icao }, '', dashboardUrl(icao));
                 } else if (historyMode === 'replace') {
-                    window.history.replaceState({ icao }, '', Drupal.url(`dashboard/${icao}`));
+                    window.history.replaceState({ icao }, '', dashboardUrl(icao));
                 }
                 if (lastOverview) renderOverview(lastOverview);
                 // Restart the refresh timer so the new airport gets a full interval.
@@ -308,7 +331,8 @@
 
             // ---- Multi-airport (CTR) view ---------------------------------
             // A FIR's airports (from the "FIR airports" setting) side by side,
-            // no map or table. Shown while the dashboard is fullscreen AND
+            // no map or table. Shown while the dashboard is fullscreen or
+            // popped out (see isDedicated()) AND
             // either a FIR code is picked in the dropdown, or the logged-in
             // controller is on that FIR's centre position.
 
@@ -355,7 +379,7 @@
 
             function updateMode() {
                 const fir = activeFir();
-                if (!fir || document.fullscreenElement !== root) {
+                if (!fir || !isDedicated()) {
                     if (multiActive) exitMulti();
                     return;
                 }
@@ -698,6 +722,8 @@
             }
 
             setInterval(tickClock, 1000);
+            // A popout opened on a FIR code goes straight to the FIR view.
+            updateMode();
             startPolling();
 
             document.addEventListener('visibilitychange', () => {
