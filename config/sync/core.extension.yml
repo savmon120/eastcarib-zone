@@ -63,6 +63,7 @@ module:
   system: 0
   taxonomy: 0
   text: 0
+  toc_node: 0
   token: 0
   update: 0
   user: 0

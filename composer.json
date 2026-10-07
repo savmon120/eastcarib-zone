@@ -40,6 +40,7 @@
         "drupal/simplei": "^3.0",
         "drupal/smtp": "^1.4",
         "drupal/svg_image": "^3.2",
+        "drupal/toc_node": "^2.0",
         "drupal/viewsreference": "^2.0@beta",
         "drupal/webform": "^6.3",
         "drush/drush": "^13.7"
