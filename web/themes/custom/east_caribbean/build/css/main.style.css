@@ -16494,6 +16494,10 @@ nav.navbar {
   box-shadow: none;
 }
 nav.navbar {
+  --bs-navbar-padding-y: 0.5rem;
+  --bs-navbar-brand-padding-y: 0;
+  --bs-nav-link-padding-y: 0.5rem;
+  --bs-navbar-toggler-padding-y: 0.25rem;
   background-color: var(--nav-bg);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
