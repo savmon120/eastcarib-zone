@@ -3,8 +3,9 @@
   <header class="wx-monitor__bar">
     <div class="wx-monitor__tabs">
       <span class="wx-monitor__tab is-active">{{ 'METAR'|t }}</span>
-      <button type="button" class="wx-monitor__button" onclick="window.location.href='/maptool';"> <span>Zone Map</span>
-      </button>
+    <button type="button" class="wx-monitor__button" onclick="window.location.href='/maptool?return=' + encodeURIComponent(window.location.pathname);">
+      <span>Zone Map</span>
+    </button>
       <span class="wx-monitor__category" data-wx="category"></span>    </div>
     <h2 class="wx-monitor__title">
       <strong data-wx="icao">{{ icao }}</strong>

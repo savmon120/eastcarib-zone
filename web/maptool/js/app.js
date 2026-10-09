@@ -421,3 +421,19 @@ document.getElementById('opacity').oninput = (e) => {
   document.getElementById('op-val').textContent = e.target.value + '%';
   refreshOpacity();
 };
+// ---- return button from profile --------------------------------------------------------
+const params = new URLSearchParams(window.location.search);
+const returnUrl = params.get('return');
+
+if (returnUrl) {
+  const btn = document.createElement('button');
+
+  btn.className = 'chip';
+  btn.textContent = '← Back';
+
+  btn.onclick = () => {
+    window.location.href = returnUrl;
+  };
+
+  document.querySelector('.side-head').appendChild(btn);
+}
