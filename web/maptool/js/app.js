@@ -26,9 +26,24 @@ const EXTRUSION_LAYERS = [
 const ECZ_BOUNDS = [[-74.5, 8.0], [-56.0, 19.2]];
 
 // ---- state ----------------------------------------------------------------
+const THEME_STORAGE_KEY = 'theme';
+const normalizeTheme = (value) => (value === 'light' || value === 'dark' ? value : 'dark');
+
+const getSiteTheme = () => {
+  const stored = localStorage.getItem(THEME_STORAGE_KEY);
+  if (stored === 'light' || stored === 'dark') {
+    return stored;
+  }
+  const htmlTheme = document.documentElement?.dataset?.theme;
+  if (htmlTheme === 'light' || htmlTheme === 'dark') {
+    return htmlTheme;
+  }
+  return 'dark';
+};
+
 const state = {
   dim: '3d',
-  basemap: 'dark',
+  basemap: normalizeTheme(getSiteTheme()),
   exag: 12,
   opacity: 0.50,
   groups: new Set(),      // active groups
@@ -316,10 +331,40 @@ function refreshExag() {
     map.setPaintProperty(L.id, 'fill-extrusion-height', heightExpr());
   });
 }
-function setBasemap(key) {
-  state.basemap = key;
-  Object.keys(RASTER).forEach((k) => map.setLayoutProperty('base-' + k, 'visibility', k === key ? 'visible' : 'none'));
+function setBasemap(key, { syncTheme = true } = {}) {
+  const next = key === 'dark' || key === 'light' || key === 'satellite' ? key : 'dark';
+  state.basemap = next;
+
+  const basemapSelect = document.getElementById('basemap');
+  if (basemapSelect && basemapSelect.value !== next) {
+    basemapSelect.value = next;
+  }
+
+  if (syncTheme && (next === 'dark' || next === 'light')) {
+    localStorage.setItem(THEME_STORAGE_KEY, next);
+    window.dispatchEvent(new CustomEvent('theme:change', { detail: next }));
+  }
+
+  Object.keys(RASTER).forEach((k) => map.setLayoutProperty('base-' + k, 'visibility', k === next ? 'visible' : 'none'));
 }
+
+window.addEventListener('theme:change', (event) => {
+  const theme = normalizeTheme(event.detail);
+  if (theme !== state.basemap && (theme === 'dark' || theme === 'light')) {
+    setBasemap(theme, { syncTheme: false });
+  }
+});
+
+window.addEventListener('storage', (event) => {
+  if (event.key !== THEME_STORAGE_KEY) {
+    return;
+  }
+
+  const nextTheme = normalizeTheme(event.newValue);
+  if (nextTheme !== state.basemap && (nextTheme === 'dark' || nextTheme === 'light')) {
+    setBasemap(nextTheme, { syncTheme: false });
+  }
+});
 
 // ---- sidebar --------------------------------------------------------------
 function buildSidebar() {
@@ -410,7 +455,10 @@ document.querySelectorAll('#dim-toggle button').forEach((b) => {
     applyDim();
   };
 });
-document.getElementById('basemap').onchange = (e) => setBasemap(e.target.value);
+document.getElementById('basemap').onchange = (e) => {
+  const next = e.target.value;
+  setBasemap(next, { syncTheme: next === 'dark' || next === 'light' });
+};
 document.getElementById('exag').oninput = (e) => {
   state.exag = +e.target.value;
   document.getElementById('exag-val').textContent = state.exag + '×';
