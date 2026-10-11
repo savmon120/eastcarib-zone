@@ -10,11 +10,11 @@ ddev export-db --file=/tmp/prod.sql.gz
 
 echo "Uploading..."
 scp /tmp/prod.sql.gz \
-  eastcaribzone@eastcaribzone.sunnywingsvirtual.com:~/prod.sql.gz
+  sunnywings@eastcaribzone.sunnywingsvirtual.com:~/prod.sql.gz
 
 echo "Importing on production..."
 
-ssh eastcaribzone@eastcaribzone.sunnywingsvirtual.com '
+ssh sunnywings@eastcaribzone.sunnywingsvirtual.com '
 cd ~/eastcaribzone.sunnywingsvirtual.com
 
 CONN=$(/opt/plesk/php/8.4/bin/php vendor/drush/drush/drush.php sql:connect)
