@@ -30,4 +30,4 @@ $config['oauth2_client.oauth2_client.vatsim']['scopes'] = ['full_name', 'email',
 $config['oauth2_client.oauth2_client.vatsim']['scope_separator'] = ' ';
 $config['oauth2_client.oauth2_client.vatsim']['grant_type'] = 'authorization_code';
 $config['oauth2_client.oauth2_client.vatsim']['success_message'] = FALSE;
-$settings['file_private_path'] = '/var/www/private';
+$settings['file_private_path'] = $app_root . '/../private';
