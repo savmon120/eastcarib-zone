@@ -16,7 +16,7 @@
   "automerge": false,
   "branchPrefix": "renovate/",
   "labels": ["dependencies"],
-  "timezone": "Etc/UTC",
+  "timezone": "UTC",
   "prHeader": "**Automated dependency update.** Please test on the dev site before merging and **check for configuration changes on production site.**",
   "prConcurrentLimit": 3,
   "prHourlyLimit": 2,
@@ -24,15 +24,20 @@
     "enabled": false
   },
   "ignorePaths": [
-    "**/node_modules/**",
-    "**/bower_components/**",
-    "vendor/**",
-    "**/vendor/**",
-    "**/examples/**",
-    "**/__tests__/**",
-    "**/test/**",
-    "**/tests/**",
-    "**/__fixtures__/**"
+    "/node_modules/",
+    "/bower_components/",
+    "/vendor/",
+    "vendor/",
+    "/examples/",
+    "/tests/",
+    "/test/",
+    "/tests/",
+    "/fixtures/",
+    "web/core/",
+    "web/modules/contrib/",
+    "web/themes/contrib/",
+    "web/profiles/contrib/",
+    "web/libraries/"
   ],
   "packageRules": [
     {
