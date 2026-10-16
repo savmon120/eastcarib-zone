@@ -1,0 +1,9 @@
+name: 'PDF Reader'
+description: 'Create a new display format for the field that render the pdf file using PDF Reader.'
+core_version_requirement: ^9.3 || ^10 || ^11
+type: module
+
+# Information added by Drupal.org packaging script on 2025-01-21
+version: '8.x-1.2'
+project: 'pdf_reader'
+datestamp: 1737479778

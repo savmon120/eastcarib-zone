@@ -3,7 +3,7 @@
         'name' => 'drupal/recommended-project',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'd969e72256b92fd0b8829a6456a99193b87324ed',
+        'reference' => '65739abb21c8489639d8e12e56edec681dd01e52',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -487,6 +487,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'drupal/pdf_reader' => array(
+            'pretty_version' => '1.2.0',
+            'version' => '1.2.0.0',
+            'reference' => '8.x-1.2',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/pdf_reader',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'drupal/quick_node_clone' => array(
             'pretty_version' => '1.22.0',
             'version' => '1.22.0.0',
@@ -508,7 +517,7 @@
         'drupal/recommended-project' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'd969e72256b92fd0b8829a6456a99193b87324ed',
+            'reference' => '65739abb21c8489639d8e12e56edec681dd01e52',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

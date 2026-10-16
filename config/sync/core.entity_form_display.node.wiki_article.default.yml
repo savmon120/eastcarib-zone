@@ -3,6 +3,7 @@ langcode: en-gb
 status: true
 dependencies:
   config:
+    - field.field.node.wiki_article.field_file
     - field.field.node.wiki_article.field_page_content
     - field.field.node.wiki_article.field_parent_category
     - field.field.node.wiki_article.field_visibility
@@ -10,6 +11,7 @@ dependencies:
     - node.type.wiki_article
   module:
     - content_moderation
+    - file
     - node_access_by_field_role
     - paragraphs
     - path
@@ -23,6 +25,13 @@ content:
     weight: 10
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_file:
+    type: file_generic
+    weight: 124
+    region: content
+    settings:
+      progress_indicator: throbber
     third_party_settings: {  }
   field_page_content:
     type: paragraphs

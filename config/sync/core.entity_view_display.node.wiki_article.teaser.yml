@@ -4,6 +4,7 @@ status: false
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.wiki_article.field_file
     - field.field.node.wiki_article.field_page_content
     - field.field.node.wiki_article.field_parent_category
     - field.field.node.wiki_article.field_visibility
@@ -22,6 +23,7 @@ content:
     weight: 100
     region: content
 hidden:
+  field_file: true
   field_page_content: true
   field_parent_category: true
   field_visibility: true
