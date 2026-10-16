@@ -14,9 +14,12 @@ class FormHooks {
 
   /**
    * Implements hook_theme_suggestions_HOOK_alter().
+   *
+   * @phpstan-param list<string> $suggestions
+   * @phpstan-param array<string, mixed> $variables
    */
   #[Hook('theme_suggestions_form_alter')]
-  public static function themeSuggestionsFormAlter(array &$suggestions, array &$variables) {
+  public static function themeSuggestionsFormAlter(array &$suggestions, array &$variables): void {
     $element = $variables['element'];
     if (isset($element['#form_id'])) {
       $suggestion = strtr($element['#form_id'], [
@@ -40,9 +43,11 @@ class FormHooks {
 
   /**
    * Implements hook_preprocess_input().
+   *
+   * @phpstan-param array<string, mixed> $variables
    */
   #[Hook('preprocess_input')]
-  public static function preprocessInput(&$variables) {
+  public static function preprocessInput(array &$variables): void {
     $element = $variables['element'];
     // Add the element type to the theme.
     $variables['type'] = $element['#type'];
@@ -57,9 +62,11 @@ class FormHooks {
 
   /**
    * Implements hook_preprocess_form_element().
+   *
+   * @phpstan-param array<string, mixed> $variables
    */
   #[Hook('preprocess_form_element')]
-  public static function preprocessFormElement(&$variables) {
+  public static function preprocessFormElement(array &$variables): void {
     $element = $variables['element'];
     // Add required class for checkbox and radio labels.
     if (in_array($element['#type'], [
@@ -75,9 +82,11 @@ class FormHooks {
 
   /**
    * Implements hook_form_FORM_ID_alter().
+   *
+   * @phpstan-param array<string, mixed> $form
    */
   #[Hook('form_search_block_form_alter')]
-  public function formSearchBlockFormAlter(&$form, FormStateInterface $form_state, $form_id) {
+  public function formSearchBlockFormAlter(array &$form, FormStateInterface $form_state, string $form_id): void {
     // Update the placeholder and size of field.
     $form['keys']['#title'] = '';
     $form['keys']['#size'] = 20;
@@ -86,9 +95,11 @@ class FormHooks {
 
   /**
    * Implements hook_form_alter().
+   *
+   * @phpstan-param array<string, mixed> $form
    */
   #[Hook('form_alter')]
-  public static function formAlter(&$form, FormStateInterface $form_state) {
+  public static function formAlter(array &$form, FormStateInterface $form_state): void {
     if (isset($form['actions']['submit']) && count($form['actions']) <= 2) {
       $form['actions']['submit']['#attributes']['class'][] = 'btn';
     }

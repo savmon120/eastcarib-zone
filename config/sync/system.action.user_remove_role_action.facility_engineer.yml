@@ -1,0 +1,14 @@
+uuid: 61d3f0eb-b12e-412e-b924-7a630c08977e
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - user.role.facility_engineer
+  module:
+    - user
+id: user_remove_role_action.facility_engineer
+label: 'Remove the Facility Engineer role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: facility_engineer

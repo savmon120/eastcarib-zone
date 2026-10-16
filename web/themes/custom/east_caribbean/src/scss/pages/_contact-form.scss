@@ -1,0 +1,94 @@
+body.path-webform {
+    background-color: var(--bs-body-bg);
+
+    .page__content > .container {
+        max-width: 800px !important;
+        margin-top: 2rem;
+        margin-bottom: 5rem;
+    }
+
+    form.webform-submission-form {
+        background: var(--bs-card-bg);
+        border: 1px solid var(--bs-border-color);
+        border-radius: 12px;
+        padding: 3rem;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+
+        .form-label {
+            font-weight: 600;
+            color: var(--bs-body-color);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 8px;
+            border: 1px solid var(--bs-form-control-border-color);
+            padding: 0.85rem 1rem;
+            font-size: 1rem;
+            background-color: var(--bs-card-bg-alt);
+            color: var(--bs-form-control-color);
+            transition: all 0.2s ease;
+
+            &:focus {
+                border-color: var(--bs-link-color);
+                box-shadow: 0 0 0 4px rgba(52, 126, 254, 0.15);
+                background-color: var(--bs-card-bg);
+                outline: none;
+            }
+        }
+
+        textarea.form-control {
+            min-height: 180px;
+        }
+
+        .form-group {
+            margin-bottom: 1.75rem;
+        }
+
+        .form-actions {
+            margin-top: 2.5rem;
+            margin-bottom: 0;
+            display: flex;
+            justify-content: center;
+
+            .btn-primary {
+                background-color: var(--bs-btn-bg);
+                color: #ffffff;
+                border: none;
+                padding: 0.85rem 2.5rem;
+                font-size: 1.05rem;
+                font-weight: 600;
+                border-radius: 8px;
+                transition: background-color 0.2s, transform 0.1s;
+
+                &:hover {
+                    background-color: var(--bs-btn-bg-hover);
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(52, 126, 254, 0.3);
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+            }
+        }
+    }
+}
+
+/* ------------------------------------------
+   DARK MODE OVERRIDES FOR WEBFORM
+   ------------------------------------------ */
+html[data-theme="dark"] body.path-webform {
+
+    form.webform-submission-form {
+        box-shadow: 0 8px 30px $dark-shadow;
+
+        .form-actions .btn-primary {
+            &:hover {
+                box-shadow: 0 4px 12px rgba(52, 126, 254, 0.2);
+            }
+        }
+    }
+}

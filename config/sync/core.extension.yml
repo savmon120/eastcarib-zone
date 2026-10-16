@@ -6,10 +6,12 @@ module:
   big_pipe: 0
   block: 0
   block_content: 0
+  bootstrap_paragraphs: 0
   breakpoint: 0
   ckeditor5: 0
   components: 0
   config: 0
+  config_ignore: 0
   config_translation: 0
   content_moderation: 0
   contextual: 0
@@ -19,7 +21,9 @@ module:
   easy_breadcrumb: 0
   ecz_vatsim: 0
   editor: 0
+  entity_reference_revisions: 0
   field: 0
+  field_group: 0
   field_ui: 0
   file: 0
   filter: 0
@@ -43,11 +47,14 @@ module:
   mysql: 0
   navigation: 0
   node: 0
+  node_access_by_field_role: 0
   oauth2_client: 0
   options: 0
   page_cache: 0
+  paragraphs_type_permissions: 0
   path: 0
   path_alias: 0
+  quick_node_clone: 0
   responsive_image: 0
   simplei: 0
   smtp: 0
@@ -56,16 +63,20 @@ module:
   system: 0
   taxonomy: 0
   text: 0
+  toc_node: 0
   token: 0
   update: 0
   user: 0
   views_ui: 0
+  viewsreference: 0
   webform: 0
   webform_ui: 0
   workflows: 0
+  extlink: 1
   pathauto: 1
   content_translation: 10
   views: 10
+  paragraphs: 11
 theme:
   claro: 0
   gin: 0

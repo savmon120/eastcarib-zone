@@ -4,30 +4,52 @@
     "config:recommended",
     "github>drevops/renovate-drupal"
   ],
-  "enabledManagers": [
-    "composer"
-  ],
-  "composerIgnorePlatformReqs": [
-    "php",
-    "ext-*",
-    "lib-*"
-  ],
+  "enabledManagers": ["composer"],
+  "composerIgnorePlatformReqs": ["php", "ext-*", "lib-*"],
   "lockFileMaintenance": {
     "enabled": true
-  },
-  "rangeStrategy": "bump",
-  "major": {
-    "dependencyDashboardApproval": true
   },
   "vulnerabilityAlerts": {
     "enabled": true
   },
+  "rangeStrategy": "update-lockfile",
+  "automerge": false,
+  "branchPrefix": "renovate/",
+  "timezone": "UTC",
+  "prHeader": "**Automated Renovate dependency update.** Please test before merging.",
+  "prConcurrentLimit": 3,
+  "prHourlyLimit": 2,
+  "major": {
+    "enabled": false
+  },
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**",
+    "**/examples/**",
+    "**/tests/**",
+    "**/test/**",
+    "**/fixtures/**",
+    "web/core/**",
+    "web/modules/contrib/**",
+    "web/themes/contrib/**",
+    "web/profiles/contrib/**",
+    "web/libraries/**"
+  ],
   "packageRules": [
     {
-      "matchPackageNames": [
-        "php"
-      ],
+      "matchPackageNames": ["php"],
       "enabled": false
+    },
+    {
+      "groupName": "Drupal core and contrib",
+      "matchPackagePatterns": ["^drupal/"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "groupName": "Drupal tooling",
+      "matchPackagePatterns": ["^drush/|^phpstan/|^squizlabs/|^dealerdirect/"],
+      "matchUpdateTypes": ["minor", "patch"]
     }
   ]
 }

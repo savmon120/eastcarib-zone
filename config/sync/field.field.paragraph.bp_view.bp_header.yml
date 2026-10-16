@@ -1,0 +1,21 @@
+uuid: a7d11495-043e-4f3b-82e6-36a2f11c1ad2
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.bp_header
+    - paragraphs.paragraphs_type.bp_view
+_core:
+  default_config_hash: piwop5i8A3gR80fC4FACWIWXvQdmNfPw05jzuxFk5mQ
+id: paragraph.bp_view.bp_header
+field_name: bp_header
+entity_type: paragraph
+bundle: bp_view
+label: Header
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

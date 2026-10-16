@@ -1,0 +1,23 @@
+uuid: 13886775-0c3d-4f56-8b96-4c7ebec032ac
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.bp_margin
+    - paragraphs.paragraphs_type.bp_image
+  module:
+    - options
+_core:
+  default_config_hash: NvJPfD4rqPzVWM91DOzg5lk-s6ssGUqGjgAWrnGXzPU
+id: paragraph.bp_image.bp_margin
+field_name: bp_margin
+entity_type: paragraph
+bundle: bp_image
+label: Margin
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

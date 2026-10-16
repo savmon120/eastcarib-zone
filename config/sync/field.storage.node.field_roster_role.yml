@@ -30,23 +30,23 @@ settings:
       value: inactive
       label: Inactive
     -
-      value: zone_manager
-      label: 'Zone Manager'
-    -
-      value: assistant_zone_manager
-      label: 'Assistant Zone Manager'
-    -
-      value: training_administrator
-      label: 'Training Administrator'
+      value: web_master
+      label: 'Web Master'
     -
       value: events_coordinator
       label: 'Events Coordinator'
     -
-      value: web_master
-      label: 'Web Master'
-    -
       value: facility_engineer
       label: 'Facility Engineer'
+    -
+      value: training_administrator
+      label: 'Training Administrator'
+    -
+      value: assistant_zone_manager
+      label: 'Assistant Zone Manager'
+    -
+      value: zone_manager
+      label: 'Zone Manager'
   allowed_values_function: ''
 module: options
 locked: false

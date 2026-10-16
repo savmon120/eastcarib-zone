@@ -1,0 +1,13 @@
+toc_node:
+  version: 1.0
+  css:
+    theme:
+      css/toc_node.css: {}
+
+back_to_top:
+  version: 1.0
+  js:
+    js/toc_node.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

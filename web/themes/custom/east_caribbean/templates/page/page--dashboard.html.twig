@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Weather dashboard (/dashboard/*): full-width, no navbar or footer.
+ *
+ * Emptying the blocks drops the wrappers too, which otherwise still render
+ * (as an empty bar) even when every block in their regions is hidden.
+ */
+#}
+{% embed 'radix:page' %}
+  {% block page_navigation %}{% endblock %}
+
+  {% block page_content %}
+    {% include 'radix:page-content' with {
+      page_main_utility_classes: ['wx-page'],
+      page_header_container_utility_classes: ['d-none'],
+      page_content_container_type: 'fluid',
+      page_content_container_utility_classes: ['wx-page__container'],
+    } %}
+  {% endblock %}
+
+  {% block page_footer %}{% endblock %}
+{% endembed %}

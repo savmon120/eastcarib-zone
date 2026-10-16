@@ -14,12 +14,15 @@ class FieldsetHooks {
    */
 
   /**
-   * Implements hook_theme_suggestions_HOOK_alter().
-   *
-   * Alters theme suggestions for fieldsets within Views.
-   */
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Alters theme suggestions for fieldsets within Views.
+ *
+ * @phpstan-param list<string> $suggestions
+ * @phpstan-param array<string, mixed> $variables
+ */
   #[Hook('theme_suggestions_fieldset_alter')]
-  public static function themeSuggestionsFieldsetAlter(array &$suggestions, array $variables) {
+  public static function themeSuggestionsFieldsetAlter(array &$suggestions, array $variables): void {
     $element = $variables['element'];
     // Add theme suggestion based on the fieldset type.
     if (isset($element['#type'])) {
@@ -47,11 +50,13 @@ class FieldsetHooks {
       $display_id = isset($element['#context']['#display_id']) ? radix_clean_identifier($element['#context']['#display_id']) : 'default';
       $suggestions[] = 'fieldset__view__' . $view_id;
       $suggestions[] = 'fieldset__view__' . $view_id . '__display__' . $display_id;
-      // Add theme suggestion based on the View ID, display ID, and fieldset type.
+      // Add theme suggestion based on the View ID, display ID, and fieldset
+      // type.
       if (isset($element['#type'])) {
         $suggestions[] = 'fieldset__view__' . $view_id . '__display__' . $display_id . '__type__' . radix_clean_identifier($element['#type']);
       }
-      // Add theme suggestion based on the View ID, display ID, and fieldset name.
+      // Add theme suggestion based on the View ID, display ID, and fieldset
+      // name.
       if (isset($element['#name'])) {
         $suggestions[] = 'fieldset__view__' . $view_id . '__display__' . $display_id . '__name__' . radix_clean_identifier($element['#name']);
       }

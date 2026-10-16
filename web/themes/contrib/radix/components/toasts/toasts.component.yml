@@ -1,7 +1,7 @@
 $schema: https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json
 name: Toasts
 status: experimental
-description: "Toasts component, see Bootstrap Documentation: https://getbootstrap.com/docs/5.3/components/toasts/"
+description: 'Toasts component, see Bootstrap Documentation: https://getbootstrap.com/docs/5.3/components/toasts/'
 props:
   type: object
   properties:
@@ -14,12 +14,12 @@ props:
       type: string
       title: Wrapper Classes
       description: Additional classes to add to the toast wrapper.
-      default: ""
+      default: ''
     wrapper_aria_live:
       type: string
       title: Wrapper ARIA Live
       description: ARIA live attribute for the toast wrapper.
-      default: "polite"
+      default: 'polite'
     with_container:
       type: boolean
       title: With Container
@@ -29,7 +29,7 @@ props:
       type: string
       title: Container Classes
       description: Additional classes to add to the toast container.
-      default: ""
+      default: ''
     additional_buttons_utility_classes:
       type: array
       items:
@@ -50,30 +50,30 @@ props:
             description: The header object for the toast with title, subtitle, and optional classes.
             properties:
               title:
-                type: ["string", "null", "object", "array", "boolean", "number"]
+                type: ['string', 'null', 'object', 'array', 'boolean', 'number']
                 title: Title
                 description: The title displayed in the toast header.
-                default: ""
+                default: ''
               subtitle:
-                type: ["string", "null", "object", "array", "boolean", "number"]
+                type: ['string', 'null', 'object', 'array', 'boolean', 'number']
                 title: Subtitle
                 description: The subtitle displayed in the toast header.
-                default: ""
+                default: ''
               classes:
                 type: string
                 title: Classes
                 description: Additional classes for styling the toast header.
-                default: ""
+                default: ''
           body:
-            type: ["string", "null", "object", "array", "boolean", "number"]
+            type: ['string', 'null', 'object', 'array', 'boolean', 'number']
             title: Body
             description: The body content of the toast.
-            default: ""
+            default: ''
           role:
             type: string
             title: Role
             description: ARIA role for the toast.
-            default: "alert"
+            default: 'alert'
           with_close:
             type: boolean
             title: With Close Button
@@ -98,7 +98,7 @@ props:
             type: string
             title: Body Wrapper Classes
             description: Additional classes for the body wrapper of the toast.
-            default: ""
+            default: ''
           attributes:
             type: object
             title: Attributes
@@ -115,12 +115,12 @@ props:
                   type: string
                   title: Text
                   description: The display text of the button.
-                  default: ""
+                  default: ''
                 color:
                   type: string
                   title: Color
                   description: The Bootstrap color scheme for the button.
-                  default: "primary"
+                  default: 'primary'
                 outline:
                   type: boolean
                   title: Outline

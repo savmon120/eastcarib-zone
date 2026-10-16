@@ -25,7 +25,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: 'Airports Directory'
+      title: Airports
       fields:
         field_airport_image:
           id: field_airport_image
@@ -408,7 +408,7 @@ display:
           metatags:
             title: 'Airport Briefings | ECZ'
           tokenize: false
-      path: pilots/Briefing
+      path: pilots/Airport
     cache_metadata:
       max-age: -1
       contexts:

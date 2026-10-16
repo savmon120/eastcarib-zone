@@ -20,6 +20,9 @@ settings:
     -
       value: v|tier2
       label: 'Tier 2'
+    -
+      value: 'both|Authorized (Both FIRs)'
+      label: 'Authorized (Both FIRs)'
   allowed_values_function: ''
 module: options
 locked: false

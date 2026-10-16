@@ -1,0 +1,4 @@
+administer node access by field:
+  title: 'Administer Node Access by Field settings'
+  description: 'Manage per-content-type access rules and role mapping.'
+  restrict access: true

@@ -1,0 +1,19 @@
+uuid: 7703c88a-4572-457b-88cd-3c2d615973e8
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_name
+    - paragraphs.paragraphs_type.frequency_item
+id: paragraph.frequency_item.field_name
+field_name: field_name
+entity_type: paragraph
+bundle: frequency_item
+label: Name
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

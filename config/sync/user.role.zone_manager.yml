@@ -1,0 +1,146 @@
+uuid: 6e961099-44b3-4c0c-ac34-552c97cd6118
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - block_content.type.hero_banner
+    - filter.format.full_html
+    - filter.format.restricted_html
+    - media.type.audio
+    - media.type.document
+    - media.type.image
+    - media.type.remote_video
+    - media.type.video
+    - node.type.controller
+    - node.type.download_item
+    - node.type.event
+    - node.type.featured_airport
+    - node.type.latest_news
+    - node.type.page
+    - node.type.waitlist_entry
+  module:
+    - block_content
+    - file
+    - filter
+    - media
+    - navigation
+    - node
+    - path
+    - system
+    - webform
+id: zone_manager
+label: 'Zone Manager'
+weight: 0
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access block library'
+  - 'access content'
+  - 'access content overview'
+  - 'access files overview'
+  - 'access media overview'
+  - 'access navigation'
+  - 'access site in maintenance mode'
+  - 'access site reports'
+  - 'access webform overview'
+  - 'administer webform'
+  - 'create audio media'
+  - 'create controller content'
+  - 'create document media'
+  - 'create download_item content'
+  - 'create event content'
+  - 'create featured_airport content'
+  - 'create hero_banner block content'
+  - 'create image media'
+  - 'create latest_news content'
+  - 'create media'
+  - 'create remote_video media'
+  - 'create url aliases'
+  - 'create video media'
+  - 'create waitlist_entry content'
+  - 'create webform'
+  - 'delete any audio media'
+  - 'delete any controller content'
+  - 'delete any document media'
+  - 'delete any download_item content'
+  - 'delete any event content'
+  - 'delete any featured_airport content'
+  - 'delete any image media'
+  - 'delete any latest_news content'
+  - 'delete any media'
+  - 'delete any remote_video media'
+  - 'delete any video media'
+  - 'delete any waitlist_entry content'
+  - 'delete any webform'
+  - 'delete any webform submission'
+  - 'delete media'
+  - 'delete own audio media'
+  - 'delete own controller content'
+  - 'delete own document media'
+  - 'delete own download_item content'
+  - 'delete own event content'
+  - 'delete own featured_airport content'
+  - 'delete own image media'
+  - 'delete own latest_news content'
+  - 'delete own remote_video media'
+  - 'delete own video media'
+  - 'delete own waitlist_entry content'
+  - 'delete own webform'
+  - 'delete own webform submission'
+  - 'edit any audio media'
+  - 'edit any controller content'
+  - 'edit any document media'
+  - 'edit any download_item content'
+  - 'edit any event content'
+  - 'edit any featured_airport content'
+  - 'edit any image media'
+  - 'edit any latest_news content'
+  - 'edit any remote_video media'
+  - 'edit any video media'
+  - 'edit any waitlist_entry content'
+  - 'edit any webform'
+  - 'edit own audio media'
+  - 'edit own controller content'
+  - 'edit own document media'
+  - 'edit own download_item content'
+  - 'edit own event content'
+  - 'edit own featured_airport content'
+  - 'edit own image media'
+  - 'edit own latest_news content'
+  - 'edit own page content'
+  - 'edit own remote_video media'
+  - 'edit own video media'
+  - 'edit own waitlist_entry content'
+  - 'edit own webform'
+  - 'revert any audio media revisions'
+  - 'revert any document media revisions'
+  - 'revert any image media revisions'
+  - 'revert any remote_video media revisions'
+  - 'revert any video media revisions'
+  - 'revert controller revisions'
+  - 'revert download_item revisions'
+  - 'revert event revisions'
+  - 'revert featured_airport revisions'
+  - 'revert latest_news revisions'
+  - 'revert waitlist_entry revisions'
+  - 'update any media'
+  - 'update media'
+  - 'use text format full_html'
+  - 'use text format restricted_html'
+  - 'view all media revisions'
+  - 'view any audio media revisions'
+  - 'view any document media revisions'
+  - 'view any image media revisions'
+  - 'view any remote_video media revisions'
+  - 'view any video media revisions'
+  - 'view controller revisions'
+  - 'view download_item revisions'
+  - 'view event revisions'
+  - 'view featured_airport revisions'
+  - 'view latest_news revisions'
+  - 'view media'
+  - 'view own unpublished media'
+  - 'view page revisions'
+  - 'view the administration theme'
+  - 'view unpublished block content'
+  - 'view waitlist_entry revisions'

@@ -1,0 +1,50 @@
+uuid: 739f3711-5f35-46de-8898-00a9caf370d8
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+    - filter.format.restricted_html
+    - node.type.controller
+    - node.type.download_item
+    - node.type.waitlist_entry
+  module:
+    - file
+    - filter
+    - media
+    - node
+    - path
+    - system
+id: training_administrator
+label: 'Training Administrator'
+weight: 2
+is_admin: false
+permissions:
+  - 'access content overview'
+  - 'access files overview'
+  - 'access media overview'
+  - 'create controller content'
+  - 'create download_item content'
+  - 'create url aliases'
+  - 'create waitlist_entry content'
+  - 'delete any controller content'
+  - 'delete any download_item content'
+  - 'delete any waitlist_entry content'
+  - 'delete own controller content'
+  - 'delete own download_item content'
+  - 'delete own waitlist_entry content'
+  - 'edit any controller content'
+  - 'edit any download_item content'
+  - 'edit any waitlist_entry content'
+  - 'edit own controller content'
+  - 'edit own download_item content'
+  - 'edit own waitlist_entry content'
+  - 'revert controller revisions'
+  - 'revert download_item revisions'
+  - 'revert waitlist_entry revisions'
+  - 'use text format full_html'
+  - 'use text format restricted_html'
+  - 'view controller revisions'
+  - 'view download_item revisions'
+  - 'view the administration theme'
+  - 'view waitlist_entry revisions'

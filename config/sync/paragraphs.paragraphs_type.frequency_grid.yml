@@ -1,0 +1,10 @@
+uuid: 74cf5a16-28b8-40a2-ba47-5236c9599bed
+langcode: en-gb
+status: true
+dependencies: {  }
+id: frequency_grid
+label: 'Frequency Grid'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

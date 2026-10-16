@@ -1,0 +1,71 @@
+uuid: 969765fd-0611-4913-a2bf-855a6e40aceb
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_page_content
+    - node.type.wiki_article
+  module:
+    - entity_reference_revisions
+id: node.wiki_article.field_page_content
+field_name: field_page_content
+entity_type: node
+bundle: wiki_article
+label: 'Page Content'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles: null
+    negate: 1
+    target_bundles_drag_drop:
+      bp_accordion:
+        weight: 16
+        enabled: false
+      bp_accordion_section:
+        weight: 17
+        enabled: false
+      bp_blank:
+        weight: 18
+        enabled: false
+      bp_block:
+        weight: 19
+        enabled: false
+      bp_carousel:
+        weight: 20
+        enabled: false
+      bp_column_wrapper:
+        weight: 24
+        enabled: false
+      bp_columns:
+        weight: 21
+        enabled: false
+      bp_columns_three_uneven:
+        weight: 22
+        enabled: false
+      bp_columns_two_uneven:
+        weight: 23
+        enabled: false
+      bp_image:
+        weight: 25
+        enabled: false
+      bp_modal:
+        weight: 26
+        enabled: false
+      bp_simple:
+        weight: 27
+        enabled: false
+      bp_tab_section:
+        weight: 29
+        enabled: false
+      bp_tabs:
+        weight: 28
+        enabled: false
+      bp_view:
+        weight: 30
+        enabled: false
+field_type: entity_reference_revisions

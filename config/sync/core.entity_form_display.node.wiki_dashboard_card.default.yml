@@ -5,11 +5,13 @@ dependencies:
   config:
     - field.field.node.wiki_dashboard_card.field_body
     - field.field.node.wiki_dashboard_card.field_media_image
+    - field.field.node.wiki_dashboard_card.field_visibility
     - field.field.node.wiki_dashboard_card.field_weight
     - node.type.wiki_dashboard_card
   module:
     - content_moderation
     - media_library
+    - node_access_by_field_role
     - path
     - text
 id: node.wiki_dashboard_card.default
@@ -37,6 +39,12 @@ content:
     region: content
     settings:
       media_types: {  }
+    third_party_settings: {  }
+  field_visibility:
+    type: role_reference_checkboxes
+    weight: 122
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_weight:
     type: number

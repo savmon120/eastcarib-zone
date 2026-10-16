@@ -1,0 +1,14 @@
+uuid: 985bddc8-2b15-4218-9d74-36876308cd30
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - user.role.visiting_controller
+  module:
+    - user
+id: user_remove_role_action.visiting_controller
+label: 'Remove the Visiting Controller role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: visiting_controller

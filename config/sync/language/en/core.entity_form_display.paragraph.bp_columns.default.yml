@@ -1,0 +1,9 @@
+third_party_settings:
+  field_group:
+    group_styles:
+      label: Styles
+content:
+  bp_column_content:
+    settings:
+      title: 'Column Content'
+      title_plural: 'Column Contents'

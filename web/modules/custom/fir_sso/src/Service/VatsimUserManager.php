@@ -32,7 +32,8 @@ class VatsimUserManager {
   /**
    * Creates or loads a Drupal user and syncs VATSIM profile fields.
    *
-   * New accounts are given the 'controller' role. All accounts have their
+   * Accounts get the 'controller' or 'pilot' role based on rating and
+   * division; other roles are left untouched. All accounts have their
    * VATSIM profile fields updated on every login so data stays current.
    *
    * @param array $vatsimData
@@ -45,32 +46,40 @@ class VatsimUserManager {
    *   If the VATSIM payload does not contain a CID.
    */
   public function provisionUser(array $vatsimData): UserInterface {
-    $data = $vatsimData['data'] ?? [];
-    $cid = (string) ($data['cid'] ?? '');
+    $data = $this->normalizePayload($vatsimData);
+    $cid = (string) ($this->readValue($data, ['cid']) ?? '');
 
-    if (empty($cid)) {
+    if ($cid === '') {
       throw new \RuntimeException('VATSIM authentication payload is missing the required CID field.');
     }
 
-    $email = $data['personal']['email'] ?? '';
-    $firstName = $data['personal']['name_first'] ?? '';
-    $lastName = $data['personal']['name_last'] ?? '';
-    $rating = $data['vatsim']['rating']['short'] ?? '';
-    $region = $data['vatsim']['region']['id'] ?? '';
-    $division = $data['vatsim']['division']['id'] ?? '';
-    $subdivision = $data['vatsim']['subdivision']['id'] ?? '';
+    $email = (string) ($this->readValue($data, ['personal.email', 'email']) ?? '');
+    $firstName = (string) ($this->readValue($data, ['personal.name_first', 'first_name']) ?? '');
+    $lastName = (string) ($this->readValue($data, ['personal.name_last', 'last_name']) ?? '');
+    $rating = (string) ($this->readValue($data, ['vatsim.rating.short', 'rating.short', 'rating']) ?? '');
+    $region = (string) ($this->readValue($data, ['vatsim.region.id', 'region.id']) ?? '');
+    $division = (string) ($this->readValue($data, ['vatsim.division.id', 'division.id']) ?? '');
+    $subdivision = (string) ($this->readValue($data, ['vatsim.subdivision.id', 'subdivision.id']) ?? '');
 
     $storage = $this->entityTypeManager->getStorage('user');
     $existing = $storage->loadByProperties(['field_vatsim_cid' => $cid]);
 
+    // Accounts are created with the CID as username. If the CID field no
+    // longer matches (e.g. it was edited by hand), fall back to the username
+    // so we re-link the account instead of failing on a duplicate name.
+    if (empty($existing)) {
+      $existing = $storage->loadByProperties(['name' => $cid]);
+      if (!empty($existing)) {
+        $this->logger->warning('No account had field_vatsim_cid @cid; re-linked the account with username @cid.', ['@cid' => $cid]);
+      }
+    }
+
     /** @var \Drupal\user\UserInterface $account */
     if (empty($existing)) {
-      // First login — create a new Drupal account keyed on the VATSIM CID.
       $account = $storage->create([
         'name' => $cid,
         'mail' => $email,
         'status' => 1,
-        'roles' => ['controller'],
       ]);
       $this->logger->info('Created new Drupal account for VATSIM CID @cid.', ['@cid' => $cid]);
     }
@@ -79,7 +88,6 @@ class VatsimUserManager {
       $this->logger->info('Loaded existing Drupal account for VATSIM CID @cid.', ['@cid' => $cid]);
     }
 
-    // Sync VATSIM profile fields on every login so they stay current.
     $account->set('field_vatsim_cid', $cid);
     $account->set('field_vatsim_first_name', $firstName);
     $account->set('field_vatsim_last_name', $lastName);
@@ -88,9 +96,86 @@ class VatsimUserManager {
     $account->set('field_vatsim_division', $division);
     $account->set('field_vatsim_subdivision', $subdivision);
 
+    $ratingMap = [
+      'OBS' => 1,
+      'S1' => 2,
+      'S2' => 3,
+      'S3' => 4,
+      'C1' => 5,
+      'C3' => 6,
+      'I1' => 7,
+      'I3' => 8,
+      'SUP' => 9,
+      'ADM' => 10,
+    ];
+
+    $ratingLevel = $ratingMap[$rating] ?? 0;
+    $isSandbox = ((int) $cid >= 10000000 && (int) $cid <= 10000010);
+    $allowedSubdivisions = ['CUR', 'PIA'];
+    $isInZone = $division === 'CAR' && in_array($subdivision, $allowedSubdivisions, TRUE);
+
+    if ($isSandbox) {
+      $sandboxOverrideCIDs = ['10000000', '10000001', '10000002', '10000003', '10000004'];
+      $isInZone = in_array($cid, $sandboxOverrideCIDs, TRUE);
+    }
+
+    $isLearningController = ($rating === 'OBS') && $isInZone;
+    $isRatedController = ($ratingLevel >= 2) && $isInZone;
+    $isController = $isLearningController || $isRatedController;
+
+    if ($account->hasRole('visiting_controller')) {
+      $isController = TRUE;
+    }
+
+    // Only manage the controller/pilot roles. Everything else (administrator,
+    // visiting_controller, mentor, ...) is assigned by hand and must survive
+    // logins, so don't overwrite the whole role list.
+    $account->removeRole('controller');
+    $account->removeRole('pilot');
+    $account->addRole($isController ? 'controller' : 'pilot');
+
     $account->save();
 
     return $account;
+  }
+
+  /**
+   * Normalizes the payload shape returned by VATSIM Connect.
+   *
+   * Some responses are wrapped in a top-level "data" object, while others are
+   * already flattened at the root level.
+   */
+  private function normalizePayload(array $vatsimData): array {
+    if (isset($vatsimData['data']) && is_array($vatsimData['data'])) {
+      return $vatsimData['data'];
+    }
+
+    return $vatsimData;
+  }
+
+  /**
+   * Reads a nested value from the payload using dot-delimited paths.
+   */
+  private function readValue(array $data, array $paths): mixed {
+    foreach ($paths as $path) {
+      $value = $data;
+      $segments = explode('.', $path);
+      $found = TRUE;
+
+      foreach ($segments as $segment) {
+        if (!is_array($value) || !array_key_exists($segment, $value)) {
+          $found = FALSE;
+          break;
+        }
+        $value = $value[$segment];
+      }
+
+      if ($found) {
+        return $value;
+      }
+    }
+
+    return NULL;
   }
 
 }

@@ -1,0 +1,14 @@
+name: 'Node Access by Field'
+type: module
+description: 'Node view access using role→user-field mapping and optional per-node role visibility field.'
+core_version_requirement: '^9 || ^10 || ^11'
+package: 'Content Access'
+# project: node_access_by_field_role
+dependencies:
+  - drupal:node
+  - drupal:user
+
+# Information added by Drupal.org packaging script on 2025-09-02
+version: '1.0.1'
+project: 'node_access_by_field_role'
+datestamp: 1756797143

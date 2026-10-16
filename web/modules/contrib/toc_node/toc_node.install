@@ -1,0 +1,62 @@
+<?php
+
+use Drupal\node\Entity\NodeType;
+
+/**
+ * Implements hook_schema().
+ */
+function toc_node_schema() {
+  $schema['toc_node'] = [
+    'description' => 'Store Table Of Contents settings for individual nodes.',
+    'fields' => [
+      'nid' => [
+        'description' => 'ID key of node.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'style' => [
+        'description' => 'TOC display style.',
+        'type' => 'varchar',
+        'length' => 10,
+        'not null' => TRUE,
+        'default' => 'none',
+      ],
+      'level' => [
+        'description' => 'TOC maximum level depth.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'back_links' => [
+        'description' => 'Back to top links display.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['nid'],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function toc_node_uninstall() {
+  $types = NodeType::loadMultiple();
+
+  foreach ($types as $type) {
+    if (!$type->getThirdPartySettings('toc_node')) {
+      continue;
+    }
+
+    foreach (array_keys($type->getThirdPartySettings('toc_node')) as $key) {
+      $type->unsetThirdPartySetting('toc_node', $key);
+    }
+    $type->save();
+  }
+
+  \Drupal::database()->schema()->dropTable('toc_node');
+}

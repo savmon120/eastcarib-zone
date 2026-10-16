@@ -29,7 +29,8 @@
             include 'radix:dropdown-menu' with {
               items: item.below,
               dropdown_direction: dropdown_direction,
-            }
+              dropdown_menu_utility_classes: dropdown_menu_utility_classes ?: [],
+            } only
           %}
         {% else %}
           {% set route_name = item.url.routed ? item.url.routeName : '' %}

@@ -1,0 +1,171 @@
+<?php
+
+declare(strict_types=1);
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\views\ViewExecutable;
+use Drupal\views\Plugin\views\query\Sql;
+
+/**
+ * Implements hook_entity_access(). (view access)
+ *
+ * Resolution order:
+ * 1) Global + per-bundle FULL access roles -> ALLOW.
+ * 2) Global + per-bundle DENY roles -> FORBID.
+ * 3) If node has any 'role_reference' field with values:
+ *    user must have ANY of the listed roles (ALLOW), otherwise FORBID.
+ * 4) Else, apply role→user-field mapping (if configured). If any mapped
+ *    field references the current user -> ALLOW, otherwise FORBID.
+ * 5) If no rule applies -> NEUTRAL.
+ */
+function node_access_by_field_role_entity_access(\Drupal\Core\Entity\EntityInterface $entity, $operation, AccountInterface $account) {
+  if ($entity->getEntityTypeId() !== 'node' || $operation !== 'view') {
+    return AccessResult::neutral();
+  }
+  // Drupal defaults: user 1 and 'bypass node access' are not restricted here.
+  if ((int) $account->id() === 1 || $account->hasPermission('bypass node access')) {
+    return AccessResult::neutral();
+  }
+
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $entity;
+  $bundle = $node->bundle();
+
+  $config = \Drupal::config('node_access_by_field_role.settings');
+  $debug = (bool) $config->get('debug');
+
+  $global_full = $config->get('global_full_access_roles') ?? [];
+  $global_deny = $config->get('global_deny_roles') ?? [];
+  $bundles = $config->get('bundles') ?? [];
+  $bundle_conf = $bundles[$bundle] ?? [];
+
+  $full_roles = array_unique(array_merge($global_full, $bundle_conf['full_access_roles'] ?? []));
+  $deny_roles = array_unique(array_merge($global_deny, $bundle_conf['deny_roles'] ?? []));
+
+  // Full access -> allowed.
+  if (_nabf_user_has_any_role($account, $full_roles)) {
+    return AccessResult::allowed()->cachePerPermissions()->addCacheContexts(['user.roles'])->addCacheableDependency($node);
+  }
+  // Deny -> forbidden.
+  if (_nabf_user_has_any_role($account, $deny_roles)) {
+    return AccessResult::forbidden()->cachePerPermissions()->addCacheContexts(['user.roles','user'])->addCacheableDependency($node);
+  }
+
+  $user_roles = $account->getRoles();
+
+  // 3) Per-node role visibility: any 'role_reference' (or list_string) field with values.
+  foreach ($node->getFieldDefinitions() as $field_name => $definition) {
+    $storage = $definition->getFieldStorageDefinition();
+    if (in_array($storage->getType(), ['role_reference', 'list_string'], TRUE)) {
+      if ($node->hasField($field_name) && !$node->get($field_name)->isEmpty()) {
+        $allowed_roles = [];
+        foreach ($node->get($field_name)->getValue() as $item) {
+          if (!empty($item['value'])) {
+            $allowed_roles[] = (string) $item['value'];
+          }
+        }
+        if ($allowed_roles) {
+          foreach ($user_roles as $rid) {
+            if (in_array($rid, $allowed_roles, TRUE)) {
+              return AccessResult::allowed()->addCacheContexts(['user','user.roles'])->addCacheableDependency($node);
+            }
+          }
+          return AccessResult::forbidden()->addCacheContexts(['user','user.roles'])->addCacheableDependency($node);
+        }
+      }
+    }
+  }
+
+  // 4) Role → user-field mapping.
+  $role_field_map = $bundle_conf['role_field_map'] ?? [];
+  if (!empty($role_field_map)) {
+    $current_uid = (int) $account->id();
+    foreach ($user_roles as $rid) {
+      if (!isset($role_field_map[$rid])) {
+        continue;
+      }
+      $field_name = $role_field_map[$rid];
+      if ($node->hasField($field_name) && !$node->get($field_name)->isEmpty()) {
+        foreach ($node->get($field_name)->getValue() as $item) {
+          if (isset($item['target_id']) && (int) $item['target_id'] === $current_uid) {
+            return AccessResult::allowed()->addCacheContexts(['user','user.roles'])->addCacheableDependency($node);
+          }
+        }
+      }
+    }
+    // Mapping exists but no match -> forbidden.
+    if ($debug) {
+      \Drupal::logger('node_access_by_field')->notice('Denied view (map) for user @uid on node @nid (bundle @b). Roles: @roles', [
+        '@uid' => (int) $account->id(),
+        '@nid' => $node->id(),
+        '@b' => $bundle,
+        '@roles' => implode(', ', $user_roles),
+      ]);
+    }
+    return AccessResult::forbidden()->addCacheContexts(['user','user.roles'])->addCacheableDependency($node);
+  }
+
+  // No rule applied -> neutral (allow other modules to decide).
+  return AccessResult::neutral()->addCacheContexts(['user.roles'])->addCacheableDependency($node);
+}
+
+/**
+ * Helper: does the account have any of the listed roles?
+ */
+function _nabf_user_has_any_role(AccountInterface $account, array $roles): bool {
+  if (empty($roles)) {
+    return FALSE;
+  }
+  foreach ($account->getRoles() as $rid) {
+    if (in_array($rid, $roles, TRUE)) {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+/**
+ * Post-execute filter: remove rows the current user cannot view.
+ *
+ * This ensures that even if the view query returns nodes that are not
+ * accessible to the current user, they will be filtered out here.
+ */
+function node_access_by_field_views_post_execute(ViewExecutable $view) {
+  // Only apply to views based on nodes.
+  if ($view->storage->get('base_table') !== 'node_field_data') {
+    return;
+  }
+
+  // Only apply to SQL-based queries (not Search API or others).
+  if (!$view->query instanceof Sql) {
+    return;
+  }
+
+  if (empty($view->result)) {
+    return;
+  }
+
+  $account = \Drupal::currentUser();
+  $access_handler = \Drupal::entityTypeManager()->getAccessControlHandler('node');
+
+  $filtered = [];
+  foreach ($view->result as $row) {
+    // Try to get the loaded entity; fallback to loading by nid.
+    $node = $row->_entity ?? NULL;
+    if (!$node && isset($row->nid)) {
+      $node = \Drupal\node\Entity\Node::load((int) $row->nid);
+    }
+
+    // If no entity was found, let it pass. Otherwise, check access.
+    if (!$node || $access_handler->access($node, 'view', $account)) {
+      $filtered[] = $row;
+    }
+  }
+
+  // Replace the view results with the filtered list.
+  $view->result = $filtered;
+  $view->total_rows = count($filtered);
+}
+

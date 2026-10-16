@@ -1,0 +1,14 @@
+uuid: ffe475aa-f081-4afc-a039-fd6712f73263
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - user.role.zone_manager
+  module:
+    - user
+id: user_add_role_action.zone_manager
+label: 'Add the Zone Manager role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: zone_manager

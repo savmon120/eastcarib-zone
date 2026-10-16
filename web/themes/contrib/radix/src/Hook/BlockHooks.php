@@ -12,9 +12,12 @@ class BlockHooks {
 
   /**
    * Implements hook_theme_suggestions_HOOK_alter().
+   *
+   * @phpstan-param list<string> $suggestions
+   * @phpstan-param array<string, mixed> $variables
    */
   #[Hook('theme_suggestions_block_alter')]
-  public static function themeSuggestionsBlockAlter(array &$suggestions, array $variables) {
+  public static function themeSuggestionsBlockAlter(array &$suggestions, array $variables): void {
     $suggestions_new = [];
     $content = $variables['elements']['content'];
     $block_content = $variables['elements']['content']['#block_content'] ?? NULL;
@@ -28,17 +31,18 @@ class BlockHooks {
         $suggestions_new[] = 'block__block_content__id__' . $variables['elements']['#id'];
         $suggestions_new[] = 'block__block_content__id_view__' . $variables['elements']['#id'] . '__' . $view_mode;
       }
-      $suggestions = array_unique($suggestions);
+      $suggestions = array_values(array_unique($suggestions));
       array_splice($suggestions, 1, 0, $suggestions_new);
     }
-    return $suggestions;
   }
 
   /**
    * Implements hook_preprocess_block().
+   *
+   * @phpstan-param array<string, mixed> $variables
    */
   #[Hook('preprocess_block')]
-  public static function preprocessBlock(&$variables) {
+  public static function preprocessBlock(array &$variables): void {
     // Add id to template.
     if (isset($variables['elements']['#id'])) {
       $variables['id'] = str_replace('_', '-', $variables['elements']['#id']);

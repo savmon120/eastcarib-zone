@@ -29,7 +29,7 @@ class SubThemeCommands extends DrushCommands {
   #[CLI\Argument(name: 'name', description: 'The machine-readable name of your sub-theme.')]
   #[CLI\Bootstrap(level: DrupalBootLevels::FULL)]
   #[CLI\Usage(name: 'drush radix:create my-theme', description: 'Creates a Radix sub-theme called my_theme, using the radix_starterkit.')]
-  public function createSubTheme(string $name) {
+  public function createSubTheme(string $name): void {
     try {
       $this->copyStarterKit();
       $this->generateTheme($name);
@@ -86,7 +86,7 @@ class SubThemeCommands extends DrushCommands {
    * @param string $command
    *   Hold command to be print.
    */
-  private function printCommand(string $command) {
+  private function printCommand(string $command): void {
     $formattedCommand = "<fg=green>$command</>";
     $this->output()->writeln($formattedCommand);
   }
@@ -97,7 +97,7 @@ class SubThemeCommands extends DrushCommands {
    * @param string $heading
    *   Hold heading data to be print.
    */
-  private function printHeading(string $heading) {
+  private function printHeading(string $heading): void {
     $formattedHeading = PHP_EOL . "<options=bold>$heading:</>";
     $this->output()->writeln($formattedHeading);
   }
@@ -105,7 +105,7 @@ class SubThemeCommands extends DrushCommands {
   /**
    * Function to copy starterkit components.
    */
-  private function copyStarterKit() {
+  private function copyStarterKit(): void {
     $filesystem = new Filesystem();
     $drupalRoot = Drush::bootstrapManager()->getRoot();
     $source = $drupalRoot . '/themes/contrib/radix/src/kits/radix_starterkit';
@@ -118,7 +118,7 @@ class SubThemeCommands extends DrushCommands {
    *
    * @see: https://www.drupal.org/project/drupal/issues/3456699
    */
-  private function copyDotFiles(string $themeName) {
+  private function copyDotFiles(string $themeName): void {
     $filesystem = new Filesystem();
     $drupalRoot = Drush::bootstrapManager()->getRoot();
     $source = $drupalRoot . '/themes/contrib/radix/src/kits/radix_starterkit';
@@ -147,7 +147,7 @@ class SubThemeCommands extends DrushCommands {
    * @param string $themeName
    *   Holds theme name to generate.
    */
-  private function generateTheme(string $themeName) {
+  private function generateTheme(string $themeName): void {
     $drupalRoot = Drush::bootstrapManager()->getRoot();
 
     // Get info from the original starterkit info.yml file.
@@ -161,13 +161,28 @@ class SubThemeCommands extends DrushCommands {
     // Replace radix_starterkit with the actual theme name in the description.
     $description = str_replace('radix_starterkit', $themeName, $description);
 
-    $process = new Process([
-      'php', $drupalRoot . '/core/scripts/drupal', 'generate-theme',
-      '--starterkit', 'radix_starterkit',
-      $themeName,
-      '--path', 'themes/custom',
-      '--description', $description,
-    ]);
+    $drupalCliPath = dirname($drupalRoot) . '/vendor/bin/dr';
+
+    if (file_exists($drupalCliPath)) {
+      // Drupal 11.4+: use the new CLI entrypoint.
+      $process = new Process([
+        $drupalCliPath, 'generate-theme',
+        '--starterkit', 'radix_starterkit',
+        $themeName,
+        '--path', 'themes/custom',
+        '--description', $description,
+      ]);
+    }
+    else {
+      // Drupal 10.3 - 11.3: fall back to the legacy script.
+      $process = new Process([
+        'php', $drupalRoot . '/core/scripts/drupal', 'generate-theme',
+        '--starterkit', 'radix_starterkit',
+        $themeName,
+        '--path', 'themes/custom',
+        '--description', $description,
+      ]);
+    }
     $process->run();
 
     if (!$process->isSuccessful()) {
@@ -186,7 +201,7 @@ class SubThemeCommands extends DrushCommands {
   /**
    * Function to remove starterkit components.
    */
-  private function removeCopiedStarterKit() {
+  private function removeCopiedStarterKit(): void {
     $filesystem = new Filesystem();
     $drupalRoot = Drush::bootstrapManager()->getRoot();
     $starterkit = $drupalRoot . '/themes/custom/radix_starterkit';

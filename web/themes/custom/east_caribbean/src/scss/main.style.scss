@@ -1,6 +1,12 @@
 @import "init";
 @import "bootstrap";
 
+@import "base/light-palette";
+@import "base/dark-palette";
+@import "base/light";
+@import "base/dark";
+
+
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
@@ -9,35 +15,43 @@
 @import "base/functions";
 @import "base/helpers";
 @import "base/typography";
+@import "base/paragraphs";
 
 @import "pages/wiki-main-page";
-@import "pages/airports_directory";
+@import "pages/airports-directory";
+@import "pages/briefing-airport";
 @import "pages/airspace";
 @import "pages/staff";
 @import "pages/download";
-@import "pages/event";
-@import "pages/events-overview";
 @import "pages/news-overview";
 @import "pages/news-article";
 @import "pages/privacy-policy";
 @import "pages/controller-roster";
 @import "pages/waitlist";
 @import "pages/join-us";
+@import "pages/vatsim-events-page";
+@import "pages/profile";
+@import"pages/contact-form";
+@import "pages/weather-dashboard";
 
 @import "components/wiki-card";
 @import "components/wiki-category";
 @import "components/wiki-article";
+@import "components/wiki-toc";
 @import "components/hero-banner";
 @import "components/operate-card";
 @import "components/upcoming-events";
 @import "components/live-operations";
 @import "components/latest-news";
-@import "components/live-flights";
-@import "components/featured_airports";
+
+@import "components/featured-airports";
 
 @import "layout/layout";
 @import "layout/base";
 @import "layout/navbar";
 @import "layout/footer";
 @import "layout/homepage-features";
+@import "layout/breadcrumbs";
 @import "components/env-indicator";
+
+@import "components/live-flights";

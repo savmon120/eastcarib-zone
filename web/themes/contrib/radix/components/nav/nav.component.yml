@@ -45,19 +45,19 @@ props:
         - dropend
         - dropstart
     nav_utility_classes:
-      type: array
+      type: ['array', 'null']
       name: Utility Classes
       items:
         type: string
       description: "Additional utility classes that can be added to the nav component. These classes should be defined in your theme's CSS."
     nav_item_utility_classes:
-      type: array
+      type: ['array', 'null']
       name: Item Utility Classes
       items:
         type: string
       description: "Additional utility classes that can be added to the nav item component. These classes should be defined in your theme's CSS."
     nav_link_utility_classes:
-      type: array
+      type: ['array', 'null']
       name: Link Utility Classes
       items:
         type: string
@@ -65,9 +65,9 @@ props:
     heading_level:
       type: string
       name: Heading level
-      description: "Tag used by the links heading."
+      description: 'Tag used by the links heading.'
     heading_utility_classes:
-      type: array
+      type: ['array', 'null']
       name: Heading Utility Classes
       items:
         type: string

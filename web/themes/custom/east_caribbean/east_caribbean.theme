@@ -10,3 +10,6 @@ $includes_path = __DIR__ . '/includes/*.theme';
 foreach (glob($includes_path) as $file) {
   require_once __DIR__ . '/includes/' . basename($file);
 }
+function east_caribbean_preprocess_html(&$variables) {
+  $variables['html_attributes']->setAttribute('data-theme', 'dark');
+}

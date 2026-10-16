@@ -1,0 +1,30 @@
+Eastern Caribbean Zone - VATSIM Airspace Overview
+Static site - deployment guide
+==================================================
+
+WHAT THIS IS
+  A plain static website (HTML + CSS + JS + GeoJSON data). No server code, no
+  build step, no database. MapLibre GL and the basemap tiles load from public
+  CDNs, so viewers need an internet connection.
+
+HOW TO DEPLOY (1:1)
+  1. Upload the ENTIRE contents of this folder to your web space (e.g. by FTP):
+        index.html
+        css/
+        js/
+        data/
+        .htaccess
+     Keep the folder structure exactly as it is.
+  2. Host it at the domain root (https://example.com/) OR any subfolder
+     (https://example.com/ecz/) - every path is relative, so both work.
+  3. Open the URL in a browser. That's it.
+
+IF THE AIRSPACES DON'T LOAD
+  Some hosts don't serve ".geojson" files by default. The included .htaccess
+  fixes this on Apache hosts (AddType application/geo+json .geojson). On other
+  hosts, add that MIME type in your control panel.
+
+REQUIREMENTS
+  A modern browser with WebGL (all current browsers) and internet access.
+
+Made & designed by Danny -| 963639 |-  (d.peters@vatsim.net)

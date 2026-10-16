@@ -1,23 +1,28 @@
-uuid: 29b0acd5-1370-484e-a1c8-a21cc147c4ff
+uuid: c9ddb827-23b3-41b7-9bb1-38a5182426d0
 langcode: en-gb
 status: true
 dependencies:
   content:
-    - 'block_content:basic:4df12ec1-0d76-4864-ab65-3b523770eb23'
+    - 'block_content:footer_wave:848a8b04-76c9-4bb4-be12-4a696e94c9c5'
   module:
     - block_content
+    - system
   theme:
     - east_caribbean
 id: east_caribbean_footerwave
 theme: east_caribbean
 region: footer
-weight: -5
+weight: 0
 provider: null
-plugin: 'block_content:4df12ec1-0d76-4864-ab65-3b523770eb23'
+plugin: 'block_content:848a8b04-76c9-4bb4-be12-4a696e94c9c5'
 settings:
-  id: 'block_content:4df12ec1-0d76-4864-ab65-3b523770eb23'
-  label: 'Footer Wave'
+  id: 'block_content:848a8b04-76c9-4bb4-be12-4a696e94c9c5'
+  label: 'Footer wave'
   label_display: '0'
   provider: block_content
   view_mode: full
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '/dashboard*'

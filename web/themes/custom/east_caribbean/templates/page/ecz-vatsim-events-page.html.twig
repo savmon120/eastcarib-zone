@@ -1,0 +1,35 @@
+<div class="vatsim-events-page">
+  {% if events is empty %}
+    <p class="vatsim-events-page__empty">{{ 'No upcoming events.'|t }}</p>
+  {% else %}
+    <div class="vatsim-events-page__grid">
+      {% for event in events %}
+        <div class="vatsim-events-page__item">
+          {% if event.banner %}
+            <div class="vatsim-events-page__banner-wrap">
+              <img class="vatsim-events-page__banner" src="{{ event.banner }}" alt="{{ event.name }}" loading="lazy">
+            </div>
+          {% endif %}
+          <div class="vatsim-events-page__body">
+            <h3 class="vatsim-events-page__name">
+              {% if event.link %}
+                <a href="{{ event.link }}" target="_blank" rel="noopener">{{ event.name }}</a>
+              {% else %}
+                {{ event.name }}
+              {% endif %}
+            </h3>
+            <div class="vatsim-events-page__meta">
+              <span class="vatsim-events-page__time">{{ event.start_time_formatted }}</span>
+              {% if event.airports is not empty %}
+                <span class="vatsim-events-page__airports">{{ event.airports|join(', ') }}</span>
+              {% endif %}
+            </div>
+            {% if event.short_description %}
+              <p class="vatsim-events-page__desc">{{ event.short_description }}</p>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>

@@ -1,0 +1,42 @@
+uuid: 6ea3b4f0-a59f-4479-8675-18ee0877ef99
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+    - filter.format.restricted_html
+    - node.type.event
+    - node.type.latest_news
+  module:
+    - file
+    - filter
+    - media
+    - node
+    - path
+    - system
+id: event_coordinator
+label: 'Event Coordinator'
+weight: 1
+is_admin: false
+permissions:
+  - 'access content overview'
+  - 'access files overview'
+  - 'access media overview'
+  - 'create event content'
+  - 'create latest_news content'
+  - 'create url aliases'
+  - 'delete any event content'
+  - 'delete any latest_news content'
+  - 'delete own event content'
+  - 'delete own latest_news content'
+  - 'edit any event content'
+  - 'edit any latest_news content'
+  - 'edit own event content'
+  - 'edit own latest_news content'
+  - 'revert event revisions'
+  - 'revert latest_news revisions'
+  - 'use text format full_html'
+  - 'use text format restricted_html'
+  - 'view event revisions'
+  - 'view latest_news revisions'
+  - 'view the administration theme'

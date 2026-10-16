@@ -3,26 +3,30 @@
 }
 
 .block-inline-blockdashboard-operate-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    background-color: var(--bs-card-bg);
+    border: 1px solid var(--bs-border-color);
     border-radius: 8px;
-    padding: 20px;
+    padding: 20px 20px 10px 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto auto auto;
-    gap: 15px 40px;
+    gap: 25px 40px;
     align-items: center;
-    height: 300px;
+    min-height: 300px;
     margin-bottom: 15px;
     margin-right: 15px;
+
+    @at-root html[data-theme="dark"] & {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    }
 
     .block__title {
         grid-column: 1;
         grid-row: 1;
         font-size: 1.4rem;
         font-weight: 800;
-        color: #1a1a1a;
+        color: var(--bs-body-color);
         margin: 0;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -34,14 +38,17 @@
 
     .field--name-field-media-image {
         grid-column: 2;
-        grid-row: 1 / span 4;
+        grid-row: 1 / span 5;
         display: flex;
         justify-content: flex-end;
+        align-items: center;
 
         img {
-            max-width: 450px;
+            width: 100%;
             height: auto;
+            max-height: 100%;
             object-fit: contain;
+            aspect-ratio: 3 / 2;
         }
     }
 
@@ -51,7 +58,7 @@
         align-self: start;
 
         p {
-            color: #555555;
+            color: var(--bs-secondary-color);
             font-size: 1.05rem;
             margin-bottom: 0;
             line-height: 1.4;
@@ -81,7 +88,7 @@
 
             .stat-icon {
                 font-size: 24px;
-                color: #555555;
+                color: var(--bs-tertiary-color);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -95,13 +102,13 @@
             .stat-value {
                 font-weight: 800;
                 font-size: 1.15rem;
-                color: #1a1a1a;
+                color: var(--bs-body-color);
                 line-height: 1.1;
             }
 
             .stat-label {
                 font-size: 0.8rem;
-                color: #777777;
+                color: var(--bs-secondary-color);
                 font-weight: 600;
             }
         }
@@ -114,7 +121,7 @@
 
         a {
             display: inline-block;
-            background-color: #4fb2b2;
+            background-color: var(--bs-link-color);
             color: #ffffff;
             padding: 12px 28px;
             border-radius: 50px;
@@ -126,9 +133,9 @@
             transition: background-color 0.2s ease, transform 0.2s ease;
 
             &:hover {
-                background-color: #3e8e8e;
+                background-color: var(--bs-link-hover-color);
                 transform: translateY(-2px);
-                color: #ffffff;
+                color: var(--bs-btn-primary-color);
             }
         }
     }

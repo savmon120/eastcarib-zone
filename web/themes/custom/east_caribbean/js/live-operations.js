@@ -88,7 +88,7 @@
             async function fetchBookings() {
                 if (!bookedList) return;
                 try {
-                    bookedList.innerHTML = '<li class="ops-empty">No upcoming bookings.</li>';
+                    bookedList.innerHTML = '<li class="ops-empty">Work in Progress.</li>';
                 } catch (error) {
                     console.error("Error fetching bookings:", error);
                 }

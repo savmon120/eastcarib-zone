@@ -1,0 +1,426 @@
+[
+  {
+    "id": "TNCF_CTR",
+    "name": "Curaçao Control",
+    "freq": "127.100",
+    "role": "Area Control",
+    "color": "#4263eb",
+    "group": "Curaçao FIR (TNCF)"
+  },
+  {
+    "id": "TNCF_APP",
+    "name": "Curaçao Terminal",
+    "freq": "119.800",
+    "role": "Approach / Terminal",
+    "color": "#12b886",
+    "group": "Curaçao FIR (TNCF)"
+  },
+  {
+    "id": "TNCA_APP",
+    "name": "Beatrix Approach",
+    "freq": "120.900",
+    "role": "Approach / Terminal",
+    "color": "#12b886",
+    "group": "Curaçao FIR (TNCF)"
+  },
+  {
+    "id": "TNCA_TWR",
+    "name": "Beatrix Tower",
+    "freq": "118.000",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Curaçao FIR (TNCF)"
+  },
+  {
+    "id": "TNCB_TWR",
+    "name": "Flamingo Tower",
+    "freq": "118.700",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Curaçao FIR (TNCF)"
+  },
+  {
+    "id": "TNCC_TWR",
+    "name": "Hato Tower",
+    "freq": "118.300",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Curaçao FIR (TNCF)"
+  },
+  {
+    "id": "TNCM_APP",
+    "name": "Juliana Approach",
+    "freq": "128.950",
+    "role": "Approach / Terminal",
+    "color": "#12b886",
+    "group": "Juliana TMA (TNCM)"
+  },
+  {
+    "id": "TNCM_TWR",
+    "name": "Juliana Tower",
+    "freq": "118.700",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Juliana TMA (TNCM)"
+  },
+  {
+    "id": "TQPF_TWR",
+    "name": "CJ Lloyd Tower",
+    "freq": "118.500",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Juliana TMA (TNCM)"
+  },
+  {
+    "id": "TTZO_FSS",
+    "name": "Piarco Oceanic",
+    "freq": "126.500",
+    "role": "Oceanic / FSS",
+    "color": "#0c8599",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TTZP_CTR",
+    "name": "Piarco Radar",
+    "freq": "123.700",
+    "role": "Area Control",
+    "color": "#4263eb",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TAPA_APP",
+    "name": "VC Bird Approach",
+    "freq": "119.100",
+    "role": "Approach / Terminal",
+    "color": "#12b886",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TAPA_TWR",
+    "name": "VC Bird Tower",
+    "freq": "118.200",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TAPA_GND",
+    "name": "VC Bird Ground",
+    "freq": "121.900",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TKPK_APP",
+    "name": "Bradshaw Approach",
+    "freq": "119.600",
+    "role": "Approach / Terminal",
+    "color": "#12b886",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TKPK_TWR",
+    "name": "Bradshaw Tower",
+    "freq": "118.300",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TKPK_GND",
+    "name": "Bradshaw Ground",
+    "freq": "121.900",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TFFF_APP",
+    "name": "Martinique Approach",
+    "freq": "121.000",
+    "role": "Approach / Terminal",
+    "color": "#12b886",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TFFF_TWR",
+    "name": "Martinique Tower",
+    "freq": "118.500",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TFFF_GND",
+    "name": "Martinique Ground",
+    "freq": "121.900",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TFFR_APP",
+    "name": "Raizet Approach",
+    "freq": "121.300",
+    "role": "Approach / Terminal",
+    "color": "#12b886",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TFFR_TWR",
+    "name": "Raizet Tower",
+    "freq": "118.400",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TDPD_TWR",
+    "name": "Douglas Charles Tower",
+    "freq": "118.900",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TDCF_TWR",
+    "name": "Canefield Tower",
+    "freq": "118.700",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TLPC_TWR",
+    "name": "George Charles Tower",
+    "freq": "118.000",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TLPC_GND",
+    "name": "George Charles Ground",
+    "freq": "121.800",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TLPL_APP",
+    "name": "Saint Lucia Approach",
+    "freq": "119.800",
+    "role": "Approach / Terminal",
+    "color": "#12b886",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TLPL_TWR",
+    "name": "Hewanorra Tower",
+    "freq": "118.300",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TLPL_GND",
+    "name": "Hewanorra Ground",
+    "freq": "121.600",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TVSA_APP",
+    "name": "Argyle Approach",
+    "freq": "120.800",
+    "role": "Approach / Terminal",
+    "color": "#12b886",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TVSA_TWR",
+    "name": "Argyle Tower",
+    "freq": "118.800",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TVSA_GND",
+    "name": "Argyle Ground",
+    "freq": "121.900",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TVSB_TWR",
+    "name": "J.F. Mitchell Tower",
+    "freq": "118.450",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TVSB_GND",
+    "name": "J.F. Mitchell Ground",
+    "freq": "121.900",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TVSC_TWR",
+    "name": "Canouan Tower",
+    "freq": "118.050",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TVSC_GND",
+    "name": "Canouan Ground",
+    "freq": "121.600",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TVSM_TWR",
+    "name": "Mustique Tower",
+    "freq": "123.000",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TVSU_TWR",
+    "name": "Union Island Tower",
+    "freq": "122.800",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TGPY_APP",
+    "name": "Maurice Bishop Approach",
+    "freq": "119.400",
+    "role": "Approach / Terminal",
+    "color": "#12b886",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TGPY_TWR",
+    "name": "Maurice Bishop Tower",
+    "freq": "118.900",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TGPY_GND",
+    "name": "Maurice Bishop Ground",
+    "freq": "121.900",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TBPB_APP",
+    "name": "Adams Approach",
+    "freq": "129.350",
+    "role": "Approach / Terminal",
+    "color": "#12b886",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TBPB_TWR",
+    "name": "Adams Tower",
+    "freq": "118.700",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TBPB_GND",
+    "name": "Adams Ground",
+    "freq": "121.900",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TTPP_APP",
+    "name": "Piarco Approach",
+    "freq": "119.000",
+    "role": "Approach / Terminal",
+    "color": "#12b886",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TTPP_TWR",
+    "name": "Piarco Tower",
+    "freq": "118.100",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TTPP_GND",
+    "name": "Piarco Ground",
+    "freq": "121.900",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TTCP_TWR",
+    "name": "Robinson Tower",
+    "freq": "118.400",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TTCP_GND",
+    "name": "Robinson Ground",
+    "freq": "121.700",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TKPN_TWR",
+    "name": "Amory Tower",
+    "freq": "120.500",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TKPN_GND",
+    "name": "Amory Ground",
+    "freq": "121.600",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TRPG_GND",
+    "name": "John A. Osborne Ground",
+    "freq": "121.900",
+    "role": "Ground",
+    "color": "#868e96",
+    "group": "Piarco FIR (TTZP)"
+  },
+  {
+    "id": "TRPG_TWR",
+    "name": "John A. Osborne Tower",
+    "freq": "118.800",
+    "role": "Tower",
+    "color": "#f76707",
+    "group": "Piarco FIR (TTZP)"
+  }
+]

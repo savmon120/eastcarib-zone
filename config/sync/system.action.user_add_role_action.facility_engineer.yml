@@ -1,0 +1,14 @@
+uuid: df0f2b91-c433-46c9-9081-d8b926d4702d
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - user.role.facility_engineer
+  module:
+    - user
+id: user_add_role_action.facility_engineer
+label: 'Add the Facility Engineer role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: facility_engineer

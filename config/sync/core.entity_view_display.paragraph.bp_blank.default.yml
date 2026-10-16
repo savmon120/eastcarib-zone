@@ -1,0 +1,68 @@
+uuid: 9f0e3c79-4017-424c-b0e0-f543f77b5a29
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.bp_blank.bp_background
+    - field.field.paragraph.bp_blank.bp_header
+    - field.field.paragraph.bp_blank.bp_margin
+    - field.field.paragraph.bp_blank.bp_padding
+    - field.field.paragraph.bp_blank.bp_unrestricted
+    - field.field.paragraph.bp_blank.bp_width
+    - paragraphs.paragraphs_type.bp_blank
+  module:
+    - options
+    - text
+_core:
+  default_config_hash: Z99UjTq-DpbVEJtENLsSnY8Pis2OI-eT_22NfVVDLb8
+id: paragraph.bp_blank.default
+targetEntityType: paragraph
+bundle: bp_blank
+mode: default
+content:
+  bp_background:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  bp_header:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  bp_margin:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  bp_padding:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  bp_unrestricted:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  bp_width:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  created: true
+  uid: true

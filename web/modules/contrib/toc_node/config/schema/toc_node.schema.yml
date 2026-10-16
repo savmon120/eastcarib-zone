@@ -1,0 +1,36 @@
+node.type.*.third_party.toc_node:
+  type: mapping
+  label: 'TOC Node settings'
+  mapping:
+    enabled:
+      type: boolean
+      label: 'Enable table of contents'
+    styles:
+      type: sequence
+      label: 'Styles available'
+      sequence:
+        type: string
+        label: 'Style'
+    style_default:
+      type: string
+      label: 'Default style'
+    level:
+      type: integer
+      label: 'Heading level'
+    back_to_top_links:
+      type: integer
+      label: 'Back to top links mode'
+
+block.settings.toc_node:
+  type: block_settings
+  label: 'TOC Node block settings'
+  mapping:
+    style:
+      type: string
+      label: 'Display style override'
+    level:
+      type: string
+      label: 'Heading level override'
+    back_to_top:
+      type: integer
+      label: 'Back to top links'

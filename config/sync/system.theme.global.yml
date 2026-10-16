@@ -11,6 +11,6 @@ features:
   favicon: true
   node_user_picture: true
 logo:
-  path: 'public://48x48.jpg'
+  path: 'public://logo_cropped_nobg_0.png'
   url: null
   use_default: false

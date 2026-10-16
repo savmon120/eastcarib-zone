@@ -13,7 +13,21 @@
     </div>
 
     <div class="custom-hero-banner__wave">
-        {{ content.field_wave_graphic.0 }}
+
+        {# Light mode wave = first SVG #}
+        {% if content.field_wave_graphic.1 %}
+            <div class="wave-light">
+                {{ content.field_wave_graphic.1 }}
+            </div>
+        {% endif %}
+
+        {# Dark mode wave = second SVG #}
+        {% if content.field_wave_graphic.0 %}
+            <div class="wave-dark">
+                {{ content.field_wave_graphic.0 }}
+            </div>
+        {% endif %}
+
     </div>
 
 </div>

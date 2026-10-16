@@ -1,0 +1,26 @@
+# English, British translation of Views Reference Field (8.x-2.0-beta13)
+# Copyright (c) 2026 by the English, British translation team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Views Reference Field (8.x-2.0-beta13)\n"
+"POT-Creation-Date: 2026-07-11 08:54+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Language-Team: English, British\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+msgid "Label"
+msgstr "Label"
+msgid "Display"
+msgstr "Display"
+msgid "Options"
+msgstr "Options"
+msgid "Default value"
+msgstr "Default value"
+msgid "- Select -"
+msgstr "- Select -"
+msgid "Separate contextual filter values with a \"/\". For example, %example."
+msgstr "Separate contextual filter values with a \"/\". For example, %example."

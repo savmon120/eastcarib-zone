@@ -1,0 +1,84 @@
+uuid: 8ee77db3-6f10-4d29-90b4-7518686e64b6
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.bp_image.bp_background
+    - field.field.paragraph.bp_image.bp_header
+    - field.field.paragraph.bp_image.bp_image_field
+    - field.field.paragraph.bp_image.bp_link
+    - field.field.paragraph.bp_image.bp_margin
+    - field.field.paragraph.bp_image.bp_padding
+    - field.field.paragraph.bp_image.bp_width
+    - paragraphs.paragraphs_type.bp_image
+  module:
+    - link
+    - options
+    - svg_image
+_core:
+  default_config_hash: mGbAmM4She2YZq0jIucCcjyF7axTdE02Ea1zodfZm1c
+id: paragraph.bp_image.default
+targetEntityType: paragraph
+bundle: bp_image
+mode: default
+content:
+  bp_background:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  bp_header:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  bp_image_field:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  bp_link:
+    type: link_separate
+    label: hidden
+    settings:
+      trim_length: null
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  bp_margin:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  bp_padding:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  bp_width:
+    type: list_key
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  created: true
+  uid: true

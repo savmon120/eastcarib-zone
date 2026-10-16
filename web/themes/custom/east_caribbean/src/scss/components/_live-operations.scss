@@ -3,7 +3,6 @@
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     padding: 12px;
-    max-height: 300px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     margin-bottom: 15px;
     display: grid;
@@ -149,5 +148,75 @@
     @media (max-width: 768px) {
         grid-template-columns: 1fr;
         max-height: 500px;
+    }
+}
+
+/* ------------------------------------------
+   DARK MODE OVERRIDES FOR LIVE OPERATIONS CARD
+   ------------------------------------------ */
+
+html[data-theme="dark"] .live-operations-card {
+    background-color: $dark-surface !important;
+    border: 1px solid $dark-border !important;
+    box-shadow: 0 4px 20px $dark-shadow !important;
+
+    .view-header {
+        color: $dark-text !important;
+
+        .pulse-indicator {
+            color: #ff6b6b !important;
+        }
+    }
+
+    .ops-section .ops-title {
+        color: $dark-text-muted !important;
+        border-bottom: 1px solid $dark-border !important;
+    }
+
+    .ops-list li {
+        background-color: $dark-bg !important;
+        border: 1px solid $dark-border !important;
+        color: $dark-text !important;
+
+        .ops-controller-info {
+            .ops-station {
+                color: $dark-text !important;
+            }
+
+            .ops-name {
+                color: $dark-text-subtle !important;
+            }
+        }
+
+        .ops-freq {
+            background-color: $dark-surface-alt !important;
+            border: 1px solid $dark-border !important;
+            color: $dark-text !important;
+            border-radius: 4px;
+        }
+    }
+
+    .ops-loading,
+    .ops-empty,
+    .ops-error {
+        background-color: transparent !important;
+        border: none !important;
+        color: $dark-text-muted !important;
+    }
+
+    .ops-error {
+        color: #ff6b6b !important;
+    }
+
+    .ops-pagination button {
+        background-color: $dark-surface !important;
+        border: 1px solid $dark-border !important;
+        color: $dark-text !important;
+
+        &:hover {
+            background-color: $dark-surface-alt !important;
+            border-color: $dark-bg-alt !important;
+            color: $dark-text !important;
+        }
     }
 }

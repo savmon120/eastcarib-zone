@@ -17,6 +17,7 @@
         thead {
             th {
                 background-color: #f1f3f5;
+                color: var(--bs-body-color);
                 font-weight: 600;
                 padding: 10px 16px;
                 border: none !important;
@@ -30,39 +31,83 @@
 
         tbody {
             tr {
+                background-color: var(--bs-body-bg);
+                transition: background-color 0.2s ease;
+
+                &:nth-child(even) {
+                    background-color: rgba(0, 0, 0, 0.03) !important;
+                }
+
                 td {
-                    background-color: #ffffff;
+                    background-color: transparent;
                     padding: 10px 16px;
                     vertical-align: middle;
                     border-top: none !important;
                     border-left: none !important;
                     border-right: none !important;
-                    border-bottom: 1px solid #f0f0f0 !important;
+                    border-bottom: 1px solid var(--bs-border-color) !important;
                     text-align: left !important;
-                    transition: background-color 0.2s ease;
+                    color: var(--bs-body-color);
 
                     &.views-field-title {
                         a {
                             text-decoration: none;
-                            color: #3b71ca;
+                            color: var(--bs-btn-primary-color);
                             font-weight: 400;
 
                             &:hover {
-                                text-decoration: underline;
-                                color: #0a1b2a;
+                                color: var(--bs-link-hover-color);
                             }
                         }
                     }
 
                     &.views-field-changed {
-                        color: #666666;
+                        color: var(--bs-secondary-color);
                         font-size: 0.95em;
                     }
                 }
 
-                &:hover td {
-                    background-color: #fafafa !important;
+                &:hover {
+                    background-color: var(--bs-table-hover-bg) !important;
                 }
+            }
+        }
+    }
+}
+
+/* ------------------------------------------
+   DARK Mode OVERRIDES — CATEGORY DOCUMENTS TABLE
+   ------------------------------------------ */
+
+html[data-theme="dark"] .view-category-documents-table {
+
+    table.table {
+        border-bottom-color: $dark-border !important;
+
+        thead th {
+            background-color: $brand-blue !important;
+            color: $dark-text !important;
+        }
+
+        tbody tr {
+            td {
+                &.views-field-title {
+                    a {
+                        color: var(--bs-btn-primary-color);
+
+                        &:hover {
+                            color: var(--bs-link-color);
+                        }
+                    }
+                }
+            }
+
+            &:nth-child(even) {
+                background-color: rgba($dark-text, 0.03) !important;
+            }
+
+            &:hover {
+                background-color: rgba($brand-blue-soft, 0.10) !important;
             }
         }
     }

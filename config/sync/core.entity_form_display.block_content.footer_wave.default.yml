@@ -1,0 +1,31 @@
+uuid: 5f259ba2-66a3-4b7d-b94f-d34c425154fe
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - block_content.type.footer_wave
+    - field.field.block_content.footer_wave.field_wave_graphic
+  module:
+    - media_library
+id: block_content.footer_wave.default
+targetEntityType: block_content
+bundle: footer_wave
+mode: default
+content:
+  field_wave_graphic:
+    type: media_library_widget
+    weight: 1
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  info:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  langcode: true

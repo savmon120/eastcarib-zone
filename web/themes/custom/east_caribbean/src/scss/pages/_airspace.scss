@@ -1,68 +1,115 @@
-//.airspace-directory {
-//    padding: 1rem 0 3rem;
-//
-//    .fir-heading {
-//        color: #0a1b2a;
-//        font-weight: 700;
-//        font-size: 1.8rem;
-//        padding-bottom: 10px;
-//        margin-top: 40px;
-//        margin-bottom: 20px;
-//        text-transform: uppercase;
-//        letter-spacing: 1px;
-//    }
-//
-//    .airspace-section {
-//        margin-bottom: 5rem;
-//    }
-//
-//    .airspace-description {
-//        font-size: 1.05rem;
-//        color: #444444;
-//        line-height: 1.7;
-//        margin-bottom: 2.5rem;
-//
-//        p {
-//            margin-bottom: 1rem;
-//        }
-//
-//        strong {
-//            color: #0548A3;
-//            font-weight: 600;
-//            border-bottom: 2px dotted #0548A3;
-//        }
-//    }
-//
-//    .airspace-visuals {
-//        align-items: flex-start;
-//    }
-//
-//    .airspace-maps {
-//        img {
-//            width: 100%;
-//        }
-//
-//        img:last-child {
-//            margin-bottom: 0 !important;
-//        }
-//    }
-//
-//    .airspace-fl {
-//        display: flex;
-//        justify-content: center;
-//
-//        .fl-wrapper {
-//            position: sticky;
-//            top: 100px;
-//            padding: 1.5rem;
-//            background: #ffffff;
-//            border-radius: 12px;
-//            text-align: center;
-//
-//            img {
-//                max-width: 100%;
-//                height: auto;
-//            }
-//        }
-//    }
-//}
+.tab-pane .paragraph {
+    margin-bottom: 2.5rem !important;
+}
+
+.nav-tabs {
+    border-bottom: none !important;
+}
+
+.tab-pane .paragraph:last-child {
+    margin-bottom: 0 !important;
+}
+
+.paragraph--type--bp-simple,
+.paragraph--type--bp-text {
+    color: var(--bs-secondary-color);
+
+    p {
+        color: var(--bs-secondary-color);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--bs-body-color);
+    }
+
+    strong, b {
+        color: var(--bs-body-color);
+    }
+
+    .table td,
+    .table th {
+        color: var(--bs-secondary-color);
+        border-color: var(--bs-border-color);
+    }
+}
+
+.paragraph--type--bp-tabs > .paragraph__column > nav > .nav-tabs {
+    justify-content: center;
+    border-bottom-color: var(--bs-border-color);
+}
+
+.paragraph--type--bp-tabs > .paragraph__column > nav > .nav-tabs .nav-link {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--bs-secondary-color);
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+        border-color: transparent;
+        border-bottom: 3px solid var(--bs-link-hover-color);
+        color: var(--bs-link-hover-color);
+    }
+
+    &.active {
+        background-color: transparent;
+        border: none;
+        border-bottom: 3px solid var(--bs-link-color);
+        color: var(--bs-link-color);
+    }
+}
+
+.paragraph--type--bp-tabs > .paragraph__column > .tab-content {
+    margin-top: 2rem;
+}
+
+.paragraph--type--bp-tabs > .paragraph__column > .tab-content > .tab-pane {
+    opacity: 0;
+
+    &.active {
+        animation: fadeInTab 0.4s ease-out forwards;
+    }
+}
+
+@keyframes fadeInTab {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ------------------------------------------
+   DARK MODE OVERRIDES — TABS & BASIC PARAGRAPHS
+   ------------------------------------------ */
+
+html[data-theme="dark"] {
+    .node--page--full,
+    .node--featured-airport--full,
+    .node--wiki-article--full {
+        background-color: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    body.node-type--wiki-article,
+    body.node-type--page {
+        .paragraph--type--bp-simple,
+        .paragraph--type--bp-text {
+            .media--type-image img {
+                filter: invert(1) hue-rotate(180deg) brightness(0.9) !important;
+                background-color: transparent !important;
+            }
+
+            .media--type-image img.no-invert {
+                filter: none !important;
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+uuid: b3693b28-658e-4b6d-a56f-095594849118
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.frequency_grid.field_frequencies
+    - paragraphs.paragraphs_type.frequency_grid
+  module:
+    - paragraphs
+id: paragraph.frequency_grid.default
+targetEntityType: paragraph
+bundle: frequency_grid
+mode: default
+content:
+  field_frequencies:
+    type: entity_reference_paragraphs
+    weight: 0
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

@@ -15,9 +15,12 @@ class FormelementHooks {
 
   /**
    * Implements hook_theme_suggestions_HOOK_alter() for form elements.
+   *
+   * @phpstan-param list<string> $suggestions
+   * @phpstan-param array<string, mixed> $variables
    */
   #[Hook('theme_suggestions_form_element_alter')]
-  public static function themeSuggestionsFormElementAlter(array &$suggestions, array $variables) {
+  public static function themeSuggestionsFormElementAlter(array &$suggestions, array $variables): void {
     $element = $variables['element'];
     // Add a suggestion based on the element type.
     if (isset($element['#type'])) {

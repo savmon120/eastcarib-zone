@@ -19,17 +19,16 @@ class VatsimEventsPageController extends ControllerBase {
   }
 
   public function viewAll(): array {
-    $events = $this->eventsManager->getEvents();
+  $events = $this->eventsManager->getEvents();
 
-    return [
-      '#theme' => 'ecz_vatsim_events',
-      '#events' => $events,
-      '#show_view_all' => FALSE,
-      '#cache' => [
-        'tags' => [EventsManager::CACHE_TAG],
-        'max-age' => 3600,
-      ],
-    ];
-  }
+  return [
+    '#theme' => 'ecz_vatsim_events_page',
+    '#events' => $events,
+    '#cache' => [
+      'tags' => [EventsManager::CACHE_TAG],
+      'max-age' => 3600,
+    ],
+  ];
+}
 
 }

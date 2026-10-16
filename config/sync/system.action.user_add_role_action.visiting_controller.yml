@@ -1,0 +1,14 @@
+uuid: 87ca33b8-d0d4-427b-afe2-7af020bb8c74
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - user.role.visiting_controller
+  module:
+    - user
+id: user_add_role_action.visiting_controller
+label: 'Add the Visiting Controller role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: visiting_controller

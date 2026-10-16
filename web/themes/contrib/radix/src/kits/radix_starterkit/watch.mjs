@@ -3,6 +3,7 @@ import fg from 'fast-glob';
 import dotenv from 'dotenv';
 import bs from 'browser-sync';
 import { watch as fsWatch, rmSync, existsSync } from 'node:fs';
+import { execSync } from 'node:child_process';
 import {
   makeSassPlugin,
   stylelintPlugin,
@@ -13,15 +14,88 @@ import {
 
 dotenv.config({ path: '.env.local' });
 
-// Inside a DDEV web container the site is served on localhost; on the host the
-// configured DRUPAL_BASE_URL is used.
 const isDdev = process.env.IS_DDEV_PROJECT?.toLowerCase() === 'true';
-const proxy = isDdev ? 'localhost' : process.env.DRUPAL_BASE_URL;
+
+/**
+ * Resolve the URL Browsersync should proxy.
+ *
+ * The configured `DRUPAL_BASE_URL` (e.g. https://my-site.ddev.site) is what a
+ * human types into the browser, but it is a poor proxy target on the host:
+ *   - The `*.ddev.site` name commonly resolves to both 127.0.0.1 and ::1. On
+ *     many setups IPv6 is attempted first and waits out a ~5s connect timeout
+ *     before falling back to IPv4, so EVERY proxied request (the page plus each
+ *     asset) pays that penalty. With dozens of assets the page never appears to
+ *     finish loading.
+ *   - DDEV serves it over HTTPS with a generic self-signed cert, and the
+ *     gzipped HTML defeats Browsersync's snippet injection.
+ *
+ * DDEV publishes the web container directly on an IPv4 host port over plain
+ * HTTP (e.g. http://127.0.0.1:32799). Proxying that instead is instant, needs
+ * no cert, and lets Browsersync inject its live-reload snippet cleanly. The
+ * host port is dynamic (it changes when DDEV restarts), so it is queried at
+ * startup rather than hard-coded.
+ *
+ * Outside DDEV — or if the query fails (DDEV stopped, a different local stack
+ * such as Lando, etc.) — fall back to DRUPAL_BASE_URL.
+ *
+ * @returns {string} The proxy target URL.
+ */
+function resolveProxyTarget() {
+  // Inside the DDEV web container the site is reachable on localhost directly.
+  if (isDdev) {
+    return 'localhost';
+  }
+
+  try {
+    const json = execSync('ddev describe -j', {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    });
+    const parsed = JSON.parse(json);
+    // `ddev describe -j` may wrap the payload in a log envelope ({ raw: … })
+    // or emit the describe object at the top level, depending on version.
+    const describe = parsed.raw ?? parsed;
+    const httpUrl = describe?.services?.web?.host_http_url;
+    if (httpUrl) {
+      console.log(`[browsersync] proxying DDEV host port: ${httpUrl}`);
+      return httpUrl;
+    }
+  } catch {
+    // ddev not installed/running, or not a ddev project — fall through.
+  }
+
+  return process.env.DRUPAL_BASE_URL;
+}
+
+const target = resolveProxyTarget();
 
 const browserSync = bs.create();
 
 browserSync.init({
-  proxy,
+  proxy: {
+    target,
+    // Drupal serves HTML with `Content-Encoding: gzip`. Browsersync's
+    // snippet-injection middleware can't parse a compressed body, so it neither
+    // injects its client snippet nor terminates the response cleanly — the page
+    // renders but the browser's load event can stall. Stripping Accept-Encoding
+    // forces the upstream to return uncompressed HTML that Browsersync can
+    // rewrite and inject into.
+    proxyReq: [
+      (proxyReq) => {
+        proxyReq.removeHeader('Accept-Encoding');
+      },
+    ],
+    proxyRes: [
+      (proxyRes) => {
+        // Drupal sends a fixed Content-Length for the original body.
+        // Browsersync rewrites the HTML to inject its client snippet, which
+        // changes the length; leaving the stale Content-Length in place
+        // truncates the page (and suppresses injection). Clear it so the
+        // rewritten body streams chunked.
+        proxyRes.headers['content-length'] = undefined;
+      },
+    ],
+  },
   open: !isDdev,
   notify: false,
   files: [

@@ -1,0 +1,6 @@
+node_access_by_field.settings:
+  title: 'Node access by field'
+  description: 'Configure per-bundle access: full/deny roles and role→user-field mapping.'
+  route_name: node_access_by_field.settings
+  parent: user.admin_index
+  weight: 50

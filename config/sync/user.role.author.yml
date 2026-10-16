@@ -21,7 +21,7 @@ _core:
   default_config_hash: aCCyadCrtpuMcmEArhpwJGlkeIxEed7bg5v86heYqms
 id: author
 label: Author
-weight: 3
+weight: -5
 is_admin: false
 permissions:
   - 'access content overview'

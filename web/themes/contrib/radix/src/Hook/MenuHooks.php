@@ -11,21 +11,36 @@ class MenuHooks {
 
   /**
    * Implements hook_preprocess_menu().
+   *
+   * @phpstan-param array<string, mixed> $variables
    */
   #[Hook('preprocess_menu')]
-  public static function preprocessMenu(&$variables, $hook) {
+  public static function preprocessMenu(array &$variables, string $hook): void {
     // No changes for menu toolbar.
     if ($hook == 'menu__toolbar') {
       return;
     }
-    // Get the current path.
-    $current_path = \Drupal::request()->getRequestUri();
-    $items = $variables['items'];
-    foreach ($items as $key => $item) {
-      if (isset($item['url']) && is_object($item['url']) && $item['url']->toString() == $current_path) {
+    $variables['#cache']['contexts'][] = 'url.path';
+
+    $request = \Drupal::request();
+    $current_uri = $request->getRequestUri();
+    $current_path = $request->getBaseUrl() . $request->getPathInfo();
+
+    foreach ($variables['items'] as $key => $item) {
+      if (!isset($item['url']) || !is_object($item['url'])) {
+        continue;
+      }
+      $url = $item['url']->toString();
+
+      // Links that only differ by query string can only be matched on it.
+      if (str_contains($url, '?')) {
+        $variables['#cache']['contexts'][] = 'url.query_args';
+      }
+
+      if ($url === $current_path || $url === $current_uri) {
         $variables['items'][$key]['in_active_trail'] = TRUE;
       }
-      if (isset($item['url']) && is_object($item['url']) && $item['url']->isRouted() && $item['url']->getRouteName() === '<nolink>') {
+      if ($item['url']->isRouted() && $item['url']->getRouteName() === '<nolink>') {
         $variables['items'][$key]['attributes']->addClass('navbar-text');
       }
     }

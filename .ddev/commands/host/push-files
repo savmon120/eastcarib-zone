@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+read -p "Sync local uploaded files to PRODUCTION? [y/N] " confirm
+[[ "$confirm" == "y" ]] || exit 1
+
+echo "Syncing files..."
+
+rsync -avz \
+  --exclude='css/' \
+  --exclude='js/' \
+  --exclude='php/' \
+  --exclude='styles/' \
+  --exclude='translations/' \
+  web/sites/default/files/ \
+  eastcaribzone@eastcaribzone.sunnywingsvirtual.com:~/eastcaribzone.sunnywingsvirtual.com/web/sites/default/files/
+
+echo "Done"

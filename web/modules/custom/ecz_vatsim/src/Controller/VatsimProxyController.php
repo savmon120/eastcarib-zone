@@ -54,10 +54,35 @@ class VatsimProxyController extends ControllerBase {
 
                     if ($matches && $is_not_obs) {
                         $filtered_controllers[] = [
+                            // Public in the VATSIM feed too; lets the weather
+                            // dashboard follow the logged-in controller.
+                            'cid' => $controller['cid'] ?? NULL,
                             'callsign' => $controller['callsign'],
                             'name' => $controller['name'],
                             'frequency' => $controller['frequency'],
                         ];
+                    }
+                }
+            }
+
+            // Filter ATIS stations
+            $filtered_atis = [];
+            if (!empty($raw_data['atis']) && is_array($raw_data['atis'])) {
+                foreach ($raw_data['atis'] as $atis) {
+                    $callsign = strtoupper($atis['callsign'] ?? '');
+                    foreach ($target_prefixes as $prefix) {
+                        if (strpos($callsign, $prefix) === 0) {
+                            $filtered_atis[] = [
+                                // Who runs it: the weather dashboard shows a
+                                // centre controller's own ATISes in FIR view.
+                                'cid' => $atis['cid'] ?? NULL,
+                                'callsign' => $atis['callsign'],
+                                'frequency' => $atis['frequency'] ?? '',
+                                'code' => $atis['atis_code'] ?? NULL,
+                                'text' => implode(' ', $atis['text_atis'] ?? []),
+                            ];
+                            break;
+                        }
                     }
                 }
             }
@@ -106,11 +131,15 @@ class VatsimProxyController extends ControllerBase {
 
             $payload = [
                 'controllers' => $filtered_controllers,
+                'atis' => $filtered_atis,
                 'inbounds' => $inbounds,
                 'outbounds' => $outbounds,
             ];
 
-            \Drupal::cache()->set($cid, $payload, time() + 60);
+            // Cache for the configured refresh interval, so the server never
+            // holds data longer than clients wait between polls.
+            $ttl = max(15, (int) ($config->get('refresh_rate') ?: 60));
+            \Drupal::cache()->set($cid, $payload, time() + $ttl);
 
             return new JsonResponse($payload);
 

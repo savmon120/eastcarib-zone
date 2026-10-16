@@ -4,11 +4,21 @@ status: true
 dependencies:
   module:
     - menu_ui
+    - toc_node
 third_party_settings:
   menu_ui:
     available_menus:
       - main
     parent: 'main:'
+  toc_node:
+    enabled: true
+    styles:
+      - none
+      - bullets
+      - numbers
+    style_default: numbers
+    level: 3
+    back_to_top_links: 1
 name: 'Wiki Article'
 type: wiki_article
 description: null
