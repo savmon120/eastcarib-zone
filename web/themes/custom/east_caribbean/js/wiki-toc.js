@@ -64,25 +64,20 @@
     // "Contents" button bottom-left that opens a panel over the page. Either
     // way the article keeps its full width (see _wiki-toc.scss).
 
-    const SIDEBAR_KEY = 'wikiTocSidebar';
     const SIDEBAR_QUERY = '(min-width: 1900px)';
     const isSidebar = () => window.matchMedia(SIDEBAR_QUERY).matches;
 
-    // Sidebar: restore the visitor's last choice (open by default).
-    // Floating panel: always start closed, as it covers the page.
     function initToggle(nav, details) {
-        let saved = null;
-        try { saved = window.localStorage.getItem(SIDEBAR_KEY); } catch (e) { /* storage blocked */ }
-        const applyMode = () => { details.open = isSidebar() ? saved !== 'closed' : false; };
+        const applyMode = () => { details.open = isSidebar(); };
         applyMode();
-        // Resizing across the breakpoint switches between the two.
         window.matchMedia(SIDEBAR_QUERY).addEventListener('change', applyMode);
 
-        details.addEventListener('toggle', () => {
-            if (!isSidebar()) return;
-            saved = details.open ? 'open' : 'closed';
-            try { window.localStorage.setItem(SIDEBAR_KEY, saved); } catch (e) { /* storage blocked */ }
-        });
+        const summary = details.querySelector('summary');
+        if (summary) {
+            summary.addEventListener('click', (event) => {
+                if (isSidebar()) event.preventDefault();
+            });
+        }
 
         // Floating panel: close after picking a section, on a click outside
         // it, or on Escape.

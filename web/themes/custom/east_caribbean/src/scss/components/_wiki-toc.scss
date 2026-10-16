@@ -130,19 +130,24 @@
    Placement on wiki articles: the TOC never takes width from the article.
    The TOC and the article are siblings in the main content block.
 
-   - 1900px and wider: the article (max 1476px) leaves an empty margin on the
-     left; the TOC sits there as a sticky sidebar, sized to fit the margin.
+   - 1900px and wider: the article (container narrowed to 55dvw on wiki
+     articles) leaves an empty margin on the left; the TOC sits there as a
+     sticky sidebar, sized to fit the margin.
    - Narrower: a "Contents" button pinned bottom-left (mirroring Back to Top
      bottom-right) that opens the list as a panel over the page.
 
-   Opening/collapsing is the <details> element; wiki-toc.js remembers the
-   sidebar choice and closes the floating panel after a jump or outside click.
+   Opening/collapsing is the <details> element; wiki-toc.js keeps the sidebar
+   open and closes the floating panel after a jump or outside click.
    ------------------------------------------ */
 
-$wiki-toc-content: 1500px;  // the page container's max-width
-$wiki-toc-gap: 16px;        // space between the sidebar and the article
+$wiki-toc-content: 55dvw;  // the page container's max-width on wiki articles
+$wiki-toc-gap: 5dvw;        // space between the sidebar and the article
 
 @media (min-width: 1900px) {
+  body.node-type--wiki-article main .container {
+    max-width: $wiki-toc-content !important;
+  }
+
   .node-type--wiki-article .block__content:has(> .wiki-toc) {
     // A zero-width first column: the TOC overflows into the left margin
     // instead of taking room, so the article keeps its full width.
@@ -151,7 +156,6 @@ $wiki-toc-gap: 16px;        // space between the sidebar and the article
     align-items: start;
 
     > .wiki-toc {
-      // As wide as the margin allows (180px at 1920 wide, 280px max).
       --wiki-toc-width: clamp(180px, calc((100vw - #{$wiki-toc-content}) / 2 - 40px), 280px);
 
       position: sticky;
@@ -164,8 +168,10 @@ $wiki-toc-gap: 16px;        // space between the sidebar and the article
       overflow-y: auto;
       overscroll-behavior: contain;
       font-size: 0.85rem;
+      scrollbar-width: none;
 
-      // Compact: the margin can be as narrow as 180px.
+      &::-webkit-scrollbar { display: none; }
+
       .wiki-toc__details { padding: 12px 12px 12px 8px; }
 
       ul.toc-node-numbers li,
@@ -182,11 +188,13 @@ $wiki-toc-gap: 16px;        // space between the sidebar and the article
       .toc-number { min-width: 1.7em; }
 
       .toc-text { overflow-wrap: break-word; }
-    }
 
-    // Collapsed: just the "Contents" title, still in the margin.
-    > .wiki-toc:has(.wiki-toc__details:not([open])) .wiki-toc__details {
-      padding: 10px 14px;
+      // Always open here (wiki-toc.js): the title is a plain heading.
+      .wiki-toc__title {
+        cursor: default;
+
+        &::after { display: none; }
+      }
     }
   }
 }
