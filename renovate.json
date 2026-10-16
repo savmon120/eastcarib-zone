@@ -7,7 +7,7 @@
   "enabledManagers": ["composer"],
   "composerIgnorePlatformReqs": ["php", "ext-*", "lib-*"],
   "lockFileMaintenance": {
-    "enabled": true
+    "enabled": false
   },
   "vulnerabilityAlerts": {
     "enabled": true
@@ -17,7 +17,7 @@
   "branchPrefix": "renovate/",
   "timezone": "UTC",
   "prHeader": "**Automated Renovate dependency update.** Please test before merging.",
-  "prConcurrentLimit": 3,
+  "prConcurrentLimit": 1,
   "prHourlyLimit": 2,
   "major": {
     "enabled": false
