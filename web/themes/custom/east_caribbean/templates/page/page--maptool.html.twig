@@ -1,0 +1,19 @@
+{#
+/**
+ * @file
+ * Map tool page (/maptool): the map fills the screen below the navbar, so no
+ * page title or footer. Markup: ecz_maptool module, ecz-maptool.html.twig.
+ */
+#}
+{% embed 'radix:page' %}
+  {% block page_content %}
+    {% include 'radix:page-content' with {
+      page_main_utility_classes: ['maptool-page'],
+      page_header_container_utility_classes: ['d-none'],
+      page_content_container_type: 'fluid',
+      page_content_container_utility_classes: ['maptool-page__container'],
+    } %}
+  {% endblock %}
+
+  {% block page_footer %}{% endblock %}
+{% endembed %}

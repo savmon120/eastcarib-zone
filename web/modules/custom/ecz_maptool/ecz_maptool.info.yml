@@ -1,0 +1,5 @@
+name: 'ECZ Map Tool'
+type: module
+description: 'The /maptool page: an interactive 3D map of the zone''s airspace and ATC positions.'
+core_version_requirement: ^10 || ^11
+package: Custom

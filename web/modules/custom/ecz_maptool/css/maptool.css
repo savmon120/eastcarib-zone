@@ -1,0 +1,187 @@
+/* Map tool page (/maptool). Markup: templates/ecz-maptool.html.twig.
+ * Every rule is scoped to .maptool so the tool's generic class names
+ * (.panel, .chip, ...) can't clash with the site's styles. */
+
+/* Page wrapper (page--maptool.html.twig): same gutters as the charts page. */
+.maptool-page__container {
+  --maptool-gutter: clamp(4px, 0.5vw, 12px);
+  padding-right: var(--maptool-gutter);
+  padding-left: var(--maptool-gutter);
+}
+
+/* Sizes below are in em, so the whole tool scales with this one font size
+ * (about 13px on a 1366px laptop, up to 15px on large screens). */
+.maptool {
+  font-size: clamp(12.5px, 0.55rem + 0.3vw, 15px);
+  --bg: #0b0f14;
+  --panel: #131a23;
+  --panel-2: #1b2530;
+  --edge: #26313d;
+  --text: #e6edf3;
+  --muted: #8b98a5;
+  --accent: #4dabf7;
+  --warn: #ffa94d;
+  --radius: 0.615em;
+  --side-w: clamp(280px, 22vw, 26em);
+
+  /* Fills the screen below the navbar; --maptool-top is set by maptool-page.js. */
+  height: calc(100dvh - var(--maptool-top, 120px) - var(--maptool-gutter, 8px));
+  min-height: 480px;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--edge);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.maptool * { box-sizing: border-box; }
+
+.maptool #app { position: relative; display: flex; height: 100%; width: 100%; }
+
+/* ---------------- sidebar ---------------- */
+.maptool #sidebar {
+  width: var(--side-w);
+  min-width: var(--side-w);
+  height: 100%;
+  overflow-y: auto;
+  background: var(--panel);
+  border-right: 1px solid var(--edge);
+  padding: 0 0 1.846em;
+  scrollbar-width: thin;
+  scrollbar-color: var(--edge) transparent;
+}
+.maptool #sidebar::-webkit-scrollbar { width: 8px; }
+.maptool #sidebar::-webkit-scrollbar-thumb { background: var(--edge); border-radius: 8px; }
+
+.maptool .side-head {
+  padding: 1.231em 1.231em 0.923em;
+  border-bottom: 1px solid var(--edge);
+  position: sticky; top: 0; background: var(--panel); z-index: 2;
+}
+.maptool .side-head h1 { font-size: 1.231em; margin: 0; letter-spacing: 0.013em; }
+.maptool .side-head .sub { font-size: 0.885em; color: var(--muted); margin: 0.348em 0 0; }
+
+.maptool .panel { padding: 1.077em 1.231em; border-bottom: 1px solid var(--edge); }
+.maptool .panel-title {
+  font-size: 0.846em; text-transform: uppercase; letter-spacing: 0.082em;
+  color: var(--muted); margin-bottom: 0.909em; font-weight: 600;
+}
+.maptool .panel-title .hint { text-transform: none; letter-spacing: 0; float: right; font-weight: 400; opacity: .8; }
+
+.maptool .ctl-row { display: flex; align-items: center; justify-content: space-between; gap: 0.769em; margin: 0.692em 0; font-size: 1em; }
+.maptool .ctl-row.slider { flex-direction: column; align-items: stretch; gap: 0.462em; }
+.maptool .ctl-row.slider span { display: flex; justify-content: space-between; font-size: 0.923em; color: var(--muted); }
+.maptool .ctl-row.slider b { color: var(--text); font-weight: 600; }
+.maptool .ctl-row.check { justify-content: flex-start; gap: 0.615em; cursor: pointer; }
+.maptool .ctl-row select {
+  background: var(--panel-2); color: var(--text); border: 1px solid var(--edge);
+  border-radius: 0.462em; padding: 0.308em 0.615em; font-size: 1em;
+}
+.maptool input[type="range"] { width: 100%; accent-color: var(--accent); }
+.maptool input[type="checkbox"] { accent-color: var(--accent); width: 1.154em; height: 1.154em; }
+
+/* segmented control */
+.maptool .seg { display: flex; background: var(--panel-2); border: 1px solid var(--edge); border-radius: 0.538em; padding: 0.231em; margin-bottom: 0.769em; }
+.maptool .seg button {
+  flex: 1; border: 0; background: transparent; color: var(--muted);
+  padding: 0.48em 0.64em; font-size: 0.962em; border-radius: 0.4em; cursor: pointer; font-weight: 600;
+}
+.maptool .seg button.active { background: var(--accent); color: #06121f; }
+
+/* chips */
+.maptool .chips { display: flex; flex-wrap: wrap; gap: 0.462em; }
+.maptool .chip {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  padding: 0.417em 0.75em; border-radius: 1.667em; font-size: 0.923em; cursor: pointer;
+  border: 1px solid var(--edge); background: var(--panel-2); color: var(--muted);
+  user-select: none;
+}
+.maptool .chip .dot { width: 0.75em; height: 0.75em; border-radius: 50%; }
+.maptool .chip.active { color: var(--text); border-color: transparent; }
+
+/* positions */
+.maptool .pos-list { display: flex; flex-direction: column; gap: 0.231em; }
+.maptool .pos {
+  display: flex; align-items: center; gap: 0.72em; padding: 0.48em 0.64em; border-radius: 0.48em;
+  cursor: pointer; font-size: 0.962em;
+}
+.maptool .pos:hover { background: var(--panel-2); }
+.maptool .pos.iso { background: var(--panel-2); outline: 1px solid var(--accent); }
+.maptool .pos .swatch { width: 0.96em; height: 0.96em; border-radius: 0.24em; flex: none; }
+.maptool .pos .pmeta { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.maptool .pos .pname { color: var(--text); }
+.maptool .pos .pcs { color: var(--muted); font-size: 0.88em; font-variant-numeric: tabular-nums; }
+.maptool .pos .pfreq { margin-left: auto; color: var(--accent); font-size: 0.92em; font-variant-numeric: tabular-nums; }
+.maptool .pos-group { font-size: 0.846em; color: var(--muted); margin: 0.909em 0 0.273em; font-weight: 600; }
+
+/* legend */
+.maptool .legend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5em 1em; font-size: 0.923em; }
+.maptool .legend-grid .li { display: flex; align-items: center; gap: 0.583em; }
+.maptool .legend-grid .box { width: 1.083em; height: 1.083em; border-radius: 0.25em; }
+
+.maptool .credit {
+  margin: 0.615em 1.231em 0.154em; padding: 0.538em 0.846em; border-radius: 0.462em;
+  background: linear-gradient(135deg, rgba(77,171,247,.12), rgba(56,217,169,.08));
+  border: 1px solid var(--edge);
+  display: flex; align-items: baseline; gap: 0.538em; flex-wrap: wrap;
+}
+.maptool .credit-label { font-size: 0.731em; text-transform: uppercase; letter-spacing: 0.105em; color: var(--muted); }
+.maptool .credit-name {
+  font-size: 0.962em; font-weight: 700; letter-spacing: 0.024em;
+  color: var(--accent); text-decoration: none; font-variant-numeric: tabular-nums;
+}
+.maptool .credit-name:hover { text-decoration: underline; }
+
+.maptool .side-foot { padding: 1.333em 1.524em; font-size: 0.808em; color: var(--muted); line-height: 1.5; }
+.maptool .side-foot .warn { color: var(--warn); margin-top: 0.571em; }
+.maptool .side-foot b { color: var(--text); font-weight: 600; }
+
+/* ---------------- map ---------------- */
+.maptool #map { flex: 1; height: 100%; position: relative; }
+
+/* info panel */
+/* info card — centred along the bottom of the map area */
+.maptool #info {
+  position: absolute; bottom: 1.538em; left: var(--side-w); right: 0; margin: 0 auto;
+  width: 35.385em; max-width: calc(100% - var(--side-w) - 2.462em);
+  z-index: 4;
+  background: rgba(19,26,35,.97); border: 1px solid var(--edge); border-radius: 0.769em;
+  padding: 1em 1.231em 1.154em; box-shadow: 0 12px 40px rgba(0,0,0,.55); backdrop-filter: blur(3px);
+}
+.maptool #info.hidden { display: none; }
+.maptool #info-close {
+  position: absolute; top: 0.35em; right: 0.55em; background: transparent; border: 0;
+  color: var(--muted); font-size: 1.538em; cursor: pointer; line-height: 1;
+}
+.maptool #info-close:hover { color: var(--text); }
+.maptool .info-head { display: flex; align-items: center; gap: 0.769em; margin: 0 1.538em 0.769em 0; flex-wrap: wrap; }
+.maptool .info-name { font-size: 1.192em; font-weight: 700; }
+.maptool .info-type { font-size: 0.808em; padding: 0.19em 0.762em; border-radius: 1.905em; font-weight: 600; white-space: nowrap; }
+.maptool .info-cols { display: flex; gap: 1.692em; align-items: flex-start; }
+.maptool .info-meta { display: grid; grid-template-columns: auto 1fr; gap: 0.24em 0.96em; font-size: 0.962em; align-content: start; flex: 1; min-width: 0; }
+.maptool .info-k { color: var(--muted); }
+.maptool .info-v { color: var(--text); font-variant-numeric: tabular-nums; }
+.maptool .info-bands .info-k { margin-bottom: 0.385em; }
+.maptool .band { display: flex; align-items: center; gap: 0.615em; margin-bottom: 0.308em; }
+.maptool .band-cls { font-size: 0.846em; font-weight: 600; padding: 0.091em 0.636em; border-radius: 0.364em; min-width: 4.909em; text-align: center; }
+.maptool .band-alt { font-size: 0.923em; color: var(--text); font-variant-numeric: tabular-nums; }
+.maptool .band-sep { color: var(--muted); }
+.maptool .info-note { margin-top: 0.957em; font-size: 0.885em; color: var(--muted); border-top: 1px solid var(--edge); padding-top: 0.696em; line-height: 1.5; }
+
+@media (max-width: 760px) {
+  .maptool #info { left: 0.923em; right: 0.923em; width: auto; max-width: none; bottom: 0.923em; }
+  .maptool .info-cols { flex-direction: column; gap: 0.769em; }
+}
+
+/* maplibre popup dark theme */
+.maptool .maplibregl-popup-content { background: var(--panel); color: var(--text); border: 1px solid var(--edge); border-radius: 0.56em; font-size: 0.962em; padding: 0.8em 0.96em; }
+.maptool .maplibregl-popup-tip { border-top-color: var(--panel) !important; border-bottom-color: var(--panel) !important; }
+.maptool .maplibregl-popup-close-button { color: var(--muted); }
+
+/* responsive */
+@media (max-width: 760px) {
+  .maptool #app { flex-direction: column; }
+  .maptool #sidebar { width: 100%; min-width: 0; height: 44%; }
+  .maptool #map { height: 56%; }
+}

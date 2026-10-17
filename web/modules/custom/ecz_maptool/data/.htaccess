@@ -1,0 +1,2 @@
+# Some Apache hosts don't know .geojson; app.js fetches these files.
+AddType application/geo+json .geojson

@@ -1,0 +1,7 @@
+ecz_maptool.page:
+  path: '/maptool'
+  defaults:
+    _controller: '\Drupal\ecz_maptool\Controller\MaptoolController::page'
+    _title: 'Airspace Map'
+  requirements:
+    _permission: 'access content'

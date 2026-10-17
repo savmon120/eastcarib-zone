@@ -1,6 +1,12 @@
 /* Eastern Caribbean Zone – VATSIM airspace overview
- * MapLibre GL 3D map. Data built by scripts/build-airspaces.mjs. */
+ * MapLibre GL 3D map. Data built by scripts/build-airspaces.mjs.
+ * Runs on the Drupal /maptool page (ecz_maptool module); wrapped so its
+ * top-level names don't leak into the site's global scope. */
+(function () {
 'use strict';
+
+// GeoJSON folder, passed in by MaptoolController.
+const DATA_PATH = (window.drupalSettings && drupalSettings.eczMaptool && drupalSettings.eczMaptool.dataPath) || 'data/';
 
 const M_PER_FT = 0.3048;
 const TYPE_COLORS = {
@@ -103,10 +109,10 @@ let POSITIONS = null;
 
 map.on('load', async () => {
   const [asp, apt, lbl, pos] = await Promise.all([
-    fetch('data/airspaces.geojson').then((r) => r.json()),
-    fetch('data/airports.geojson').then((r) => r.json()),
-    fetch('data/airspace-labels.geojson').then((r) => r.json()),
-    fetch('data/positions.json').then((r) => r.json()),
+    fetch(DATA_PATH + 'airspaces.geojson').then((r) => r.json()),
+    fetch(DATA_PATH + 'airports.geojson').then((r) => r.json()),
+    fetch(DATA_PATH + 'airspace-labels.geojson').then((r) => r.json()),
+    fetch(DATA_PATH + 'positions.json').then((r) => r.json()),
   ]);
   AIRSPACES = asp; POSITIONS = pos;
 
@@ -342,6 +348,8 @@ function setBasemap(key, { syncTheme = true } = {}) {
 
   if (syncTheme && (next === 'dark' || next === 'light')) {
     localStorage.setItem(THEME_STORAGE_KEY, next);
+    // The site's theme toggle (theme-toggle.js) only listens to its own button.
+    document.documentElement.setAttribute('data-theme', next);
     window.dispatchEvent(new CustomEvent('theme:change', { detail: next }));
   }
 
@@ -469,19 +477,4 @@ document.getElementById('opacity').oninput = (e) => {
   document.getElementById('op-val').textContent = e.target.value + '%';
   refreshOpacity();
 };
-// ---- return button from profile --------------------------------------------------------
-const params = new URLSearchParams(window.location.search);
-const returnUrl = params.get('return');
-
-if (returnUrl) {
-  const btn = document.createElement('button');
-
-  btn.className = 'chip';
-  btn.textContent = '← Back';
-
-  btn.onclick = () => {
-    window.location.href = returnUrl;
-  };
-
-  document.querySelector('.side-head').appendChild(btn);
-}
+})();

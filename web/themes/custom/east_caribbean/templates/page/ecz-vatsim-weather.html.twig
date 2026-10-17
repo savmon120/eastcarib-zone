@@ -3,7 +3,7 @@
   <header class="wx-monitor__bar">
     <div class="wx-monitor__tabs">
       <span class="wx-monitor__tab is-active">{{ 'METAR'|t }}</span>
-    <button type="button" class="wx-monitor__button" onclick="window.location.href='/maptool?return=' + encodeURIComponent(window.location.pathname);">
+    <button type="button" class="wx-monitor__button" onclick="window.location.href='{{ path('ecz_maptool.page') }}';">
       <span>Zone Map</span>
     </button>
       <span class="wx-monitor__category" data-wx="category"></span>    </div>

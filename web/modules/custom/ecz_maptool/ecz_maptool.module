@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * The /maptool page: an interactive 3D map of the zone's airspace.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function ecz_maptool_theme($existing, $type, $theme, $path) {
+  return [
+    'ecz_maptool' => [
+      'variables' => [],
+      'path' => $path . '/templates',
+      'template' => 'ecz-maptool',
+    ],
+  ];
+}

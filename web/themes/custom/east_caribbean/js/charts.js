@@ -27,7 +27,7 @@
 
         const STORAGE_KEY = 'eczChartsListWidth';
         const MIN_LIST = 280;
-        // Matches the calc(100% - 368px) cap in _charts.scss.
+        // Matches the 360px viewer floor in _charts.scss (plus the divider).
         const MIN_VIEWER = 360;
         const KEY_STEP = 24;
 
