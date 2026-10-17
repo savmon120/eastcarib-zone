@@ -27,6 +27,7 @@ dependencies:
     - media
     - navigation
     - node
+    - paragraphs_type_permissions
     - path
     - quick_node_clone
     - system
@@ -47,6 +48,7 @@ permissions:
   - 'access site reports'
   - 'access webform overview'
   - 'administer webform'
+  - 'bypass paragraphs type content access'
   - 'clone own wiki_article content'
   - 'clone own wiki_dashboard_card content'
   - 'clone wiki_article content'

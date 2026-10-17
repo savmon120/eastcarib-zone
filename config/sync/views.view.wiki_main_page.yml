@@ -25,7 +25,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: Documents
+      title: 'Zone Wiki'
       fields:
         title:
           id: title
