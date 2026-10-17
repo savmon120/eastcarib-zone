@@ -1,0 +1,24 @@
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_weight
+    - node.type.chart
+id: node.chart.field_weight
+field_name: field_weight
+entity_type: node
+bundle: chart
+label: 'Sort order'
+description: 'Lower numbers are listed first within the column; charts with the same number are sorted by name.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

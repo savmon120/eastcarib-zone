@@ -1,0 +1,19 @@
+{#
+/**
+ * @file
+ * Charts page (/pilots/charts/*): the charts tool fills the screen, so no
+ * page title or footer. Its airport bar has a Back link (ecz-charts.html.twig).
+ */
+#}
+{% embed 'radix:page' %}
+  {% block page_content %}
+    {% include 'radix:page-content' with {
+      page_main_utility_classes: ['charts-page'],
+      page_header_container_utility_classes: ['d-none'],
+      page_content_container_type: 'fluid',
+      page_content_container_utility_classes: ['charts-page__container'],
+    } %}
+  {% endblock %}
+
+  {% block page_footer %}{% endblock %}
+{% endembed %}

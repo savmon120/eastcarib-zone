@@ -1,0 +1,114 @@
+{#
+/**
+ * @file
+ * Charts page (/pilots/charts): airports along the top; the selected
+ * airport's charts in columns on the left; a PDF.js viewer on the right.
+ *
+ * Every airport's columns are rendered (hidden but the active one), so
+ * charts.js can switch airports without a reload. Airport links and chart
+ * buttons are real links, so the page still works without JavaScript.
+ *
+ * Available variables:
+ * - airports: Keyed by ICAO: icao, name, charts (category => list of id, name, url).
+ * - categories: Column keys => labels, in display order.
+ * - icao: The airport selected on load.
+ */
+#}
+<div class="charts" data-charts>
+  {% if airports is empty %}
+    <p class="charts__empty">
+      {{ 'No charts have been published yet.'|t }}
+      <a href="{{ path('<front>') }}">{{ 'Back to the homepage'|t }}</a>
+    </p>
+  {% else %}
+    <nav class="charts__airports" aria-label="{{ 'Airports'|t }}">
+      {% for airport in airports %}
+        <a href="{{ path('ecz_charts.page', {icao: airport.icao}) }}"
+           class="charts__airport{{ airport.icao == icao ? ' is-active' }}"
+           data-charts-airport="{{ airport.icao }}"
+           title="{{ airport.name }}"
+           {% if airport.icao == icao %}aria-current="page"{% endif %}>{{ airport.icao }}</a>
+      {% endfor %}
+    </nav>
+
+    <div class="charts__body">
+      <div class="charts__lists">
+        {% for airport in airports %}
+          <section class="charts__panel" data-charts-panel="{{ airport.icao }}"{{ airport.icao != icao ? ' hidden' }}>
+            <h2 class="charts__panel-title">
+              <strong>{{ airport.icao }}</strong>
+              {% if airport.name %}<span>{{ airport.name }}</span>{% endif %}
+            </h2>
+            <div class="charts__columns">
+              {% for key, label in categories %}
+                <div class="charts__column charts__column--{{ key|lower }}">
+                  <h3 class="charts__column-title">{{ label }}</h3>
+                  {% for chart in airport.charts[key] %}
+                    <a href="{{ chart.url }}" class="charts__chart" target="_blank" rel="noopener"
+                       data-chart-id="{{ chart.id }}"
+                       data-chart-category="{{ key }}">{{ chart.name }}</a>
+                  {% else %}
+                    <span class="charts__none">{{ 'None'|t }}</span>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+          </section>
+        {% endfor %}
+      </div>
+
+      {# Drag (or arrow keys) to resize the columns; double-click resets. Wired up in charts.js. #}
+      <div class="charts__divider" data-charts-divider role="separator" aria-orientation="vertical"
+           aria-label="{{ 'Resize chart list'|t }}" title="{{ 'Drag to resize, double-click to reset'|t }}" tabindex="0"></div>
+
+      <div class="charts__viewer" data-charts-viewer>
+        <div class="charts__toolbar">
+          <span class="charts__title" data-charts-title>{{ 'No chart selected'|t }}</span>
+
+          <div class="charts__tools" data-charts-tools hidden>
+            <span class="charts__pager" data-charts-pager hidden>
+              <button type="button" class="charts__tool" data-charts-action="prev" title="{{ 'Previous page'|t }}">
+                <i data-lucide="chevron-left" aria-hidden="true"></i><span class="visually-hidden">{{ 'Previous page'|t }}</span>
+              </button>
+              <span class="charts__page-count" data-charts-page>1 / 1</span>
+              <button type="button" class="charts__tool" data-charts-action="next" title="{{ 'Next page'|t }}">
+                <i data-lucide="chevron-right" aria-hidden="true"></i><span class="visually-hidden">{{ 'Next page'|t }}</span>
+              </button>
+            </span>
+
+            <button type="button" class="charts__tool" data-charts-action="zoom-out" title="{{ 'Zoom out'|t }}">
+              <i data-lucide="zoom-out" aria-hidden="true"></i><span class="visually-hidden">{{ 'Zoom out'|t }}</span>
+            </button>
+            <span class="charts__zoom" data-charts-zoom>100%</span>
+            <button type="button" class="charts__tool" data-charts-action="zoom-in" title="{{ 'Zoom in'|t }}">
+              <i data-lucide="zoom-in" aria-hidden="true"></i><span class="visually-hidden">{{ 'Zoom in'|t }}</span>
+            </button>
+            <button type="button" class="charts__tool" data-charts-action="fit-width" title="{{ 'Fit to width'|t }}">
+              <i data-lucide="move-horizontal" aria-hidden="true"></i><span class="visually-hidden">{{ 'Fit to width'|t }}</span>
+            </button>
+            <button type="button" class="charts__tool" data-charts-action="fit-page" title="{{ 'Fit whole page'|t }}">
+              <i data-lucide="scan" aria-hidden="true"></i><span class="visually-hidden">{{ 'Fit whole page'|t }}</span>
+            </button>
+            <button type="button" class="charts__tool" data-charts-action="rotate-ccw" title="{{ 'Rotate counterclockwise'|t }}">
+              <i data-lucide="rotate-ccw" aria-hidden="true"></i><span class="visually-hidden">{{ 'Rotate counterclockwise'|t }}</span>
+            </button>
+            <button type="button" class="charts__tool" data-charts-action="rotate" title="{{ 'Rotate clockwise'|t }}">
+              <i data-lucide="rotate-cw" aria-hidden="true"></i><span class="visually-hidden">{{ 'Rotate clockwise'|t }}</span>
+            </button>
+            <button type="button" class="charts__tool" data-charts-action="invert" aria-pressed="false" title="{{ 'Night mode (invert colours)'|t }}">
+              <i data-lucide="contrast" aria-hidden="true"></i><span class="visually-hidden">{{ 'Night mode (invert colours)'|t }}</span>
+            </button>
+            <a class="charts__tool" data-charts-open href="#" target="_blank" rel="noopener" title="{{ 'Open PDF in a new tab'|t }}">
+              <i data-lucide="external-link" aria-hidden="true"></i><span class="visually-hidden">{{ 'Open PDF in a new tab'|t }}</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="charts__stage" data-charts-stage>
+          <p class="charts__message" data-charts-message>{{ 'Select a chart on the left to view it here.'|t }}</p>
+          <canvas class="charts__canvas" data-charts-canvas hidden></canvas>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>

@@ -1,0 +1,31 @@
+uuid: af0049c1-4218-4fa1-805c-6aa3d5864010
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_chart_airport
+    - node.type.chart
+    - node.type.featured_airport
+_core:
+  default_config_hash: VWvkc6zjzVl4TI3NpxFRNIz4xysqoEZRQepfWEy4Zuw
+id: node.chart.field_chart_airport
+field_name: field_chart_airport
+entity_type: node
+bundle: chart
+label: Airport
+description: 'The airport this chart belongs to (a Featured Airport, titled by its ICAO code).'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      featured_airport: featured_airport
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

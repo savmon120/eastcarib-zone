@@ -46,6 +46,14 @@ weather:
     - core/drupal
     - core/drupalSettings
 
+charts:
+  js:
+    https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js: { type: external, minified: true }
+    js/charts.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
 wiki-toc:
   js:
     js/wiki-toc.js: {}

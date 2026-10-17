@@ -1,0 +1,13 @@
+uuid: 1e0c0c48-1147-4143-850c-39b3df08303a
+langcode: en-gb
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 8WkICCv_rNlTGybAb8RNtgzbxq5TtjwZFiwkj2DNkR4
+name: Chart
+type: chart
+description: 'An aeronautical chart (PDF) for an airport, listed on /pilots/charts.'
+help: 'The title is the chart name shown on its button, e.g. "ILS RWY 10" or "Airport Diagram".'
+new_revision: true
+preview_mode: 0
+display_submitted: false

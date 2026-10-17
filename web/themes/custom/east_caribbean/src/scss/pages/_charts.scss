@@ -1,0 +1,409 @@
+/* ------------------------------------------
+   CHARTS PAGE (/pilots/charts)
+   Markup: templates/page/ecz-charts.html.twig, behaviour: js/charts.js.
+   Uses the site's light/dark tokens; each chart column has its own accent.
+   ------------------------------------------ */
+
+.charts-page {
+  padding: 8px 0 !important;
+}
+
+.charts-page__container {
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.charts {
+  // Column accents: dark enough for white text in light mode...
+  --charts-star: #127a5a;
+  --charts-app: #2458b8;
+  --charts-taxi: #9a5b00;
+  --charts-sid: #6d3cc0;
+  --charts-ref: #555c66;
+  --charts-on-accent: #fff;
+  --charts-stage-bg: #dfe3e8;
+  --charts-bar-bg: #1f2a3a;
+
+  display: flex;
+  flex-direction: column;
+  // Fills the screen below the navbar; --charts-top is set by charts.js.
+  height: calc(100dvh - var(--charts-top, 120px) - 8px);
+  min-height: 560px;
+  overflow: hidden;
+  color: var(--bs-body-color);
+  background-color: var(--bs-card-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 12px;
+
+  &__empty {
+    padding: 48px 16px;
+    margin: 0;
+    color: var(--bs-secondary-color);
+    text-align: center;
+  }
+
+  /* Airports bar */
+
+  &__airports {
+    display: flex;
+    flex-shrink: 0;
+    gap: 2px;
+    padding: 6px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    // Dark in both themes so the white airport codes always read.
+    background-color: var(--charts-bar-bg);
+    border-bottom: 1px solid var(--bs-border-color);
+  }
+
+  &__airport {
+    flex: none;
+    padding: clamp(4px, 0.6vh, 8px) clamp(8px, 0.7vw, 14px);
+    font-size: clamp(0.85rem, 0.6rem + 0.35vw, 1.1rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border-radius: 6px;
+
+    &:hover,
+    &:focus-visible {
+      color: #fff;
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    &.is-active {
+      color: var(--charts-bar-bg);
+      background-color: var(--bs-link-color);
+    }
+  }
+
+  /* Chart columns (left) and viewer (right) */
+
+  &__body {
+    display: grid;
+    flex: 1;
+    // --charts-left is set when the divider is dragged; the viewer always keeps 360px.
+    grid-template-columns:
+      min(var(--charts-left, clamp(400px, 44%, 1200px)), calc(100% - 368px))
+      auto
+      minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  &__lists {
+    min-height: 0;
+    padding: clamp(8px, 0.8vw, 16px);
+    overflow-y: auto;
+  }
+
+  &__divider {
+    position: relative;
+    width: 8px;
+    cursor: col-resize;
+    touch-action: none;
+    background-color: var(--bs-border-color);
+
+    // Grip in the middle.
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 2px;
+      height: 32px;
+      content: "";
+      background-color: var(--bs-secondary-color);
+      border-radius: 1px;
+      transform: translate(-50%, -50%);
+    }
+
+    &:hover,
+    &:focus-visible,
+    .charts.is-resizing & {
+      background-color: var(--bs-link-color);
+      outline: 0;
+
+      &::after { background-color: var(--charts-bar-bg); }
+    }
+  }
+
+  // While dragging: no text selection, and the cursor stays put over the viewer.
+  &.is-resizing {
+    cursor: col-resize;
+    user-select: none;
+
+    .charts__stage { pointer-events: none; }
+  }
+
+  &__panel-title {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    align-items: baseline;
+    margin: 0 0 clamp(8px, 1vh, 16px);
+    font-size: clamp(0.9rem, 0.7rem + 0.3vw, 1.2rem);
+
+    span {
+      font-size: 0.85em;
+      font-weight: 400;
+      color: var(--bs-secondary-color);
+    }
+  }
+
+  &__columns {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: clamp(6px, 0.6vw, 16px);
+    align-items: start;
+  }
+
+  &__column {
+    --charts-accent: var(--charts-ref);
+
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 0.8vh, 12px);
+
+    &--star { --charts-accent: var(--charts-star); }
+    &--app { --charts-accent: var(--charts-app); }
+    &--taxi { --charts-accent: var(--charts-taxi); }
+    &--sid { --charts-accent: var(--charts-sid); }
+  }
+
+  &__column-title {
+    padding: clamp(4px, 0.6vh, 8px) 4px;
+    margin: 0;
+    font-size: clamp(0.7rem, 0.45rem + 0.35vw, 0.95rem);
+    font-weight: 800;
+    color: var(--charts-on-accent);
+    text-align: center;
+    letter-spacing: 1px;
+    background-color: var(--charts-accent);
+    border-radius: 6px;
+  }
+
+  &__chart {
+    display: block;
+    // Height follows the screen height, text follows its width.
+    padding: clamp(8px, 0.25rem + 0.9vh, 20px) clamp(6px, 0.5vw, 12px);
+    font-size: clamp(0.72rem, 0.45rem + 0.45vw, 1.05rem);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--bs-body-color);
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+    background-color: var(--bs-card-bg-alt);
+    border: 1px solid color-mix(in srgb, var(--charts-accent) 60%, transparent);
+    border-radius: 6px;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--bs-body-color);
+      background-color: var(--bs-btn-bg-hover);
+      border-color: var(--charts-accent);
+    }
+
+    &.is-active {
+      color: var(--charts-on-accent);
+      background-color: var(--charts-accent);
+      border-color: var(--charts-accent);
+    }
+  }
+
+  &__none {
+    padding: 6px 0;
+    font-size: clamp(0.72rem, 0.45rem + 0.45vw, 1.05rem);
+    color: var(--bs-secondary-color);
+    text-align: center;
+  }
+
+  /* Viewer */
+
+  &__viewer {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  &__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    align-items: center;
+    min-height: 46px;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--bs-border-color);
+  }
+
+  &__title {
+    flex: 1 1 160px;
+    min-width: 0;
+    overflow: hidden;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__tools,
+  &__pager {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+
+    &[hidden] { display: none; }
+  }
+
+  &__pager {
+    padding-right: 6px;
+    margin-right: 4px;
+    border-right: 1px solid var(--bs-border-color);
+  }
+
+  &__tool {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    color: var(--bs-body-color);
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: 6px;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--bs-body-color);
+      background-color: var(--bs-btn-bg-hover);
+    }
+
+    &[aria-pressed="true"] {
+      color: var(--bs-body-bg);
+      background-color: var(--bs-link-color);
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__zoom,
+  &__page-count {
+    min-width: 3.4em;
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--bs-secondary-color);
+    text-align: center;
+  }
+
+  &__stage {
+    position: relative;
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    padding: 16px;
+    overflow: auto;
+    cursor: grab;
+    background-color: var(--charts-stage-bg);
+
+    &.is-dragging { cursor: grabbing; }
+
+    &.is-inverted .charts__canvas {
+      filter: invert(1) hue-rotate(180deg) brightness(0.9);
+    }
+  }
+
+  // Auto margins centre the chart, and collapse to 0 once it is larger
+  // than the stage, so every edge can still be scrolled to.
+  &__canvas {
+    flex: none;
+    margin: auto;
+    background-color: #fff;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+
+    &[hidden] { display: none; }
+  }
+
+  &__message {
+    max-width: 360px;
+    margin: auto;
+    color: var(--bs-secondary-color);
+    text-align: center;
+    cursor: default;
+  }
+}
+
+// ...and light enough to read on the dark surfaces in dark mode.
+html[data-theme="dark"] .charts {
+  --charts-star: #4fd1a5;
+  --charts-app: #7cb0ff;
+  --charts-taxi: #f2b75b;
+  --charts-sid: #bb96ff;
+  --charts-ref: #a3aab5;
+  --charts-on-accent: #10131a;
+  --charts-stage-bg: #0d0f13;
+  --charts-bar-bg: #0d0f13;
+}
+
+// The site forces dark-mode headings light (layout/_layout.scss); the
+// column titles sit on a light accent fill, so they need the dark text.
+html[data-theme="dark"] #main-content .charts__column-title {
+  color: var(--charts-on-accent) !important;
+}
+
+/* Tablets and phones: the columns above the viewer, page scrolls. */
+
+@media (max-width: 991.98px) {
+  .charts {
+    height: auto;
+    min-height: 0;
+
+    &__body {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &__divider {
+      display: none;
+    }
+
+    &__lists {
+      max-height: 45vh;
+      border-bottom: 1px solid var(--bs-border-color);
+    }
+
+    &__viewer {
+      height: 75vh;
+      height: 75dvh;
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .charts {
+    // One category per row, its charts two across.
+    &__columns {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    &__column {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &__column-title {
+      grid-column: 1 / -1;
+      text-align: left;
+    }
+
+    &__none {
+      grid-column: 1 / -1;
+      text-align: left;
+    }
+  }
+}

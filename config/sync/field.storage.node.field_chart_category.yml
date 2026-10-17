@@ -1,0 +1,38 @@
+uuid: 69c6ddcd-7b4c-4645-8749-1faee60e0239
+langcode: en-gb
+status: true
+dependencies:
+  module:
+    - node
+    - options
+_core:
+  default_config_hash: vzoRM4wE-z7xOf6IIVPXfsmF3EzQ1fZEOA20S_A0s4U
+id: node.field_chart_category
+field_name: field_chart_category
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: STAR
+      label: STAR
+    -
+      value: APP
+      label: Approach
+    -
+      value: TAXI
+      label: Taxi
+    -
+      value: SID
+      label: SID
+    -
+      value: REF
+      label: Reference
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

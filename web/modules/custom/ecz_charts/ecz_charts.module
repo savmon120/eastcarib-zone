@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Airport charts: the Chart content type and the /pilots/charts viewer.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function ecz_charts_theme($existing, $type, $theme, $path) {
+  return [
+    'ecz_charts' => [
+      'variables' => [
+        'airports' => [],
+        'categories' => [],
+        'icao' => NULL,
+      ],
+      'path' => $path . '/templates',
+      'template' => 'ecz-charts',
+    ],
+  ];
+}

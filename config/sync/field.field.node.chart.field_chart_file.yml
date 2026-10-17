@@ -1,0 +1,29 @@
+uuid: 13e5cab3-7ab7-4b19-bd22-d79c115a1af3
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_chart_file
+    - node.type.chart
+  module:
+    - file
+_core:
+  default_config_hash: CAqPCNWmOVmf_bGEVzUgdjjtQd4eyAPfoHh4Wm47g2U
+id: node.chart.field_chart_file
+field_name: field_chart_file
+entity_type: node
+bundle: chart
+label: 'Chart PDF'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: charts
+  file_extensions: pdf
+  max_filesize: ''
+  description_field: false
+field_type: file

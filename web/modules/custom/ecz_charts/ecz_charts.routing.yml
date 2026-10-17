@@ -1,0 +1,9 @@
+ecz_charts.page:
+  path: '/pilots/charts/{icao}'
+  defaults:
+    _controller: '\Drupal\ecz_charts\Controller\ChartsController::page'
+    _title: 'Charts'
+    icao: ''
+  requirements:
+    _permission: 'access content'
+    icao: '[A-Za-z0-9]{0,4}'

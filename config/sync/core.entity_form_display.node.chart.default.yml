@@ -1,0 +1,80 @@
+uuid: 4e1949e1-54ef-47fe-8fdf-bb15a2342fb8
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - field.field.node.chart.field_chart_airport
+    - field.field.node.chart.field_chart_category
+    - field.field.node.chart.field_chart_file
+    - field.field.node.chart.field_weight
+    - node.type.chart
+  module:
+    - content_moderation
+    - file
+_core:
+  default_config_hash: BgincqWX0VyUb8BPYx3cLFgywBkOJc4kZ2qqkraFm_4
+id: node.chart.default
+targetEntityType: node
+bundle: chart
+mode: default
+content:
+  field_chart_airport:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_chart_category:
+    type: options_select
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_chart_file:
+    type: file_generic
+    weight: 3
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  field_weight:
+    type: number
+    weight: 4
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  moderation_state:
+    type: moderation_state_default
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 10
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: 'e.g. ILS RWY 10'
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true
