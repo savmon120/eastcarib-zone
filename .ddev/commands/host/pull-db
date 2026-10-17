@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+read -p "Overwrite LOCAL database? [y/N] " confirm
+[[ "$confirm" == "y" ]] || exit 1
+
+echo "Dumping production database..."
+ssh sunnywings@eastcaribzone.sunnywingsvirtual.com '
+set -e
+cd ~/eastcaribzone.sunnywingsvirtual.com
+/opt/plesk/php/8.4/bin/php vendor/drush/drush/drush.php sql:dump --gzip --result-file=~/prod.sql
+'
+
+echo "Downloading..."
+scp sunnywings@eastcaribzone.sunnywingsvirtual.com:~/prod.sql.gz /tmp/prod.sql.gz
+
+echo "Importing local database..."
+ddev import-db --file=/tmp/prod.sql.gz
+
+echo "Cleaning up..."
+ssh sunnywings@eastcaribzone.sunnywingsvirtual.com 'rm -f ~/prod.sql.gz; echo "Removed remote dump"'
+rm -f /tmp/prod.sql.gz
+
+echo "Done"
