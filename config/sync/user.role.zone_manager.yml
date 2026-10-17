@@ -18,6 +18,8 @@ dependencies:
     - node.type.latest_news
     - node.type.page
     - node.type.waitlist_entry
+    - node.type.wiki_article
+    - node.type.wiki_dashboard_card
   module:
     - block_content
     - file
@@ -26,6 +28,7 @@ dependencies:
     - navigation
     - node
     - path
+    - quick_node_clone
     - system
     - webform
 id: zone_manager
@@ -44,6 +47,10 @@ permissions:
   - 'access site reports'
   - 'access webform overview'
   - 'administer webform'
+  - 'clone own wiki_article content'
+  - 'clone own wiki_dashboard_card content'
+  - 'clone wiki_article content'
+  - 'clone wiki_dashboard_card content'
   - 'create audio media'
   - 'create controller content'
   - 'create document media'
@@ -59,6 +66,8 @@ permissions:
   - 'create video media'
   - 'create waitlist_entry content'
   - 'create webform'
+  - 'create wiki_article content'
+  - 'create wiki_dashboard_card content'
   - 'delete any audio media'
   - 'delete any controller content'
   - 'delete any document media'
@@ -73,6 +82,8 @@ permissions:
   - 'delete any waitlist_entry content'
   - 'delete any webform'
   - 'delete any webform submission'
+  - 'delete any wiki_article content'
+  - 'delete any wiki_dashboard_card content'
   - 'delete media'
   - 'delete own audio media'
   - 'delete own controller content'
@@ -87,6 +98,8 @@ permissions:
   - 'delete own waitlist_entry content'
   - 'delete own webform'
   - 'delete own webform submission'
+  - 'delete own wiki_article content'
+  - 'delete own wiki_dashboard_card content'
   - 'edit any audio media'
   - 'edit any controller content'
   - 'edit any document media'
@@ -99,6 +112,8 @@ permissions:
   - 'edit any video media'
   - 'edit any waitlist_entry content'
   - 'edit any webform'
+  - 'edit any wiki_article content'
+  - 'edit any wiki_dashboard_card content'
   - 'edit own audio media'
   - 'edit own controller content'
   - 'edit own document media'
@@ -112,6 +127,8 @@ permissions:
   - 'edit own video media'
   - 'edit own waitlist_entry content'
   - 'edit own webform'
+  - 'edit own wiki_article content'
+  - 'edit own wiki_dashboard_card content'
   - 'revert any audio media revisions'
   - 'revert any document media revisions'
   - 'revert any image media revisions'
@@ -144,3 +161,5 @@ permissions:
   - 'view the administration theme'
   - 'view unpublished block content'
   - 'view waitlist_entry revisions'
+  - 'view wiki_article revisions'
+  - 'view wiki_dashboard_card revisions'
