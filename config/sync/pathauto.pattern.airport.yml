@@ -1,0 +1,23 @@
+uuid: 31a15d14-84c8-4c7f-b641-a48924aed4e9
+langcode: en-gb
+status: true
+dependencies:
+  config:
+    - node.type.featured_airport
+  module:
+    - node
+id: airport
+label: Airport
+type: 'canonical_entities:node'
+pattern: '/airports/[node:title]'
+selection_criteria:
+  5121b1ff-19c3-43c0-a789-85881cef6989:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      featured_airport: featured_airport
+selection_logic: and
+weight: -5
+relationships: {  }

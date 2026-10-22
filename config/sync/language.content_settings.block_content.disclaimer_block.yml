@@ -4,11 +4,6 @@ status: true
 dependencies:
   config:
     - block_content.type.disclaimer_block
-  module:
-    - content_translation
-third_party_settings:
-  content_translation:
-    enabled: true
 _core:
   default_config_hash: pYV_j3OTOlWBweKkB0jY9dB9C3aTUJZ903T91ZahX4w
 id: block_content.disclaimer_block

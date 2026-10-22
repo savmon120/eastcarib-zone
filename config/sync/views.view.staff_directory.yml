@@ -465,7 +465,7 @@ display:
           metatags:
             title: 'Meet the Staff | ECZ'
           tokenize: false
-      path: about/Staff
+      path: about/staff
     cache_metadata:
       max-age: -1
       contexts:
