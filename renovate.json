@@ -43,13 +43,17 @@
     },
     {
       "groupName": "Drupal core and contrib",
-      "matchPackagePatterns": ["^drupal/"],
-      "matchUpdateTypes": ["minor", "patch"]
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": [
+        "/^drupal//"
+      ]
     },
     {
       "groupName": "Drupal tooling",
-      "matchPackagePatterns": ["^drush/|^phpstan/|^squizlabs/|^dealerdirect/"],
-      "matchUpdateTypes": ["minor", "patch"]
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": [
+        "/^drush/|^phpstan/|^squizlabs/|^dealerdirect//"
+      ]
     }
   ]
 }
