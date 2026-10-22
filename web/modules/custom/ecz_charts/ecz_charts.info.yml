@@ -1,6 +1,6 @@
 name: 'ECZ Charts'
 type: module
-description: 'Airport charts: the Chart content type and the /pilots/charts viewer.'
+description: 'Airport charts: the Chart content type and the /charts viewer.'
 core_version_requirement: ^10 || ^11
 package: Custom
 dependencies:

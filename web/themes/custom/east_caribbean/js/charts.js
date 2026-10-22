@@ -1,7 +1,7 @@
 (function (Drupal, once) {
     'use strict';
 
-    // Charts page (/pilots/charts): switches airports without a reload and
+    // Charts page (/charts): switches airports without a reload and
     // shows the selected chart with PDF.js. Markup: ecz-charts.html.twig.
 
     const WORKER_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -301,7 +301,7 @@
                 const viewer = initViewer(root);
 
                 // The URL keeps the airport and chart, so it can be shared:
-                // /pilots/charts/TNCM#chart-12.
+                // /charts/TNCM#chart-12.
                 function selectChart(link) {
                     root.querySelectorAll('.charts__chart.is-active').forEach(el => el.classList.remove('is-active'));
                     link.classList.add('is-active');

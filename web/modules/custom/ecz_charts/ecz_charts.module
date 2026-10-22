@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Airport charts: the Chart content type and the /pilots/charts viewer.
+ * Airport charts: the Chart content type and the /charts viewer.
  */
 
 /**

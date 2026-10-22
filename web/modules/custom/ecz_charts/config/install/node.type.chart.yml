@@ -3,7 +3,7 @@ status: true
 dependencies: {  }
 name: Chart
 type: chart
-description: 'An aeronautical chart (PDF) for an airport, listed on /pilots/charts.'
+description: 'An aeronautical chart (PDF) for an airport, listed on /charts.'
 help: 'The title is the chart name shown on its button, e.g. "ILS RWY 10" or "Airport Diagram".'
 new_revision: true
 preview_mode: 0
