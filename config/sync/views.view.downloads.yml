@@ -306,7 +306,7 @@ display:
           metatags:
             title: 'Downloads | ECZ'
           tokenize: false
-      path: controllers/Downloads
+      path: downloads
     cache_metadata:
       max-age: -1
       contexts:
