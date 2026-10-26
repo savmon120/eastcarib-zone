@@ -21,7 +21,7 @@ settings:
   handler: 'default:file'
   handler_settings: {  }
   file_directory: '[date:custom:Y]-[date:custom:m]'
-  file_extensions: pdf
-  max_filesize: ''
+  file_extensions: 'pdf docx pptx'
+  max_filesize: 20MB
   description_field: false
 field_type: file
