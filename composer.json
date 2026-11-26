@@ -38,6 +38,7 @@
         "drupal/pdf_reader": "^1.2",
         "drupal/quick_node_clone": "^1.22",
         "drupal/radix": "^6.0",
+        "drupal/redirect": "^1.13",
         "drupal/simplei": "^3.0",
         "drupal/smtp": "^1.4",
         "drupal/svg_image": "^3.2",
