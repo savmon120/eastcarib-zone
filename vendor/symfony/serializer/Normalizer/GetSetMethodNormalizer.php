@@ -61,7 +61,7 @@ final class GetSetMethodNormalizer extends AbstractObjectNormalizer
      */
     private function supports(string $class, bool $readAttributes): bool
     {
-        if ($this->classDiscriminatorResolver?->getMappingForClass($class)) {
+        if ($this->classDiscriminatorResolver?->getMappingForMappedObject($class)) {
             return true;
         }
 
@@ -169,7 +169,7 @@ final class GetSetMethodNormalizer extends AbstractObjectNormalizer
     protected function setAttributeValue(object $object, string $attribute, mixed $value, ?string $format = null, array $context = []): void
     {
         $setter = 'set'.$attribute;
-        $key = $object::class.':'.$setter;
+        $key = $object::class.':'.strtolower($setter);
 
         if (!isset(self::$setterAccessibleCache[$key])) {
             self::$setterAccessibleCache[$key] = method_exists($object, $setter) && \is_callable([$object, $setter]) && !(new \ReflectionMethod($object, $setter))->isStatic();
@@ -212,6 +212,12 @@ final class GetSetMethodNormalizer extends AbstractObjectNormalizer
 
         $setter = 'set'.$attribute;
         if ($reflection->hasMethod($setter) && $this->isSetMethod($reflection->getMethod($setter))) {
+            foreach ($context[self::IGNORED_ATTRIBUTES] ?? $this->defaultContext[self::IGNORED_ATTRIBUTES] as $ignoredAttribute) {
+                if (!strcasecmp($attribute, $ignoredAttribute)) {
+                    return false;
+                }
+            }
+
             return true;
         }
 

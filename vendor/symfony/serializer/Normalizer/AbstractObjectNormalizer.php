@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Serializer\Normalizer;
 
+use Doctrine\Persistence\Proxy as DoctrineProxy;
 use Symfony\Component\PropertyAccess\Exception\NoSuchIndexException;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 use Symfony\Component\PropertyAccess\Exception\UninitializedPropertyException;
@@ -25,6 +26,7 @@ use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\LogicException;
 use Symfony\Component\Serializer\Exception\MissingConstructorArgumentsException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
+use Symfony\Component\Serializer\Exception\UnsupportedException;
 use Symfony\Component\Serializer\Mapping\AttributeMetadata;
 use Symfony\Component\Serializer\Mapping\AttributeMetadataInterface;
 use Symfony\Component\Serializer\Mapping\ClassDiscriminatorFromClassMetadata;
@@ -39,6 +41,7 @@ use Symfony\Component\TypeInfo\Type\CollectionType;
 use Symfony\Component\TypeInfo\Type\IntersectionType;
 use Symfony\Component\TypeInfo\Type\NullableType;
 use Symfony\Component\TypeInfo\Type\ObjectType;
+use Symfony\Component\TypeInfo\Type\TemplateType;
 use Symfony\Component\TypeInfo\Type\UnionType;
 use Symfony\Component\TypeInfo\Type\WrappingTypeInterface;
 use Symfony\Component\TypeInfo\TypeContext\TypeContextFactory;
@@ -259,6 +262,11 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
             return $this->attributesCache[$key];
         }
 
+        if (1000 < \count($this->attributesCache)) {
+            // stop memory leak if there are many keys
+            $this->attributesCache = \array_slice($this->attributesCache, 500, null, true);
+        }
+
         $allowedAttributes = $this->getAllowedAttributes($object, $context, true);
 
         if (false !== $allowedAttributes) {
@@ -321,9 +329,12 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
 
         if (XmlEncoder::FORMAT === $format && !\is_array($data)) {
             $data = ['#' => $data];
+        } elseif (isset($context['_union_member']) && !\is_array($data) && !\is_object($data)) {
+            throw new UnsupportedException(\sprintf('Data expected to be an array or an object to denormalize "%s" as a member of a union type, "%s" given.', $type, get_debug_type($data)));
         }
 
-        $allowedAttributes = $this->getAllowedAttributes($type, $context, true);
+        unset($context['_union_member']);
+
         $normalizedData = $this->prepareForDenormalization($data);
         $extraAttributes = [];
 
@@ -344,6 +355,43 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
         }
 
         $normalizedData = $nestedData + $normalizedData;
+
+        // Nested discriminator maps pick the class one level at a time
+        $visitedClasses = [$mappedClass => true];
+        while (!isset($visitedClasses[$nextClass = $this->getMappedClass($normalizedData, $mappedClass, $format, $context)])) {
+            $visitedClasses[$nextClass] = true;
+            $mappedClass = $nextClass;
+        }
+
+        $allowedAttributes = $this->getAllowedAttributes($mappedClass, $context, true);
+        $excludedTypeProperties = [];
+
+        if (false !== $allowedAttributes && null !== $this->classDiscriminatorResolver) {
+            $typeProperties = [];
+
+            if (null !== $mapping = $this->classDiscriminatorResolver->getMappingForMappedObject($mappedClass)) {
+                $typeProperties[] = $mapping->getTypeProperty();
+            }
+
+            foreach ([$mappedClass => $mappedClass] + class_parents($mappedClass) + class_implements($mappedClass) as $declaringClass) {
+                if (is_a($declaringClass, $type, true) && null !== $mapping = $this->classDiscriminatorResolver->getMappingForClass($declaringClass)) {
+                    $allowedAttributes[] = $typeProperties[] = $mapping->getTypeProperty();
+                }
+            }
+
+            // A type property is read to pick the class, but it's written only when the metadata of the class allows it
+            $groups = $this->getGroups($context);
+
+            foreach ($typeProperties as $typeProperty) {
+                $attributeMetadata = $this->getAttributeMetadata($mappedClass, $typeProperty);
+
+                if ($attributeMetadata && ($attributeMetadata->isIgnored() || ($groups && $attributeMetadata->getGroups() && !array_intersect(array_merge($attributeMetadata->getGroups(), ['*']), $groups)))) {
+                    $excludedTypeProperties[$typeProperty] = true;
+                }
+            }
+
+            $allowedAttributes = array_diff($allowedAttributes, array_keys($excludedTypeProperties));
+        }
 
         $originalNormalizedData = $normalizedData;
         $object = $this->instantiateObject($normalizedData, $mappedClass, $context, new \ReflectionClass($mappedClass), $allowedAttributes, $format);
@@ -379,14 +427,17 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
             $attributeContext = $this->getAttributeDenormalizationContext($resolvedClass, $attribute, $context);
 
             if ((false !== $allowedAttributes && !\in_array($attribute, $allowedAttributes, true)) || !$this->isAllowedAttribute($resolvedClass, $attribute, $format, $context)) {
-                if (!($context[self::ALLOW_EXTRA_ATTRIBUTES] ?? $this->defaultContext[self::ALLOW_EXTRA_ATTRIBUTES])) {
+                if (!($context[self::ALLOW_EXTRA_ATTRIBUTES] ?? $this->defaultContext[self::ALLOW_EXTRA_ATTRIBUTES]) && !isset($excludedTypeProperties[$attribute])) {
                     $extraAttributes[] = $attribute;
                 }
 
                 continue;
             }
 
-            if ($attributeContext[self::DEEP_OBJECT_TO_POPULATE] ?? $this->defaultContext[self::DEEP_OBJECT_TO_POPULATE] ?? false) {
+            $type = $this->getType($resolvedClass, $attribute);
+
+            // the current value is used only to denormalize typed attributes
+            if (null !== $type && ($attributeContext[self::DEEP_OBJECT_TO_POPULATE] ?? $this->defaultContext[self::DEEP_OBJECT_TO_POPULATE] ?? false)) {
                 $discriminatorMapping = $this->classDiscriminatorResolver?->getMappingForMappedObject($object);
 
                 try {
@@ -401,7 +452,7 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
                 }
             }
 
-            if (null !== $type = $this->getType($resolvedClass, $attribute)) {
+            if (null !== $type) {
                 try {
                     // BC layer for PropertyTypeExtractorInterface::getTypes().
                     // Can be removed as soon as PropertyTypeExtractorInterface::getTypes() is removed (8.0).
@@ -474,16 +525,22 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
             usort($types, static fn (LegacyType $a, LegacyType $b): int => ($a->getClassName() ?? $a->getBuiltinType()) <=> ($b->getClassName() ?? $b->getBuiltinType()));
         }
 
+        $originalData = $data;
         foreach ($types as $type) {
+            // each type of a union gets the data as given, not as changed for the previous type
+            $data = $originalData;
+
             if (null === $data && $type->isNullable()) {
                 return null;
             }
 
             $collectionValueType = $type->isCollection() ? $type->getCollectionValueTypes()[0] ?? null : null;
+            $collectionKeyTypes = array_map(static fn (LegacyType $t) => $t->getBuiltinType(), $type->getCollectionKeyTypes());
 
             // Fix a collection that contains the only one element
             // This is special to xml format only
-            if ('xml' === $format && null !== $collectionValueType && (!\is_array($data) || !\is_int(key($data)))) {
+            // When the keys cannot be int, an array with other keys is the collection itself, not its only element
+            if ('xml' === $format && null !== $collectionValueType && (!\is_array($data) || (!\is_int(key($data)) && (!$collectionKeyTypes || \in_array(LegacyType::BUILTIN_TYPE_INT, $collectionKeyTypes, true))))) {
                 $data = [$data];
             }
 
@@ -610,6 +667,10 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
                     }
 
                     $childContext = $this->createChildContext($context, $attribute, $format);
+                    if (($isUnionType || $type->isNullable()) && !\is_array($data) && !\is_object($data)) {
+                        // object normalizers leave a scalar to the other types of the union instead of building an empty object from it
+                        $childContext['_union_member'] = true;
+                    }
                     if ($this->serializer->supportsDenormalization($data, $class, $format, $childContext)) {
                         return $this->serializer->denormalize($data, $class, $format, $childContext);
                     }
@@ -648,11 +709,17 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
                     case LegacyType::BUILTIN_TYPE_OBJECT:
                     case LegacyType::BUILTIN_TYPE_RESOURCE:
                     case LegacyType::BUILTIN_TYPE_STRING:
-                        if (('is_'.$builtinType)($data)) {
+                        // an object can be a collection of objects, but not one declared as an array
+                        if (('is_'.$builtinType)($data) && (LegacyType::BUILTIN_TYPE_OBJECT !== $builtinType || LegacyType::BUILTIN_TYPE_ARRAY !== $type->getBuiltinType())) {
                             return $data;
                         }
 
                         break;
+                }
+            } catch (UnsupportedException $unsupported) {
+                // a type that does not accept the data has no error of its own to report
+                if (!$isUnionType && !$type->isNullable()) {
+                    throw $unsupported;
                 }
             } catch (NotNormalizableValueException|InvalidArgumentException $e) {
                 if (!$isUnionType && !$isNullable) {
@@ -718,6 +785,26 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
     {
         $expectedTypes = [];
 
+        while ($type instanceof TemplateType) {
+            $type = $type->getWrappedType();
+        }
+
+        $types = [];
+        $queue = [$type];
+        while ($candidate = array_shift($queue)) {
+            if ($candidate instanceof TemplateType) {
+                array_unshift($queue, $candidate->getWrappedType());
+                continue;
+            }
+
+            if ($candidate instanceof UnionType) {
+                array_unshift($queue, ...$candidate->getTypes());
+                continue;
+            }
+
+            $types[] = $candidate;
+        }
+
         // BC layer for type-info < 7.2
         if (method_exists(Type::class, 'asNonNullable')) {
             $isUnionType = $type->asNonNullable() instanceof UnionType;
@@ -730,13 +817,11 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
         $missingConstructorArgumentsException = null;
         $filterBoolFailed = false;
 
-        $types = match (true) {
-            $type instanceof IntersectionType => throw new LogicException('Unable to handle intersection type.'),
-            $type instanceof UnionType => $type->getTypes(),
-            default => [$type],
-        };
-
+        $originalData = $data;
         foreach ($types as $t) {
+            // each type of a union gets the data as given, not as changed for the previous type
+            $data = $originalData;
+
             if (null === $data && $type->isNullable()) {
                 return null;
             }
@@ -756,9 +841,29 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
                 }
             }
 
+            if ($t instanceof IntersectionType) {
+                if (\is_object($data)) {
+                    $matchesIntersection = true;
+                    foreach ($t->getTypes() as $intersectedType) {
+                        if (!$intersectedType instanceof ObjectType || !is_a($data, $intersectedType->getClassName())) {
+                            $matchesIntersection = false;
+                            break;
+                        }
+                    }
+
+                    if ($matchesIntersection) {
+                        return $data;
+                    }
+                }
+
+                $expectedTypes[(string) $t] = true;
+                continue;
+            }
+
             // Fix a collection that contains the only one element
             // This is special to xml format only
-            if ('xml' === $format && $collectionValueType && (!\is_array($data) || !\is_int(key($data)))) {
+            // When the keys cannot be int, an array with other keys is the collection itself, not its only element
+            if ('xml' === $format && $collectionValueType && (!\is_array($data) || (!\is_int(key($data)) && $collectionKeyType->isIdentifiedBy(TypeIdentifier::INT)))) {
                 // BC layer for type-info < 7.2
                 $isMixedType = method_exists(Type::class, 'isA') ? $collectionValueType->isA(TypeIdentifier::MIXED) : $collectionValueType->isIdentifiedBy(TypeIdentifier::MIXED);
                 if (!$isMixedType) {
@@ -925,6 +1030,10 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
                     }
 
                     $childContext = $this->createChildContext($context, $attribute, $format);
+                    if ($type instanceof UnionType && !\is_array($data) && !\is_object($data)) {
+                        // object normalizers leave a scalar to the other types of the union instead of building an empty object from it
+                        $childContext['_union_member'] = true;
+                    }
                     if ($this->serializer->supportsDenormalization($data, $class, $format, $childContext)) {
                         return $this->serializer->denormalize($data, $class, $format, $childContext);
                     }
@@ -958,7 +1067,7 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
                     TypeIdentifier::ITERABLE => is_iterable($data),
                     TypeIdentifier::MIXED => true,
                     TypeIdentifier::NULL => null === $data,
-                    TypeIdentifier::OBJECT => \is_object($data),
+                    TypeIdentifier::OBJECT => \is_object($data) && !$t->isIdentifiedBy(TypeIdentifier::ARRAY),
                     TypeIdentifier::RESOURCE => \is_resource($data),
                     TypeIdentifier::STRING => \is_string($data),
                     TypeIdentifier::TRUE => true === $data,
@@ -967,6 +1076,11 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
 
                 if ($dataMatchesExpectedType) {
                     return $data;
+                }
+            } catch (UnsupportedException $unsupported) {
+                // a type that does not accept the data has no error of its own to report
+                if (!$type instanceof UnionType) {
+                    throw $unsupported;
                 }
             } catch (NotNormalizableValueException|InvalidArgumentException $e) {
                 if (!$type instanceof UnionType) {
@@ -1125,7 +1239,13 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
             return false === $this->typeCache[$key] ? null : $this->typeCache[$key];
         }
 
-        if (null !== $type = $this->getPropertyType($currentClass, $attribute)) {
+        if (1000 < \count($this->typeCache)) {
+            // stop memory leak if there are many keys
+            $this->typeCache = \array_slice($this->typeCache, 500, null, true);
+        }
+
+        // asking PropertyInfo about attributes that the class doesn't have would fill its cache with each unknown key
+        if (null !== ($name = $this->getDeclaredAttributeName($currentClass, $attribute)) && null !== $type = $this->getPropertyType($currentClass, $name)) {
             return $this->typeCache[$key] = $type;
         }
 
@@ -1135,7 +1255,7 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
             }
 
             foreach ($discriminatorMapping->getTypesMapping() as $mappedClass) {
-                if (null !== $type = $this->getPropertyType($mappedClass, $attribute)) {
+                if (null !== ($name = $this->getDeclaredAttributeName($mappedClass, $attribute)) && null !== $type = $this->getPropertyType($mappedClass, $name)) {
                     return $this->typeCache[$key] = $type;
                 }
             }
@@ -1159,6 +1279,35 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
         }
 
         return $this->propertyTypeExtractor->getTypes($className, $property);
+    }
+
+    /**
+     * Returns the name of the property, getter, setter or constructor argument that the attribute refers to, as PropertyInfo lists it.
+     */
+    private function getDeclaredAttributeName(string $class, string $attribute): ?string
+    {
+        if (property_exists($class, $attribute)) {
+            return $attribute;
+        }
+
+        if (method_exists($class, '__construct')) {
+            foreach ((new \ReflectionMethod($class, '__construct'))->getParameters() as $parameter) {
+                if ($attribute === $parameter->name) {
+                    return $attribute;
+                }
+            }
+        }
+
+        foreach (['get', 'set'] as $prefix) {
+            if (method_exists($class, $prefix.$attribute)) {
+                // method names are case-insensitive, so the name is read from the method, the way ReflectionExtractor::getProperties() does
+                $name = substr((new \ReflectionMethod($class, $prefix.$attribute))->name, 3);
+
+                return property_exists($class, lcfirst($name)) || (!property_exists($class, $name) && !preg_match('/^[A-Z]{2,}/', $name)) ? lcfirst($name) : $name;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -1258,35 +1407,6 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
             if (null !== $discriminatorMapping = $this->classDiscriminatorResolver->getMappingForMappedObject($classOrObject)) {
                 $allowedAttributes[] = $attributesAsString ? $discriminatorMapping->getTypeProperty() : new AttributeMetadata($discriminatorMapping->getTypeProperty());
             }
-
-            // A class name can be denormalized into any of the mapped classes, so their attributes
-            // are all allowed. The class of an object is known and the others cannot be read from it.
-            if (!\is_object($classOrObject) && null !== $discriminatorMapping = $this->classDiscriminatorResolver->getMappingForClass($classOrObject)) {
-                $attributes = [];
-                $mappedClasses = array_values($discriminatorMapping->getTypesMapping());
-                $visited = [$classOrObject => true];
-
-                // Forcing extra attributes off makes the mapped classes return their attributes instead of false
-                $mappedContext = [self::ALLOW_EXTRA_ATTRIBUTES => false] + $context;
-
-                while (null !== $mappedClass = array_shift($mappedClasses)) {
-                    if (isset($visited[$mappedClass])) {
-                        continue;
-                    }
-                    $visited[$mappedClass] = true;
-
-                    $attributes[] = parent::getAllowedAttributes($mappedClass, $mappedContext, $attributesAsString);
-
-                    // Mapped classes can declare a discriminator map of their own
-                    if (null !== $nestedMapping = $this->classDiscriminatorResolver->getMappingForClass($mappedClass)) {
-                        $typeProperty = $nestedMapping->getTypeProperty();
-                        $attributes[] = [$attributesAsString ? $typeProperty : new AttributeMetadata($typeProperty)];
-                        $mappedClasses = array_merge($mappedClasses, array_values($nestedMapping->getTypesMapping()));
-                    }
-                }
-
-                $allowedAttributes = array_merge($allowedAttributes, ...$attributes);
-            }
         }
 
         return $allowedAttributes;
@@ -1340,6 +1460,7 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
         unset($context['cache_key']); // avoid artificially different keys
         unset($context['not_normalizable_value_exceptions']); // grows with every collected error
         unset($context['debug_trace_id']); // unique per call when the serializer is traced
+        unset($context['deserialization_path']); // differs for each item of a collection
 
         try {
             return hash('xxh128', $format.serialize([
@@ -1395,7 +1516,15 @@ abstract class AbstractObjectNormalizer extends AbstractNormalizer
     private function getMappedClass(array $data, string $class, ?string $format, array $context): string
     {
         if (null !== $object = $this->extractObjectToPopulate($class, $context, self::OBJECT_TO_POPULATE)) {
-            return $object::class;
+            $resolvedClass = ($this->objectClassResolver)($object);
+
+            if (!$object instanceof $resolvedClass) {
+                // instantiateObject() populates the object only when it's an instance of the returned class
+                return $object::class;
+            }
+
+            // Doctrine proxies declare public properties that the proxied class doesn't have
+            return $object::class === $resolvedClass && $object instanceof DoctrineProxy ? get_parent_class($object) : $resolvedClass;
         }
 
         if (!$mapping = $this->classDiscriminatorResolver?->getMappingForClass($class)) {

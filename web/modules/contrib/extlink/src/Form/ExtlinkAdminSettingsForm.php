@@ -58,199 +58,42 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
     $config = $this->config('extlink.settings');
     $renderer = $this->renderer;
 
-    $form['extlink_exclude_admin_routes'] = [
+    $form['general_settings'] = [
+      '#type' => 'details',
+      '#title' => $this->t('General settings'),
+      '#open' => TRUE,
+    ];
+
+    $form['general_settings']['extlink_exclude_admin_routes'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Disable on admin routes.'),
       '#default_value' => $config->get('extlink_exclude_admin_routes'),
       '#description' => $this->t('Whether the extlink module should be disabled on admin routes.'),
     ];
 
-    $form['extlink_use_external_js_file'] = [
+    $form['general_settings']['extlink_use_external_js_file'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Load exclusions and inclusions externally.'),
       '#default_value' => $config->get('extlink_use_external_js_file'),
       '#description' => $this->t('Whether the extlink JS settings should be added to the page via an external settings file. In the case of a large number of patterns, this will reduce the amount of markup added to each page.'),
     ];
 
-    $form['warning'] = [
-      '#type' => 'markup',
-      '#markup' => 'The \'ext\' class will be auto added to all external links.',
-    ];
-
-    $form['extlink_class'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Place an icon next to external links.'),
-      '#return_value' => 'ext',
-      '#default_value' => $config->get('extlink_class'),
-      '#description' => $this->t('Places an <span class="ext"> </span>&nbsp; icon next to external links.'),
-    ];
-
-    $form['extlink_label'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('external link label'),
-      '#default_value' => $config->get('extlink_label'),
-      '#states' => [
-        'visible' => [
-          ':input[name="extlink_class"]' => ['checked' => TRUE],
-        ],
-      ],
-    ];
-
-    $form['extlink_mailto_class'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Place an icon next to mailto links.'),
-      '#return_value' => 'mailto',
-      '#default_value' => $config->get('extlink_mailto_class'),
-      '#description' => $this->t('Places an <span class="mailto"> </span>&nbsp; icon next to mailto links.'),
-    ];
-
-    $form['extlink_mailto_label'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('mailto: label'),
-      '#default_value' => $config->get('extlink_mailto_label'),
-      '#states' => [
-        'visible' => [
-          ':input[name="extlink_mailto_class"]' => ['checked' => TRUE],
-        ],
-      ],
-    ];
-
-    $form['extlink_tel_class'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Place an icon next to tel: links.'),
-      '#return_value' => 'tel',
-      '#default_value' => $config->get('extlink_tel_class'),
-      '#description' => $this->t('Places an <span class="tel"> </span>&nbsp; icon next to telephone links.'),
-    ];
-
-    $form['extlink_tel_label'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('tel: Label'),
-      '#default_value' => $config->get('extlink_tel_label'),
-      '#states' => [
-        'visible' => [
-          ':input[name="extlink_tel_class"]' => ['checked' => TRUE],
-        ],
-      ],
-    ];
-
-    $form['extlink_img_class'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Place an icon next to image links.'),
-      '#default_value' => $config->get('extlink_img_class'),
-      '#description' => $this->t('If checked, images wrapped in an anchor tag will be treated as external links.'),
-    ];
-
-    $form['extlink_use_font_awesome'] = [
+    $form['general_settings']['extlink_use_font_awesome'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Use Font Awesome icons instead of images.'),
       '#default_value' => $config->get('extlink_use_font_awesome'),
       '#description' => $this->t('Add Font Awesome classes to the link as well as an "i" tag rather than images. <strong>Warning for this to work font awesome needs to be present.</strong>'),
     ];
 
-    $form['extlink_font_awesome_classes'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Font Awesome icon classes'),
-      '#tree' => TRUE,
-      '#states' => [
-        'visible' => [
-          ':input[name="extlink_use_font_awesome"]' => ['checked' => TRUE],
-        ],
-      ],
-    ];
-
-    $form['extlink_font_awesome_classes']['links'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Font Awesome External Links Classes'),
-      '#default_value' => $config->get('extlink_font_awesome_classes.links') ?: 'fa fa-external-link',
-      '#states' => [
-        'visible' => [
-          ':input[name="extlink_class"]' => ['checked' => TRUE],
-        ],
-      ],
-    ];
-
-    $form['extlink_font_awesome_classes']['mailto'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Font Awesome mailto Links Classes'),
-      '#default_value' => $config->get('extlink_font_awesome_classes.mailto') ?: 'fa fa-envelope-o',
-      '#states' => [
-        'visible' => [
-          ':input[name="extlink_mailto_class"]' => ['checked' => TRUE],
-        ],
-      ],
-    ];
-
-    $form['extlink_font_awesome_classes']['tel'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Font Awesome Tel Class'),
-      '#default_value' => $config->get('extlink_font_awesome_classes.tel') ?: 'fa fa-phone',
-      '#states' => [
-        'visible' => [
-          ':input[name="extlink_tel_class"]' => ['checked' => TRUE],
-        ],
-      ],
-    ];
-
     if ($this->moduleHandler->moduleExists('ui_icons')) {
-      $form['extlink_use_icon'] = [
+      $form['general_settings']['extlink_use_icon'] = [
         '#type' => 'checkbox',
         '#title' => $this->t('Use icons instead of images.'),
         '#default_value' => $config->get('extlink_use_icon'),
       ];
-
-      $form['extlink_icons'] = [
-        '#type' => 'details',
-        '#title' => $this->t('Icons'),
-        '#tree' => TRUE,
-        '#states' => [
-          'visible' => [
-            ':input[name="extlink_use_icon"]' => ['checked' => TRUE],
-          ],
-        ],
-      ];
-
-      $form['extlink_icons']['links'] = [
-        '#type' => 'icon_autocomplete',
-        '#title' => $this->t('External Links icon'),
-        '#default_value' => $config->get('extlink_icons.links.icon') ?: NULL,
-        '#default_settings' => $config->get('extlink_icons.links.settings') ?? [],
-        '#show_settings' => TRUE,
-        '#states' => [
-          'visible' => [
-            ':input[name="extlink_class"]' => ['checked' => TRUE],
-          ],
-        ],
-      ];
-
-      $form['extlink_icons']['mailto'] = [
-        '#type' => 'icon_autocomplete',
-        '#title' => $this->t('Mailto Links icon'),
-        '#default_value' => $config->get('extlink_icons.mailto.icon') ?: NULL,
-        '#default_settings' => $config->get('extlink_icons.mailto.settings') ?? [],
-        '#show_settings' => TRUE,
-        '#states' => [
-          'visible' => [
-            ':input[name="extlink_mailto_class"]' => ['checked' => TRUE],
-          ],
-        ],
-      ];
-
-      $form['extlink_icons']['tel'] = [
-        '#type' => 'icon_autocomplete',
-        '#title' => $this->t('Tel icon'),
-        '#default_value' => $config->get('extlink_icons.tel.icon') ?: NULL,
-        '#default_settings' => $config->get('extlink_icons.tel.settings') ?? [],
-        '#show_settings' => TRUE,
-        '#states' => [
-          'visible' => [
-            ':input[name="extlink_tel_class"]' => ['checked' => TRUE],
-          ],
-        ],
-      ];
     }
 
-    $form['extlink_icon_placement'] = [
+    $form['general_settings']['extlink_icon_placement'] = [
       '#type' => 'select',
       '#title' => $this->t('Where to place icon in reference to link.'),
       '#options' => [
@@ -264,7 +107,7 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Choose the location of the external link icon relative to the link. Before and after will place the graphic outside the link, while append and prepend will place the graphic inside the link.'),
     ];
 
-    $form['extlink_prevent_orphan'] = [
+    $form['general_settings']['extlink_prevent_orphan'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Prevent text wrapping separating the last word from the icon.'),
       '#default_value' => $config->get('extlink_prevent_orphan'),
@@ -276,7 +119,7 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['extlink_prevent_orphan_text_like'] = [
+    $form['general_settings']['extlink_prevent_orphan_text_like'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Wrap only text-like links.'),
       '#default_value' => $config->get('extlink_prevent_orphan_text_like'),
@@ -289,21 +132,28 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['extlink_subdomains'] = [
+    $form['general_settings']['extlink_hide_icons'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Hide decorative icons from screen readers.'),
+      '#default_value' => $config->get('extlink_hide_icons'),
+      '#description' => $this->t("Enable it if the icon is redundant and used solely as visual progressive enhancement, this adds the aria-hidden='true' tag."),
+    ];
+
+    $form['general_settings']['extlink_subdomains'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Exclude links with the same primary domain.'),
       '#default_value' => $config->get('extlink_subdomains'),
       '#description' => $this->t("For example, a link from 'www.example.com' to the subdomain of 'my.example.com' would be excluded."),
     ];
 
-    $form['extlink_target'] = [
+    $form['general_settings']['extlink_target'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Open external links in a new window or tab.'),
       '#default_value' => $config->get('extlink_target'),
       '#description' => $this->t('A link will open in a new window or tab (depending on which web browser is used and how it is configured).'),
     ];
 
-    $form['extlink_target_no_override'] = [
+    $form['general_settings']['extlink_target_no_override'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Do not alter links with a default target value'),
       '#default_value' => $config->get('extlink_target_no_override'),
@@ -315,7 +165,7 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['extlink_target_display_default_title'] = [
+    $form['general_settings']['extlink_target_display_default_title'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Display default text in title'),
       '#default_value' => $config->get('extlink_target_display_default_title'),
@@ -326,11 +176,11 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['extlink_target_default_title_text'] = [
+    $form['general_settings']['extlink_target_default_title_text'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Default title text for new window links'),
       '#default_value' => $config->get('extlink_target_default_title_text') ?: '(opens in a new window)',
-      '#description' => $this->t("Example: (opens in a new window).") ,
+      '#description' => $this->t('Example: (opens in a new window).'),
       '#states' => [
         'visible' => [
           ':input[name="extlink_target_display_default_title"]' => ['checked' => TRUE],
@@ -338,26 +188,26 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['extlink_title_no_override'] = [
+    $form['general_settings']['extlink_title_no_override'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Do not alter the title attribute on links.'),
       '#default_value' => $config->get('extlink_title_no_override'),
-      '#description' => $this->t("If enabled, the title attribute will not be altered on external links."),
+      '#description' => $this->t('If enabled, the title attribute will not be altered on external links.'),
     ];
 
-    $form['extlink_noreferrer'] = [
+    $form['general_settings']['extlink_noreferrer'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Tag external links as "noreferrer".'),
       '#default_value' => $config->get('extlink_noreferrer'),
     ];
 
-    $form['extlink_nofollow'] = [
+    $form['general_settings']['extlink_nofollow'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Tag external links as "no follow".'),
       '#default_value' => $config->get('extlink_nofollow'),
     ];
 
-    $form['extlink_follow_no_override'] = [
+    $form['general_settings']['extlink_follow_no_override'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Do not override rel="follow", if set'),
       '#default_value' => $config->get('extlink_follow_no_override'),
@@ -368,13 +218,13 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['extlink_alert'] = [
+    $form['general_settings']['extlink_alert'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Display a pop-up warning when any external link is clicked.'),
       '#default_value' => $config->get('extlink_alert'),
     ];
 
-    $form['extlink_alert_text'] = [
+    $form['general_settings']['extlink_alert_text'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Text to display in the pop-up warning box.'),
       '#rows' => 3,
@@ -382,48 +232,215 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Text to display in the pop-up external link warning box.'),
       '#wysiwyg' => FALSE,
       '#states' => [
-        // Only show this field when user opts to display a pop-up warning.
         'visible' => [
           ':input[name="extlink_alert"]' => ['checked' => TRUE],
         ],
       ],
     ];
 
-    $form['extlink_hide_icons'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Hide decorative icons from screen readers.'),
-      '#default_value' => $config->get('extlink_hide_icons'),
-      '#description' => $this->t("Enable it if the icon is redundant and used solely as visual progressive enhancement, this adds the aria-hidden='true' tag."),
-    ];
-
-    $form['extlink_additional_link_classes'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Additional Link CSS Classes'),
-      '#default_value' => $config->get('extlink_additional_link_classes'),
-      '#description' => $this->t('Custom CSS classes that will be added onto every external link.'),
-    ];
-
-    $form['extlink_additional_mailto_classes'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Additional MailTo CSS Classes'),
-      '#default_value' => $config->get('extlink_additional_mailto_classes'),
-      '#description' => $this->t('Custom CSS classes that will be added onto every external mailto link.'),
-    ];
-
-    $form['extlink_additional_tel_classes'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Additional Tel CSS Classes'),
-      '#default_value' => $config->get('extlink_additional_tel_classes'),
-      '#description' => $this->t('Custom CSS classes that will be added onto every external tel link.'),
-    ];
-
-    $form['allowed_domains'] = [
+    $form['general_settings']['allowed_domains'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Allowed domains.'),
       '#maxlength' => NULL,
       '#default_value' => implode(PHP_EOL, (array) $config->get('allowed_domains')),
       '#description' => $this->t('Enter a line-separated list of allowed domains (ie "example.com").'),
     ];
+
+    // External links group.
+    $form['external_links'] = [
+      '#type' => 'details',
+      '#title' => $this->t('External links'),
+      '#open' => TRUE,
+    ];
+
+    $form['external_links']['extlink_class'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Place an icon next to external links.'),
+      '#return_value' => 'ext',
+      '#default_value' => $config->get('extlink_class'),
+      '#description' => $this->t('Places an <span class="ext"> </span>&nbsp; icon next to external links.'),
+    ];
+
+    $form['external_links']['extlink_label'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('External link label'),
+      '#default_value' => $config->get('extlink_label'),
+      '#states' => [
+        'visible' => [
+          ':input[name="extlink_class"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    $form['external_links']['extlink_additional_link_classes'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Additional link CSS classes'),
+      '#default_value' => $config->get('extlink_additional_link_classes'),
+      '#description' => $this->t('Custom CSS classes that will be added onto every external link.'),
+    ];
+
+    $form['external_links']['extlink_font_awesome_classes_links'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Font Awesome external links classes'),
+      '#default_value' => $config->get('extlink_font_awesome_classes.links') ?: 'fa fa-external-link',
+      '#parents' => ['extlink_font_awesome_classes', 'links'],
+      '#states' => [
+        'visible' => [
+          ':input[name="extlink_use_font_awesome"]' => ['checked' => TRUE],
+          ':input[name="extlink_class"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    if ($this->moduleHandler->moduleExists('ui_icons')) {
+      $form['external_links']['extlink_icons_links'] = [
+        '#type' => 'icon_autocomplete',
+        '#title' => $this->t('External links icon'),
+        '#default_value' => $config->get('extlink_icons.links.icon') ?: NULL,
+        '#default_settings' => $config->get('extlink_icons.links.settings') ?? [],
+        '#show_settings' => TRUE,
+        '#parents' => ['extlink_icons', 'links'],
+        '#states' => [
+          'visible' => [
+            ':input[name="extlink_use_icon"]' => ['checked' => TRUE],
+            ':input[name="extlink_class"]' => ['checked' => TRUE],
+          ],
+        ],
+      ];
+    }
+
+    $form['external_links']['extlink_img_class'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Place an icon next to image links.'),
+      '#default_value' => $config->get('extlink_img_class'),
+      '#description' => $this->t('If checked, images wrapped in an anchor tag will be treated as external links.'),
+    ];
+
+    // Mailto links group.
+    $form['mailto_links'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Mailto links'),
+      '#open' => TRUE,
+    ];
+
+    $form['mailto_links']['extlink_mailto_class'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Place an icon next to mailto links.'),
+      '#return_value' => 'mailto',
+      '#default_value' => $config->get('extlink_mailto_class'),
+      '#description' => $this->t('Places an <span class="mailto"> </span>&nbsp; icon next to mailto links.'),
+    ];
+
+    $form['mailto_links']['extlink_mailto_label'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Mailto label'),
+      '#default_value' => $config->get('extlink_mailto_label'),
+      '#states' => [
+        'visible' => [
+          ':input[name="extlink_mailto_class"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    $form['mailto_links']['extlink_additional_mailto_classes'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Additional mailto CSS classes'),
+      '#default_value' => $config->get('extlink_additional_mailto_classes'),
+      '#description' => $this->t('Custom CSS classes that will be added onto every external mailto link.'),
+    ];
+
+    $form['mailto_links']['extlink_font_awesome_classes_mailto'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Font Awesome mailto classes'),
+      '#default_value' => $config->get('extlink_font_awesome_classes.mailto') ?: 'fa fa-envelope-o',
+      '#parents' => ['extlink_font_awesome_classes', 'mailto'],
+      '#states' => [
+        'visible' => [
+          ':input[name="extlink_use_font_awesome"]' => ['checked' => TRUE],
+          ':input[name="extlink_mailto_class"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    if ($this->moduleHandler->moduleExists('ui_icons')) {
+      $form['mailto_links']['extlink_icons_mailto'] = [
+        '#type' => 'icon_autocomplete',
+        '#title' => $this->t('Mailto icon'),
+        '#default_value' => $config->get('extlink_icons.mailto.icon') ?: NULL,
+        '#default_settings' => $config->get('extlink_icons.mailto.settings') ?? [],
+        '#show_settings' => TRUE,
+        '#parents' => ['extlink_icons', 'mailto'],
+        '#states' => [
+          'visible' => [
+            ':input[name="extlink_use_icon"]' => ['checked' => TRUE],
+            ':input[name="extlink_mailto_class"]' => ['checked' => TRUE],
+          ],
+        ],
+      ];
+    }
+
+    // Telephone links group.
+    $form['telephone_links'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Telephone links'),
+      '#open' => TRUE,
+    ];
+
+    $form['telephone_links']['extlink_tel_class'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Place an icon next to tel: links.'),
+      '#return_value' => 'tel',
+      '#default_value' => $config->get('extlink_tel_class'),
+      '#description' => $this->t('Places an <span class="tel"> </span>&nbsp; icon next to telephone links.'),
+    ];
+
+    $form['telephone_links']['extlink_tel_label'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Telephone label'),
+      '#default_value' => $config->get('extlink_tel_label'),
+      '#states' => [
+        'visible' => [
+          ':input[name="extlink_tel_class"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    $form['telephone_links']['extlink_additional_tel_classes'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Additional tel CSS classes'),
+      '#default_value' => $config->get('extlink_additional_tel_classes'),
+      '#description' => $this->t('Custom CSS classes that will be added onto every external tel link.'),
+    ];
+
+    $form['telephone_links']['extlink_font_awesome_classes_tel'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Font Awesome tel classes'),
+      '#default_value' => $config->get('extlink_font_awesome_classes.tel') ?: 'fa fa-phone',
+      '#parents' => ['extlink_font_awesome_classes', 'tel'],
+      '#states' => [
+        'visible' => [
+          ':input[name="extlink_use_font_awesome"]' => ['checked' => TRUE],
+          ':input[name="extlink_tel_class"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    if ($this->moduleHandler->moduleExists('ui_icons')) {
+      $form['telephone_links']['extlink_icons_tel'] = [
+        '#type' => 'icon_autocomplete',
+        '#title' => $this->t('Telephone icon'),
+        '#default_value' => $config->get('extlink_icons.tel.icon') ?: NULL,
+        '#default_settings' => $config->get('extlink_icons.tel.settings') ?? [],
+        '#show_settings' => TRUE,
+        '#parents' => ['extlink_icons', 'tel'],
+        '#states' => [
+          'visible' => [
+            ':input[name="extlink_use_icon"]' => ['checked' => TRUE],
+            ':input[name="extlink_tel_class"]' => ['checked' => TRUE],
+          ],
+        ],
+      ];
+    }
 
     $patterns = [
       '#theme' => 'item_list',
@@ -444,7 +461,7 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['patterns'] = [
+    $form['general_settings']['patterns'] = [
       '#type' => 'details',
       '#title' => $this->t('Pattern matching.'),
       '#description' =>
@@ -457,7 +474,7 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       '#open' => FALSE,
     ];
 
-    $form['patterns']['extlink_exclude'] = [
+    $form['general_settings']['patterns']['extlink_exclude'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Exclude links matching the pattern.'),
       '#maxlength' => NULL,
@@ -465,7 +482,7 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Enter a regular expression for links that you wish to exclude from being considered external.'),
     ];
 
-    $form['patterns']['extlink_include'] = [
+    $form['general_settings']['patterns']['extlink_include'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Include links matching the pattern.'),
       '#maxlength' => NULL,
@@ -473,7 +490,7 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Enter a regular expression for internal links that you wish to be considered external.'),
     ];
 
-    $form['patterns']['extlink_exclude_noreferrer'] = [
+    $form['general_settings']['patterns']['extlink_exclude_noreferrer'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Exclude links matching the pattern from having "noreferrer" applied.'),
       '#maxlength' => NULL,
@@ -486,17 +503,14 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['css_matching'] = [
-      '#tree' => FALSE,
-      '#type' => 'fieldset',
-      '#title' => $this->t('CSS Matching.'),
-      '#collapsible' => TRUE,
-      '#collapsed' => TRUE,
-      '#description' =>
-      '<p>' . $this->t('Use CSS selectors to exclude entirely or only look inside explicitly specified classes and IDs for external links.') . '</p>',
+    $form['general_settings']['css_matching'] = [
+      '#type' => 'details',
+      '#title' => $this->t('CSS Matching'),
+      '#open' => FALSE,
+      '#description' => '<p>' . $this->t('Use CSS selectors to exclude entirely or only look inside explicitly specified classes and IDs for external links.') . '</p>',
     ];
 
-    $form['css_matching']['extlink_css_exclude'] = [
+    $form['general_settings']['css_matching']['extlink_css_exclude'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Exclude links inside these CSS selectors.'),
       '#maxlength' => NULL,
@@ -504,7 +518,7 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Enter a comma-separated list of CSS selectors (ie "#block-block-2 .content, ul.menu").'),
     ];
 
-    $form['css_matching']['extlink_css_include'] = [
+    $form['general_settings']['css_matching']['extlink_css_include'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Include links inside these CSS selectors.'),
       '#maxlength' => NULL,
@@ -512,7 +526,7 @@ class ExtlinkAdminSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Enter a comma-separated list of CSS selectors (ie "#block-block-2 .content, ul.menu").'),
     ];
 
-    $form['css_matching']['extlink_css_explicit'] = [
+    $form['general_settings']['css_matching']['extlink_css_explicit'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Only look for links inside these CSS selectors.'),
       '#maxlength' => NULL,

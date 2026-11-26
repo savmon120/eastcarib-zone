@@ -478,7 +478,7 @@ class Email extends Message
                 preg_match_all('/'.$regex.'/i', $html, $tmpMatches);
                 $names = array_merge($names, $tmpMatches[2], $tmpMatches[3]);
             }
-            $names = array_filter(array_unique($names));
+            $names = array_filter(array_unique($names), 'strlen');
         }
 
         $otherParts = $relatedParts = [];
@@ -573,7 +573,7 @@ class Email extends Message
      */
     public function __unserialize(array $data): void
     {
-        if (($data[1] ?? null) instanceof \Stringable || ($data[3] ?? null) instanceof \Stringable) {
+        if (!\is_string($data[1] ?? '') || !\is_string($data[3] ?? '')) {
             throw new \BadMethodCallException('Cannot unserialize '.self::class);
         }
 

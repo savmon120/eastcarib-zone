@@ -52,6 +52,8 @@ class Request
     public const HEADER_X_FORWARDED_AWS_ELB = 0b0011010; // AWS ELB doesn't send X-Forwarded-Host
     public const HEADER_X_FORWARDED_TRAEFIK = 0b0111110; // All "X-Forwarded-*" headers sent by Traefik reverse proxy
 
+    public const SUB_REQUEST_TRUSTED_HEADER_SET = 'SYMFONY_SUB_REQUEST_TRUSTED_HEADER_SET';
+
     public const METHOD_HEAD = 'HEAD';
     public const METHOD_GET = 'GET';
     public const METHOD_POST = 'POST';
@@ -611,7 +613,7 @@ class Request
      *
      * You should only list the reverse proxies that you manage directly.
      *
-     * @param array                          $proxies          A list of trusted proxies, the string 'REMOTE_ADDR' will be replaced with $_SERVER['REMOTE_ADDR'] and 'PRIVATE_SUBNETS' by IpUtils::PRIVATE_SUBNETS
+     * @param array                          $proxies          A list of trusted proxies, the string 'REMOTE_ADDR' will be replaced with $_SERVER['REMOTE_ADDR'], and 'private_ranges' or 'PRIVATE_SUBNETS' by IpUtils::PRIVATE_RANGES
      * @param int-mask-of<Request::HEADER_*> $trustedHeaderSet A bit field to set which headers to trust from your proxies
      */
     public static function setTrustedProxies(array $proxies, int $trustedHeaderSet): void
@@ -627,7 +629,7 @@ class Request
 
         if (false !== ($i = array_search('PRIVATE_SUBNETS', $proxies, true)) || false !== ($i = array_search('private_ranges', $proxies, true))) {
             unset($proxies[$i]);
-            $proxies = array_merge($proxies, IpUtils::PRIVATE_SUBNETS);
+            $proxies = array_merge($proxies, IpUtils::PRIVATE_RANGES);
         }
 
         self::$trustedProxies = $proxies;
@@ -1145,7 +1147,9 @@ class Request
         // This also applies to a segment with a colon character (e.g., "file:colon") that cannot be used
         // as the first segment of a relative-path reference, as it would be mistaken for a scheme name
         // (see https://tools.ietf.org/html/rfc3986#section-4.2).
-        return !isset($path[0]) || '/' === $path[0]
+        // A leading backslash, space or control character needs the prefix too,
+        // since browsers read a backslash as a slash and ignore leading spaces and control characters.
+        return !isset($path[0]) || '/' === $path[0] || '\\' === $path[0] || \ord($path[0]) <= 0x20
             || false !== ($colonPos = strpos($path, ':')) && ($colonPos < ($slashPos = strpos($path, '/')) || false === $slashPos)
             ? "./$path" : $path;
     }
@@ -1714,7 +1718,7 @@ class Request
         $combinations = array_merge(...array_map($this->getLanguageCombinations(...), $preferredLanguages));
         foreach ($combinations as $combination) {
             foreach ($locales as $locale) {
-                if (str_starts_with($locale, $combination)) {
+                if ($locale === $combination || str_starts_with($locale, $combination.'_')) {
                     return $locale;
                 }
             }
@@ -1916,6 +1920,8 @@ class Request
 
                 if (isset($uriComponents['path'])) {
                     $requestUri = $uriComponents['path'];
+                } elseif (false !== $uriComponents) {
+                    $requestUri = '/';
                 }
 
                 if (isset($uriComponents['query'])) {
@@ -1973,8 +1979,13 @@ class Request
             $requestUri = '/'.$requestUri;
         }
 
-        if ($baseUrl && null !== $prefix = $this->getUrlencodedPrefix($requestUri, $baseUrl)) {
-            // full $baseUrl matches
+        if (str_starts_with($requestUri, '//') || str_starts_with($requestUri, '/\\')) {
+            // the URI starts with a host that the client chose: URLs built on it would point there
+            return '';
+        }
+
+        if ($baseUrl && (null !== $prefix = $this->getUrlencodedPrefix($requestUri, $baseUrl)) && \in_array($requestUri[\strlen($prefix)] ?? '', ['', '/', '?'], true)) {
+            // full $baseUrl matches, and is not only the start of a longer path segment
             return $prefix;
         }
 
@@ -1988,17 +1999,19 @@ class Request
             $truncatedRequestUri = substr($requestUri, 0, $pos);
         }
 
-        $basename = basename($baseUrl ?? '');
-        if (!$basename || !strpos(rawurldecode($truncatedRequestUri), $basename)) {
-            // no match whatsoever; set it blank
+        // With mod_rewrite or ISAPI_Rewrite, the script filename can come after
+        // a prefix in the path: the base URL then ends with the script filename
+        $decodedRequestUri = rawurldecode($truncatedRequestUri);
+        if (!$baseUrl || !$pos = ($this->isIisRewrite() ? stripos($decodedRequestUri, $baseUrl) : strpos($decodedRequestUri, $baseUrl))) {
+            // the script filename isn't in the path, or only at its start, which is handled above
             return '';
         }
 
-        // If using mod_rewrite or ISAPI_Rewrite strip the script filename
-        // out of baseUrl. $pos !== 0 makes sure it is not matching a value
-        // from PATH_INFO or QUERY_STRING
-        if (\strlen($requestUri) >= \strlen($baseUrl) && (false !== $pos = strpos($requestUri, $baseUrl)) && 0 !== $pos) {
-            $baseUrl = substr($requestUri, 0, $pos + \strlen($baseUrl));
+        $baseUrl = $this->getUrlencodedPrefix($truncatedRequestUri, substr($decodedRequestUri, 0, $pos + \strlen($baseUrl))) ?? '';
+
+        if (!\in_array($requestUri[\strlen($baseUrl)] ?? '', ['', '/', '?'], true)) {
+            // the script filename is only the start of a longer path segment
+            return '';
         }
 
         return rtrim($baseUrl, '/'.\DIRECTORY_SEPARATOR);
@@ -2114,13 +2127,12 @@ class Request
             return null;
         }
 
+        // Each byte of the prefix takes 1 or 3 characters in the string.
+        // A {n} quantifier would make PCRE fail to compile for a long prefix.
         $len = \strlen($prefix);
+        preg_match_all('#%[[:xdigit:]]{2}|.#s', substr($string, 0, 3 * $len), $match);
 
-        if (preg_match(\sprintf('#^(%%[[:xdigit:]]{2}|.){%d}#', $len), $string, $match)) {
-            return $match[0];
-        }
-
-        return null;
+        return implode('', \array_slice($match[0], 0, $len));
     }
 
     private static function createRequestFromFactory(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null): static
@@ -2146,7 +2158,19 @@ class Request
      */
     public function isFromTrustedProxy(): bool
     {
-        return self::$trustedProxies && IpUtils::checkIp($this->server->get('REMOTE_ADDR', ''), self::$trustedProxies);
+        return null !== $this->getSubRequestTrustedHeaderSet() || (self::$trustedProxies && IpUtils::checkIp($this->server->get('REMOTE_ADDR', ''), self::$trustedProxies));
+    }
+
+    /**
+     * Returns the trusted header set of a request built by HttpKernel's SubRequestHandler, which comes from 127.0.0.1.
+     */
+    private function getSubRequestTrustedHeaderSet(): ?int
+    {
+        if ('127.0.0.1' !== $this->server->get('REMOTE_ADDR') || !$this->server->has(self::SUB_REQUEST_TRUSTED_HEADER_SET)) {
+            return null;
+        }
+
+        return (int) $this->server->get(self::SUB_REQUEST_TRUSTED_HEADER_SET);
     }
 
     /**
@@ -2165,14 +2189,15 @@ class Request
 
         $clientValues = [];
         $forwardedValues = [];
+        $trustedHeaderSet = $this->getSubRequestTrustedHeaderSet() ?? self::$trustedHeaderSet;
 
-        if ((self::$trustedHeaderSet & $type) && $this->headers->has(self::TRUSTED_HEADERS[$type])) {
+        if (($trustedHeaderSet & $type) && $this->headers->has(self::TRUSTED_HEADERS[$type])) {
             foreach (explode(',', $this->headers->get(self::TRUSTED_HEADERS[$type])) as $v) {
                 $clientValues[] = (self::HEADER_X_FORWARDED_PORT === $type ? '0.0.0.0:' : '').trim($v);
             }
         }
 
-        if ((self::$trustedHeaderSet & self::HEADER_FORWARDED) && (isset(self::FORWARDED_PARAMS[$type])) && $this->headers->has(self::TRUSTED_HEADERS[self::HEADER_FORWARDED])) {
+        if (($trustedHeaderSet & self::HEADER_FORWARDED) && (isset(self::FORWARDED_PARAMS[$type])) && $this->headers->has(self::TRUSTED_HEADERS[self::HEADER_FORWARDED])) {
             $forwarded = $this->headers->get(self::TRUSTED_HEADERS[self::HEADER_FORWARDED]);
             $parts = HeaderUtils::split($forwarded, ',;=');
             $param = self::FORWARDED_PARAMS[$type];
@@ -2237,7 +2262,7 @@ class Request
                 continue;
             }
 
-            if (IpUtils::checkIp($clientIp, self::$trustedProxies)) {
+            if (IpUtils::checkIp($clientIp, self::$trustedProxies) || ('127.0.0.1' === $clientIp && null !== $this->getSubRequestTrustedHeaderSet())) {
                 unset($clientIps[$key]);
 
                 // Fallback to this when the client IP falls into the range of trusted proxies

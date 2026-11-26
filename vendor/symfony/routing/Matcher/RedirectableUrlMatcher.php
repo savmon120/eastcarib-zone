@@ -35,7 +35,8 @@ abstract class RedirectableUrlMatcher extends UrlMatcher implements Redirectable
                 try {
                     $ret = parent::match($pathinfo);
 
-                    return $this->redirect($pathinfo, $ret['_route'] ?? null, $this->context->getScheme()) + $ret;
+                    // a leading "//" or "/\", even with tabs or newlines in between, would make the redirection point to another host
+                    return $this->redirect(preg_replace(['#^/[\t\n\r]*+\K/#', '#^/[\t\n\r]*+\K\\\\#'], ['%2F', '%5C'], $pathinfo), $ret['_route'] ?? null, $this->context->getScheme()) + $ret;
                 } catch (ExceptionInterface) {
                     throw $e;
                 } finally {
@@ -44,13 +45,22 @@ abstract class RedirectableUrlMatcher extends UrlMatcher implements Redirectable
             } elseif ('' === $trimmedPathinfo = rtrim($pathinfo, '/')) {
                 throw $e;
             } else {
+                $fallbackSchemes = $this->trailingSlashSchemes;
+                $fallbackPathinfo = $pathinfo;
                 try {
                     $pathinfo = $trimmedPathinfo === $pathinfo ? $pathinfo.'/' : $trimmedPathinfo;
                     $ret = parent::match($pathinfo);
 
-                    return $this->redirect($pathinfo, $ret['_route'] ?? null) + $ret;
+                    return $this->redirect(preg_replace(['#^/[\t\n\r]*+\K/#', '#^/[\t\n\r]*+\K\\\\#'], ['%2F', '%5C'], $pathinfo), $ret['_route'] ?? null) + $ret;
                 } catch (ExceptionInterface) {
                     if ($this->allowSchemes) {
+                        goto redirect_scheme;
+                    }
+                    if ($this->allowSchemes = $this->trailingSlashSchemes) {
+                        goto redirect_scheme;
+                    }
+                    if ($this->allowSchemes = $fallbackSchemes) {
+                        $pathinfo = $fallbackPathinfo;
                         goto redirect_scheme;
                     }
                     throw $e;

@@ -67,6 +67,16 @@ class CompiledUrlMatcherDumper extends MatcherDumper
             if ($host = $route->getHost()) {
                 $matchHost = true;
                 $host = '/'.strtr(strrev($host), '}.{', '(/)');
+                // routes are grouped and reordered only on variables that take a whole label and can't match a dot,
+                // as the label of a variable that is next to other characters may also be matched by a variable alone
+                $host = preg_replace_callback('#(?<=(.))\(([\w\x80-\xFF]++)!?\)(?=(.?))#', static function ($m) use ($route) {
+                    if ('/' !== $m[1] || '' !== $m[3] && '/' !== $m[3]) {
+                        return '(.*)';
+                    }
+                    $requirement = $route->getRequirement(strrev($m[2]));
+
+                    return null === $requirement || preg_match('#^(?:[\w|?*+{},:)-]|\((?!\?)|\(\?[:|]|\\\\[dw]|\[(?:\w|\\\\[dw]|(?<=\w)-(?=\w)|(?<=\[)-|-(?=\]))++\])++$#', $requirement) ? $m[0] : '(.*)';
+                }, $host);
             }
 
             $routes->addRoute($host ?: '/(.*)', [$name, $route]);
@@ -82,7 +92,7 @@ class CompiledUrlMatcherDumper extends MatcherDumper
 
         [$staticRoutes, $dynamicRoutes] = $this->groupStaticRoutes($routes);
 
-        $conditions = [null];
+        $conditions = ['' => null];
         $compiledRoutes[] = $this->compileStaticRoutes($staticRoutes, $conditions);
         $chunkLimit = \count($dynamicRoutes);
 
@@ -104,7 +114,7 @@ class CompiledUrlMatcherDumper extends MatcherDumper
         if ($forDump) {
             $compiledRoutes[2] = $compiledRoutes[4];
         }
-        unset($conditions[0]);
+        unset($conditions['']);
 
         if ($conditions) {
             foreach ($conditions as $expression => $condition) {
@@ -266,10 +276,6 @@ class CompiledUrlMatcherDumper extends MatcherDumper
             'vars' => [],
         ];
         $state->getVars = static function ($m) use ($state) {
-            if ('_route' === $m[1]) {
-                return '?:';
-            }
-
             $state->vars[] = $m[1];
 
             return '';
@@ -315,6 +321,15 @@ class CompiledUrlMatcherDumper extends MatcherDumper
                         $state->vars = [];
                         $hostRegex = '(?i:'.preg_replace_callback('#\?P<([^>]++)>#', $state->getVars, $rx[1]).')\.';
                         $state->hostVars = $state->vars;
+
+                        if ($state->hostVars) {
+                            // Group 1 captures the path so that host variables cannot match any part of it.
+                            // Group 1 is mapped to the first host variable, then the group of that variable overwrites it.
+                            // The first lookahead skips the capture when the host cannot match.
+                            $hostCheck = preg_replace('#\?P<[^>]++>#', '?:', $rx[1]);
+                            $hostRegex = '(?=(?i:'.$hostCheck.')\.)(?=[^/]*+(.*+))'.$hostRegex.'(?=\1)';
+                            array_unshift($state->hostVars, $state->hostVars[0]);
+                        }
                     } else {
                         $hostRegex = '(?:(?:[^./]*+\.)++)';
                         $state->hostVars = [];
@@ -395,6 +410,12 @@ class CompiledUrlMatcherDumper extends MatcherDumper
 
             [$name, $regex, $vars, $route, $hasTrailingSlash, $hasTrailingVar] = $route;
             $compiledRoute = $route->compile();
+            foreach ($vars as $i => $var) {
+                // as in UrlMatcher, a variable that is also in the host takes the value of the host: groups named "_route" are skipped
+                if (\in_array($var, $state->hostVars, true)) {
+                    $vars[$i] = '_route';
+                }
+            }
             $vars = array_merge($state->hostVars, $vars);
 
             if ($compiledRoute->getRegex() === $prevRegex) {
@@ -427,7 +448,7 @@ class CompiledUrlMatcherDumper extends MatcherDumper
             unset($defaults['_canonical_route']);
         }
 
-        if ($condition = $route->getCondition()) {
+        if ('' !== $condition = $route->getCondition()) {
             $condition = $this->getExpressionLanguage()->compile($condition, ['context', 'request', 'params']);
             $condition = $conditions[$condition] ??= (str_contains($condition, '$request') ? 1 : -1) * \count($conditions);
         } else {

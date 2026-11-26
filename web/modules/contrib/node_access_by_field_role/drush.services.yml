@@ -1,0 +1,5 @@
+services:
+  node_access_by_field_role.commands:
+    class: \Drupal\node_access_by_field_role\Commands\NodeAccessByFieldCommands
+    tags:
+      - { name: drush.command }

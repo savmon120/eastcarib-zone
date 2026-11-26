@@ -12,6 +12,7 @@
 namespace Symfony\Component\Serializer\Encoder;
 
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 
 /**
@@ -40,6 +41,13 @@ class CsvEncoder implements EncoderInterface, DecoderInterface
     private const UTF8_BOM = "\xEF\xBB\xBF";
 
     private const FORMULAS_START_CHARACTERS = ['=', '-', '+', '@', "\t", "\r", "\n"];
+
+    // PHP frees nested arrays recursively, so a deep enough header can overflow the C stack
+    private const MAX_HEADER_DEPTH = 512;
+
+    // Each row walks the levels of its headers again and creates their arrays, so both are bounded by the size of the data
+    private const MAX_LEVELS_PER_BYTE = 16;
+    private const MAX_ARRAYS_PER_BYTE = 4;
 
     private array $defaultContext = [
         self::DELIMITER_KEY => ',',
@@ -101,18 +109,20 @@ class CsvEncoder implements EncoderInterface, DecoderInterface
         $endOfLine = $context[self::END_OF_LINE] ?? $this->defaultContext[self::END_OF_LINE];
 
         if (!($context[self::NO_HEADERS_KEY] ?? $this->defaultContext[self::NO_HEADERS_KEY])) {
-            fputcsv($handle, $headers, $delimiter, $enclosure, $escapeChar);
-            if ("\n" !== $endOfLine && 0 === fseek($handle, -1, \SEEK_CUR)) {
-                fwrite($handle, $endOfLine);
+            $headerRow = $headers;
+            if ($escapeFormulas) {
+                foreach ($headerRow as $i => $header) {
+                    if (\in_array(substr((string) $header, 0, 1), self::FORMULAS_START_CHARACTERS, true)) {
+                        $headerRow[$i] = "'".$header;
+                    }
+                }
             }
+            fputcsv($handle, $headerRow, $delimiter, $enclosure, $escapeChar, $endOfLine);
         }
 
         $headers = array_fill_keys($headers, '');
         foreach ($data as $row) {
-            fputcsv($handle, array_replace($headers, $row), $delimiter, $enclosure, $escapeChar);
-            if ("\n" !== $endOfLine && 0 === fseek($handle, -1, \SEEK_CUR)) {
-                fwrite($handle, $endOfLine);
-            }
+            fputcsv($handle, array_replace($headers, $row), $delimiter, $enclosure, $escapeChar, $endOfLine);
         }
 
         rewind($handle);
@@ -149,10 +159,12 @@ class CsvEncoder implements EncoderInterface, DecoderInterface
         $nbHeaders = 0;
         $headerCount = [];
         $result = [];
+        $levelBudget = self::MAX_LEVELS_PER_BYTE * \strlen($data);
+        $arrayBudget = self::MAX_ARRAYS_PER_BYTE * \strlen($data);
 
         [$delimiter, $enclosure, $escapeChar, $keySeparator, , , , $asCollection] = $this->getCsvOptions($context);
 
-        while (false !== ($cols = fgetcsv($handle, 0, $delimiter, $enclosure, $escapeChar))) {
+        foreach ($this->readRows($handle, $delimiter, $enclosure, $escapeChar) as $cols) {
             $nbCols = \count($cols);
 
             if (null === $headers) {
@@ -172,7 +184,10 @@ class CsvEncoder implements EncoderInterface, DecoderInterface
                     }
                 } else {
                     foreach ($cols as $col) {
-                        $header = explode($keySeparator, $col ?? '');
+                        $header = explode($keySeparator, $col ?? '', self::MAX_HEADER_DEPTH + 1);
+                        if (\count($header) > self::MAX_HEADER_DEPTH) {
+                            throw new NotEncodableValueException(\sprintf('CSV headers cannot be nested more than %d levels deep.', self::MAX_HEADER_DEPTH));
+                        }
                         $headers[] = $header;
                         $headerCount[] = \count($header);
                     }
@@ -184,6 +199,10 @@ class CsvEncoder implements EncoderInterface, DecoderInterface
             $item = [];
             for ($i = 0; ($i < $nbCols) && ($i < $nbHeaders); ++$i) {
                 $depth = $headerCount[$i];
+                if (0 > $levelBudget -= $depth) {
+                    throw new NotEncodableValueException('CSV headers are nested too deeply for the size of the data.');
+                }
+
                 $arr = &$item;
                 for ($j = 0; $j < $depth; ++$j) {
                     $headerName = $headers[$i][$j];
@@ -200,6 +219,10 @@ class CsvEncoder implements EncoderInterface, DecoderInterface
                     }
 
                     if (!isset($arr[$headerName])) {
+                        if (0 > --$arrayBudget) {
+                            throw new NotEncodableValueException('CSV headers are nested too deeply for the size of the data.');
+                        }
+
                         $arr[$headerName] = [];
                     }
 
@@ -299,5 +322,29 @@ class CsvEncoder implements EncoderInterface, DecoderInterface
         }
 
         return $headers;
+    }
+
+    /**
+     * @param resource $handle
+     */
+    private function readRows($handle, string $delimiter, string $enclosure, string $escapeChar): \Generator
+    {
+        $emptyLines = 0;
+        while ([null] === $cols = fgetcsv($handle, 0, $delimiter, $enclosure, $escapeChar)) {
+            ++$emptyLines;
+        }
+
+        // fgetcsv() returns [null] for an empty line: it is a record with an empty value in a single-column document, and carries no data otherwise
+        $skipEmptyLines = false !== $cols && 1 < \count($cols);
+
+        if (!$skipEmptyLines) {
+            yield from array_fill(0, $emptyLines, [null]);
+        }
+
+        for (; false !== $cols; $cols = fgetcsv($handle, 0, $delimiter, $enclosure, $escapeChar)) {
+            if (!$skipEmptyLines || [null] !== $cols) {
+                yield $cols;
+            }
+        }
     }
 }

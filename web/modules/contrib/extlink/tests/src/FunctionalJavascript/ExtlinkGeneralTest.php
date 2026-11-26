@@ -194,21 +194,39 @@ class ExtlinkGeneralTest extends ExtlinkTestBase {
     ];
     $node = $this->drupalCreateNode($settings);
 
-    // Get the page.
-    $this->drupalGet($node->toUrl());
-    $page = $this->getSession()->getPage();
-    $this->assertTrue($page->hasLink('Google!'));
-    $this->assertTrue($page->hasLink('Send Mail'));
-    $this->assertTrue($page->hasLink('Google number'));
+    // Check with and without processing links that contain an image or icon.
+    // With extlink_img_class enabled, the mailto and tel links are processed
+    // again in the additional classes pass, even though the first pass
+    // already appended an icon to them.
+    foreach ([FALSE, TRUE] as $img_class) {
+      $this->config('extlink.settings')
+        ->set('extlink_img_class', $img_class)
+        ->save();
 
-    // Test that the external link element has the CSS class applied.
-    $this->assertSession()->elementExists('css', 'a.ext-link-css');
+      // Get the page.
+      $this->drupalGet($node->toUrl());
+      $page = $this->getSession()->getPage();
+      $this->assertTrue($page->hasLink('Google!'));
+      $this->assertTrue($page->hasLink('Send Mail'));
+      $this->assertTrue($page->hasLink('Google number'));
 
-    // Test that the external mailto link element has the CSS class applied.
-    $this->assertSession()->elementExists('css', 'a.ext-mailto-css');
+      $assert_session = $this->assertSession();
 
-    // Test that the external tel link element has the CSS class applied.
-    $this->assertSession()->elementExists('css', 'a.ext-tel-css');
+      // Test that the external link only has its own additional CSS class.
+      $assert_session->elementExists('css', 'a[href="https://google.com"].ext-link-css');
+      $assert_session->elementNotExists('css', 'a[href="https://google.com"].ext-mailto-css');
+      $assert_session->elementNotExists('css', 'a[href="https://google.com"].ext-tel-css');
+
+      // Test that the mailto link only has its own additional CSS class.
+      $assert_session->elementExists('css', 'a[href^="mailto:"].ext-mailto-css');
+      $assert_session->elementNotExists('css', 'a[href^="mailto:"].ext-link-css');
+      $assert_session->elementNotExists('css', 'a[href^="mailto:"].ext-tel-css');
+
+      // Test that the tel link only has its own additional CSS class.
+      $assert_session->elementExists('css', 'a[href^="tel:"].ext-tel-css');
+      $assert_session->elementNotExists('css', 'a[href^="tel:"].ext-link-css');
+      $assert_session->elementNotExists('css', 'a[href^="tel:"].ext-mailto-css');
+    }
   }
 
   /**

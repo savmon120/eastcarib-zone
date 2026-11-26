@@ -1,6 +1,6 @@
-# Node Access by Field
+# Node Access by Field Role
 
-**Drupal 9/10/11 compatible.**
+**Drupal 10/11/12 compatible.**
 This module controls node **view access** with two complementary mechanisms:
 
 1. **Role → User field mapping (per content type)**
@@ -8,7 +8,7 @@ This module controls node **view access** with two complementary mechanisms:
    Users with that role may view the node **only if** they are referenced in the mapped field.
 
 2. **Per-node role visibility (optional)**
-   If a node contains a multi-valued field of type **role_reference** (provided by this module) with values,
+   If a node contains a multi-valued field of type **Role reference** (`role_reference`, provided by this module) with values,
    only users holding **any of those roles** may view the node.
 
    > Any content type that has this field will automatically apply the rule – there is no hard-coded bundle name.
@@ -30,8 +30,8 @@ This module controls node **view access** with two complementary mechanisms:
 Install as any other Drupal module:
 
 ```bash
-composer require drupal/node_access_by_field
-drush en node_access_by_field -y
+composer require drupal/node_access_by_field_role
+drush en node_access_by_field_role -y
 ```
 
 ---
@@ -40,14 +40,15 @@ drush en node_access_by_field -y
 
 - Go to **Configuration → People → Node access by field**
   Path: `/admin/config/people/node-access-by-field`
-- Permission: **Administer Node Access by Field**
+- Permission: **Administer Node Access by Field settings**
 
 ---
 
 ## Per-node role visibility
 
-To use it on a content type, **add the field** “Role reference” (machine name `role_reference`) to that content type.
-You can add it via UI or Drush:
+To use it on a content type, **add the field** “Role reference” (machine name `role_reference`) to that content type:
+- In the Drupal UI: navigate to **Structure → Content types → [Your Content Type] → Manage fields → Create a new field**, select the **Reference** category and choose **Role reference**.
+- Or via Drush:
 
 ```bash
 drush nabf:add-role-field <bundle> field_visible_roles
@@ -66,7 +67,8 @@ drush nabf:add-role-field <bundle> field_visible_roles
 
 ## Requirements
 
-- Drupal Core 9, 10, or 11
+- Drupal Core ^10.1, 11, or 12
+- PHP >= 8.1
 
 No external dependencies.
 

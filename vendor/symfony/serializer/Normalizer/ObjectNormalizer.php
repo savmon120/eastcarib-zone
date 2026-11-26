@@ -120,6 +120,14 @@ final class ObjectNormalizer extends AbstractObjectNormalizer
 
     protected function setAttributeValue(object $object, string $attribute, mixed $value, ?string $format = null, array $context = []): void
     {
+        if ($writeInfo = $this->getWriteInfoInsteadOfGetterSetter($object, $attribute, $value, $context)) {
+            if (PropertyWriteInfo::TYPE_PROPERTY === $writeInfo->getType()) {
+                $object->{$writeInfo->getName()} = $value;
+            }
+
+            return;
+        }
+
         try {
             $this->propertyAccessor->setValue($object, $attribute, $value);
         } catch (NoSuchPropertyException) {
@@ -143,19 +151,39 @@ final class ObjectNormalizer extends AbstractObjectNormalizer
 
         if ($context['_read_attributes'] ?? true) {
             $context = array_intersect_key($context, ['enable_getter_setter_extraction' => true, 'enable_magic_methods_extraction' => true]);
-            $cacheKey = $class.$attribute.hash('xxh128', serialize($context));
+            $cacheKey = $class.'::'.$attribute.hash('xxh128', serialize($context));
 
-            return self::$isReadableCache[$cacheKey] ??= $this->propertyInfoExtractor->isReadable($class, $attribute, $context) || $this->hasAttributeAccessorMethod($class, $attribute) || (\is_object($classOrObject) && $this->propertyAccessor->isReadable($classOrObject, $attribute));
+            return self::$isReadableCache[$cacheKey] ??= $this->isPropertyPath($attribute) || $this->propertyInfoExtractor->isReadable($class, $attribute, $context) || $this->hasAttributeAccessorMethod($class, $attribute) || (\is_object($classOrObject) && $this->propertyAccessor->isReadable($classOrObject, $attribute));
+        }
+
+        if ($ignoredAttributes = $context[self::IGNORED_ATTRIBUTES] ?? $this->defaultContext[self::IGNORED_ATTRIBUTES]) {
+            $foldedAttribute = strtolower(str_replace(['_', ' '], '', $attribute));
+            foreach ($ignoredAttributes as $ignoredAttribute) {
+                if ($foldedAttribute === strtolower(str_replace(['_', ' '], '', $ignoredAttribute)) && $this->isWrittenByMethod($class, $attribute, $context)) {
+                    return false;
+                }
+            }
+        }
+
+        if ($this->isPropertyPath($attribute)) {
+            // a property path is writable only when the class metadata declares it as an attribute
+            return $this->classMetadataFactory && isset($this->classMetadataFactory->getMetadataFor($class)->getAttributesMetadata()[$attribute]);
         }
 
         $context = array_intersect_key($context, ['enable_getter_setter_extraction' => true, 'enable_magic_methods_extraction' => true, 'enable_constructor_extraction' => true, 'enable_adder_remover_extraction' => true]);
-        $cacheKey = $class.$attribute.hash('xxh128', serialize($context));
+        $cacheKey = $class.'::'.$attribute.hash('xxh128', serialize($context));
 
         if (isset(self::$isWritableCache[$cacheKey])) {
             return self::$isWritableCache[$cacheKey];
         }
 
-        if (str_contains($attribute, '.') || str_contains($attribute, '[') || $this->propertyInfoExtractor->isWritable($class, $attribute, $context)) {
+        if (1000 < \count(self::$isWritableCache)) {
+            // stop memory leak if there are many keys
+            self::$isWritableCache = \array_slice(self::$isWritableCache, 500, null, true);
+        }
+
+        // asking PropertyInfo about attributes that the class doesn't have would fill its cache with each unknown key
+        if (null !== ($name = $this->getWritableAttributeName($class, $attribute)) && $this->propertyInfoExtractor->isWritable($class, $name, $context)) {
             return self::$isWritableCache[$cacheKey] = true;
         }
 
@@ -163,6 +191,25 @@ final class ObjectNormalizer extends AbstractObjectNormalizer
 
         return self::$isWritableCache[$cacheKey] = !\in_array($writeType, [null, PropertyWriteInfo::TYPE_NONE], true)
             && (PropertyWriteInfo::TYPE_PROPERTY !== $writeType || !property_exists($class, $attribute));
+    }
+
+    /**
+     * Returns the name of the property or of the setter that the attribute refers to, as PropertyInfo lists it.
+     */
+    private function getWritableAttributeName(string $class, string $attribute): ?string
+    {
+        if (property_exists($class, $attribute)) {
+            return $attribute;
+        }
+
+        if (!method_exists($class, 'set'.$attribute)) {
+            return null;
+        }
+
+        // method names are case-insensitive, so the name is read from the method, the way ReflectionExtractor::getProperties() does
+        $name = substr((new \ReflectionMethod($class, 'set'.$attribute))->name, 3);
+
+        return property_exists($class, lcfirst($name)) || (!property_exists($class, $name) && !preg_match('/^[A-Z]{2,}/', $name)) ? lcfirst($name) : $name;
     }
 
     private function hasAttributeAccessorMethod(string $class, string $attribute): bool
@@ -179,5 +226,48 @@ final class ObjectNormalizer extends AbstractObjectNormalizer
             && !$method->getAttributes(Ignore::class)
             && !$method->getNumberOfRequiredParameters()
             && !\in_array((string) $method->getReturnType(), ['void', 'never'], true);
+    }
+
+    private function isWrittenByMethod(string $class, string $attribute, array $context): bool
+    {
+        $writeInfo = $this->writeInfoExtractor->getWriteInfo($class, $attribute, ['enable_constructor_extraction' => false] + $context);
+
+        return match ($writeInfo?->getType()) {
+            PropertyWriteInfo::TYPE_METHOD => method_exists($class, $writeInfo->getName()),
+            PropertyWriteInfo::TYPE_ADDER_AND_REMOVER => true,
+            default => false,
+        };
+    }
+
+    private function isPropertyPath(string $attribute): bool
+    {
+        return str_contains($attribute, '.') || str_contains($attribute, '[');
+    }
+
+    /**
+     * Returns how to write the attribute when PropertyAccessor would call a method named after it, like name($value), that isAllowedAttribute() doesn't account for.
+     */
+    private function getWriteInfoInsteadOfGetterSetter(object $object, string $attribute, mixed $value, array $context): ?PropertyWriteInfo
+    {
+        $method = str_replace(['_', ' '], '', $attribute);
+
+        if (!method_exists($object, $method) || !(new \ReflectionMethod($object, $method))->getNumberOfParameters()) {
+            return null;
+        }
+
+        $context = ['enable_constructor_extraction' => false, 'enable_adder_remover_extraction' => is_iterable($value)] + array_intersect_key($context, ['enable_getter_setter_extraction' => true, 'enable_magic_methods_extraction' => true]);
+        $writeInfo = $this->writeInfoExtractor->getWriteInfo($object::class, $attribute, ['enable_getter_setter_extraction' => true] + $context);
+
+        if (PropertyWriteInfo::TYPE_METHOD !== $writeInfo->getType()) {
+            return null;
+        }
+
+        $writeInfoWithoutGetterSetter = $this->writeInfoExtractor->getWriteInfo($object::class, $attribute, $context);
+
+        if (PropertyWriteInfo::TYPE_METHOD === $writeInfoWithoutGetterSetter->getType() && $writeInfo->getName() === $writeInfoWithoutGetterSetter->getName()) {
+            return null;
+        }
+
+        return $writeInfoWithoutGetterSetter;
     }
 }

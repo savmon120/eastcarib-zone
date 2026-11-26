@@ -64,18 +64,28 @@ class ExtlinkUiIconsTest extends ExtlinkTestBase {
     $span = $link->find('css', '.extlink');
     $this->assertTrue($span->hasAttribute('data-extlink-icon-type'));
     $this->assertEquals('link', $span->getAttribute('data-extlink-icon-type'));
+    $this->assertEmpty($page->findAll('css', 'a[data-extlink][aria-label]'));
+    $this->assertFalse($link->hasAttribute('aria-label'));
+    $span = $link->find('css', '.extlink');
+    $this->assertEquals('(link is external)', $span->getAttribute('aria-label'));
 
     $this->assertTrue($page->hasLink('Send Mail'));
     $link = $page->findLink('Send Mail');
     $span = $link->find('css', '.extlink');
     $this->assertTrue($span->hasAttribute('data-extlink-icon-type'));
     $this->assertEquals('mailto', $span->getAttribute('data-extlink-icon-type'));
+    $this->assertFalse($link->hasAttribute('aria-label'));
+    $span = $link->find('css', '.extlink');
+    $this->assertEquals('(link sends email)', $span->getAttribute('aria-label'));
 
     $this->assertTrue($page->hasLink('Google number'));
     $link = $page->findLink('Google number');
     $span = $link->find('css', '.extlink');
     $this->assertTrue($span->hasAttribute('data-extlink-icon-type'));
     $this->assertEquals('tel', $span->getAttribute('data-extlink-icon-type'));
+    $this->assertFalse($link->hasAttribute('aria-label'));
+    $span = $link->find('css', '.extlink');
+    $this->assertEquals('(link is a phone number)', $span->getAttribute('aria-label'));
   }
 
 }

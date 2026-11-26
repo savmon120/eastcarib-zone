@@ -91,7 +91,12 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
         array $options = [],
     ) {
         // needed in case there is a fatal error because the backend is too slow to respond
-        register_shutdown_function($this->store->cleanup(...));
+        $pid = getmypid();
+        register_shutdown_function(static function () use ($store, $pid) {
+            if ($pid === getmypid()) {
+                $store->cleanup();
+            }
+        });
 
         $this->options = array_merge([
             'debug' => false,
@@ -354,7 +359,12 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
         if (!$this->isFreshEnough($request, $entry)) {
             $this->record($request, 'stale');
 
-            return $this->validate($request, $entry, $catch);
+            try {
+                return $this->validate($request, $entry, $catch);
+            } finally {
+                // release the lock taken by isFreshEnough(), even when nothing was stored
+                $this->store->unlock($request);
+            }
         }
 
         if ($entry->headers->hasCacheControlDirective('no-cache')) {
@@ -587,6 +597,12 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
         if ($this->waitForLock($request)) {
             throw new CacheWasLockedException(); // unwind back to handle(), try again
         }
+
+        // a no-cache entry must be validated anyway, call the backend
+        if ($entry->headers->hasCacheControlDirective('no-cache')) {
+            return false;
+        }
+
         // backend is slow as hell, send a 503 response (to avoid the dog pile effect)
         $entry->setStatusCode(503);
         if (!$entry->headers->has('X-Body-File') && !$entry->headers->has('X-Body-Eval')) {
@@ -747,6 +763,10 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
      */
     private function mayServeStaleWhileRevalidate(Response $entry): bool
     {
+        if ($entry->mustRevalidate()) {
+            return false;
+        }
+
         $timeout = $entry->headers->getCacheControlDirective('stale-while-revalidate');
         $timeout ??= $this->options['stale_while_revalidate'];
 

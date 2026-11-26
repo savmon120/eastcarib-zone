@@ -213,7 +213,7 @@ class Serializer implements SerializerInterface, NormalizerInterface, Denormaliz
             throw new NotNormalizableValueException(\sprintf('Could not denormalize object of type "%s", no supporting normalizer found.', $type));
         }
 
-        if ((isset($context[DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS]) || isset($this->defaultContext[DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS])) && !isset($context['not_normalizable_value_exceptions'])) {
+        if (($context[DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS] ?? $this->defaultContext[DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS] ?? false) && !isset($context['not_normalizable_value_exceptions'])) {
             unset($context[DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS]);
             $context['not_normalizable_value_exceptions'] = [];
             $errors = &$context['not_normalizable_value_exceptions'];
@@ -343,7 +343,7 @@ class Serializer implements SerializerInterface, NormalizerInterface, Denormaliz
 
                 foreach ($supportedTypes as $supportedType => $isCacheable) {
                     if (\in_array($supportedType, ['*', 'object'], true)
-                        || $class !== $supportedType && ('object' !== $genericType || !is_subclass_of($class, $supportedType))
+                        || $class !== $supportedType && ('object' !== $genericType || !is_a($class, $supportedType, true))
                         && !($doesClassRepresentCollection && str_ends_with($supportedType, '[]') && is_subclass_of(strstr($class, '[]', true), strstr($supportedType, '[]', true)))
                     ) {
                         continue;

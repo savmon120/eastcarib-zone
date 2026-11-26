@@ -18,6 +18,13 @@ namespace Symfony\Component\HttpFoundation;
  */
 class IpUtils
 {
+    /**
+     * Ranges that a server must not connect to: the private networks, plus the documentation, benchmarking
+     * and other special-purpose ranges listed below. This is a deny list for outgoing requests, so it also
+     * covers the IPv6 prefixes that embed an IPv4 address (IPv4-mapped, IPv4-compatible, 6to4, Teredo,
+     * NAT64). A remote client can present such an address as its own, so this list must not serve as an
+     * allow list of trusted proxies: use PRIVATE_RANGES for that.
+     */
     public const PRIVATE_SUBNETS = [
         '127.0.0.0/8',     // RFC1700 (Loopback)
         '10.0.0.0/8',      // RFC1918
@@ -34,6 +41,7 @@ class IpUtils
         '::1/128',         // Loopback
         'fc00::/7',        // Unique Local Address
         'fe80::/10',       // Link Local Address
+        'fec0::/10',       // Site-Local Addresses, deprecated by RFC 3879
         '::ffff:0:0/96',   // IPv4-mapped IPv6 addresses (RFC 4291 section 2.5.5.2)
         '::/128',          // Unspecified address
         '::/96',           // IPv4-compatible IPv6 addresses (RFC 4291 section 2.5.5.1)
@@ -43,6 +51,25 @@ class IpUtils
         '2001:0002::/48',  // IPv6 Benchmarking (RFC 5180 and corrections)
         '64:ff9b::/96',    // NAT64 well-known prefix (RFC 6052)
         '64:ff9b:1::/48',  // NAT64 local-use prefix (RFC 8215)
+    ];
+
+    /**
+     * Ranges reserved for private networks, which a reverse proxy in front of the application can live in.
+     *
+     * Unlike PRIVATE_SUBNETS, this list holds no prefix that a remote client can present as its own address,
+     * so it can serve as an allow list, as Request::setTrustedProxies() does for "private_ranges".
+     * An IPv4-mapped IPv6 address is matched as the IPv4 host it embeds.
+     */
+    public const PRIVATE_RANGES = [
+        '127.0.0.0/8',    // RFC1700 (Loopback)
+        '10.0.0.0/8',     // RFC1918
+        '172.16.0.0/12',  // RFC1918
+        '192.168.0.0/16', // RFC1918
+        '169.254.0.0/16', // RFC3927
+        '100.64.0.0/10',  // RFC6598
+        '::1/128',        // Loopback
+        'fc00::/7',       // Unique Local Address
+        'fe80::/10',      // Link Local Address
     ];
 
     private static array $checkedIps = [];
@@ -66,9 +93,19 @@ class IpUtils
         }
 
         $method = substr_count($requestIp, ':') > 1 ? 'checkIp6' : 'checkIp4';
+        $embeddedIp4 = null;
+
+        // An IPv4-mapped IPv6 address is the address of an IPv4 host, so it is also checked against IPv4 subnets as that host
+        if ('checkIp6' === $method && filter_var($requestIp, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV6) && false !== ($packed = @inet_pton($requestIp)) && 16 === \strlen($packed) && "\0\0\0\0\0\0\0\0\0\0\xFF\xFF" === substr($packed, 0, 12)) {
+            $embeddedIp4 = inet_ntop(substr($packed, 12));
+        }
 
         foreach ($ips as $ip) {
             if (self::$method($requestIp, $ip)) {
+                return true;
+            }
+
+            if (null !== $embeddedIp4 && !str_contains($ip, ':') && self::checkIp4($embeddedIp4, $ip)) {
                 return true;
             }
         }
@@ -208,6 +245,12 @@ class IpUtils
             throw new \InvalidArgumentException('Cannot anonymize more than 4 bytes for IPv4 and 16 bytes for IPv6.');
         }
 
+        $wrappedIPv6 = false;
+        if (str_starts_with($ip, '[') && str_ends_with($ip, ']')) {
+            $wrappedIPv6 = true;
+            $ip = substr($ip, 1, -1);
+        }
+
         /*
          * If the IP contains a % symbol, then it is a local-link address with scoping according to RFC 4007
          * In that case, we only care about the part before the % symbol, as the following functions, can only work with
@@ -216,12 +259,6 @@ class IpUtils
          */
         if (str_contains($ip, '%')) {
             $ip = substr($ip, 0, strpos($ip, '%'));
-        }
-
-        $wrappedIPv6 = false;
-        if (str_starts_with($ip, '[') && str_ends_with($ip, ']')) {
-            $wrappedIPv6 = true;
-            $ip = substr($ip, 1, -1);
         }
 
         $mappedIpV4MaskGenerator = static function (string $mask, int $bytesToAnonymize) {
@@ -254,6 +291,9 @@ class IpUtils
     /**
      * Checks if an IPv4 or IPv6 address is contained in the list of private IP subnets.
      *
+     * An IPv4-mapped, 6to4, Teredo or NAT64 address is checked as the IPv4 address it embeds:
+     * connecting to it reaches that IPv4 address, and a client can present it only when that IPv4 address is its own.
+     *
      * @throws \ValueError When $requestIp is not a valid IP address
      */
     public static function isPrivateIp(string $requestIp): bool
@@ -262,7 +302,26 @@ class IpUtils
             throw new \ValueError(\sprintf('"%s" is not a valid IP address.', $requestIp));
         }
 
-        return self::checkIp($requestIp, self::PRIVATE_SUBNETS);
+        return self::checkIp(self::getEmbeddedIp4($requestIp) ?? $requestIp, self::PRIVATE_SUBNETS);
+    }
+
+    private static function getEmbeddedIp4(string $ip): ?string
+    {
+        if (!str_contains($ip, ':') || false === $packed = @inet_pton($ip)) {
+            return null;
+        }
+
+        return match (true) {
+            // IPv4-mapped (::ffff:0:0/96): the last 32 bits
+            "\0\0\0\0\0\0\0\0\0\0\xFF\xFF" === substr($packed, 0, 12) => inet_ntop(substr($packed, 12)),
+            // NAT64 with the well-known prefix (64:ff9b::/96): the last 32 bits
+            "\0\x64\xFF\x9B\0\0\0\0\0\0\0\0" === substr($packed, 0, 12) => inet_ntop(substr($packed, 12)),
+            // 6to4 (2002::/16): the 32 bits after the prefix
+            "\x20\x02" === substr($packed, 0, 2) => inet_ntop(substr($packed, 2, 4)),
+            // Teredo (2001::/32): the public address of the client, inverted in the last 32 bits
+            "\x20\x01\0\0" === substr($packed, 0, 4) => inet_ntop(~substr($packed, 12)),
+            default => null,
+        } ?: null;
     }
 
     private static function getCacheResult(string $cacheKey): ?bool

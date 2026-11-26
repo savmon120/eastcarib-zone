@@ -1,4 +1,4 @@
-node_access_by_field.settings:
+node_access_by_field_role.settings:
   type: mapping
   label: 'Node Access by Field settings'
   mapping:

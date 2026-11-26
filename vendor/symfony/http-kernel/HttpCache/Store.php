@@ -28,6 +28,7 @@ class Store implements StoreInterface
     private \SplObjectStorage $keyCache;
     /** @var array<string, resource> */
     private array $locks = [];
+    private int|false $pid;
 
     /**
      * Constructor.
@@ -43,6 +44,7 @@ class Store implements StoreInterface
         protected string $root,
         private array $options = [],
     ) {
+        $this->pid = getmypid();
         if (!is_dir($this->root) && !@mkdir($this->root, 0o777, true) && !is_dir($this->root)) {
             throw new \RuntimeException(\sprintf('Unable to create the store directory (%s).', $this->root));
         }
@@ -55,6 +57,8 @@ class Store implements StoreInterface
      */
     public function cleanup(): void
     {
+        $this->resetLocksAfterFork();
+
         // unlock everything
         foreach ($this->locks as $lock) {
             flock($lock, \LOCK_UN);
@@ -71,10 +75,12 @@ class Store implements StoreInterface
      */
     public function lock(Request $request): bool|string
     {
+        $this->resetLocksAfterFork();
+
         $key = $this->getCacheKey($request);
 
         if (!isset($this->locks[$key])) {
-            $path = $this->getPath($key);
+            $path = $this->getPath($key).'.lck';
             if (!is_dir(\dirname($path)) && !@mkdir(\dirname($path), 0o777, true) && !is_dir(\dirname($path))) {
                 return $path;
             }
@@ -98,6 +104,8 @@ class Store implements StoreInterface
      */
     public function unlock(Request $request): bool
     {
+        $this->resetLocksAfterFork();
+
         $key = $this->getCacheKey($request);
 
         if (isset($this->locks[$key])) {
@@ -113,13 +121,15 @@ class Store implements StoreInterface
 
     public function isLocked(Request $request): bool
     {
+        $this->resetLocksAfterFork();
+
         $key = $this->getCacheKey($request);
 
         if (isset($this->locks[$key])) {
             return true; // shortcut if lock held by this process
         }
 
-        if (!is_file($path = $this->getPath($key))) {
+        if (!is_file($path = $this->getPath($key).'.lck')) {
             return false;
         }
 
@@ -333,6 +343,8 @@ class Store implements StoreInterface
      */
     private function doPurge(string $url): bool
     {
+        $this->resetLocksAfterFork();
+
         $key = $this->getCacheKey(Request::create($url));
         if (isset($this->locks[$key])) {
             flock($this->locks[$key], \LOCK_UN);
@@ -370,41 +382,29 @@ class Store implements StoreInterface
             return true;
         }
 
-        if (isset($this->locks[$key])) {
-            $fp = $this->locks[$key];
-            @ftruncate($fp, 0);
-            @fseek($fp, 0);
-            $len = @fwrite($fp, $data);
-            if (\strlen($data) !== $len) {
-                @ftruncate($fp, 0);
+        if (!is_dir(\dirname($path)) && !@mkdir(\dirname($path), 0o777, true) && !is_dir(\dirname($path))) {
+            return false;
+        }
 
-                return false;
-            }
-        } else {
-            if (!is_dir(\dirname($path)) && !@mkdir(\dirname($path), 0o777, true) && !is_dir(\dirname($path))) {
-                return false;
-            }
+        $tmpFile = tempnam(\dirname($path), basename($path));
+        if (false === $fp = @fopen($tmpFile, 'w')) {
+            @unlink($tmpFile);
 
-            $tmpFile = tempnam(\dirname($path), basename($path));
-            if (false === $fp = @fopen($tmpFile, 'w')) {
-                @unlink($tmpFile);
+            return false;
+        }
+        @fwrite($fp, $data);
+        @fclose($fp);
 
-                return false;
-            }
-            @fwrite($fp, $data);
-            @fclose($fp);
+        if ($data != file_get_contents($tmpFile)) {
+            @unlink($tmpFile);
 
-            if ($data != file_get_contents($tmpFile)) {
-                @unlink($tmpFile);
+            return false;
+        }
 
-                return false;
-            }
+        if (!@rename($tmpFile, $path)) {
+            @unlink($tmpFile);
 
-            if (!@rename($tmpFile, $path)) {
-                @unlink($tmpFile);
-
-                return false;
-            }
+            return false;
         }
 
         @chmod($path, 0o666 & ~umask());
@@ -494,5 +494,20 @@ class Store implements StoreInterface
         }
 
         return new Response($content, $status, $headers);
+    }
+
+    private function resetLocksAfterFork(): void
+    {
+        if ($this->pid === $pid = getmypid()) {
+            return;
+        }
+
+        // Closing an inherited handle preserves the parent's lock.
+        foreach ($this->locks as $lock) {
+            fclose($lock);
+        }
+
+        $this->locks = [];
+        $this->pid = $pid;
     }
 }

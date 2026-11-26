@@ -228,7 +228,7 @@
     }
     if (hasAdditionalTelClasses) {
       Drupal.extlink.applyClassAndSpan(
-        mailtoLinks,
+        telLinks,
         drupalSettings.data.extlink.extAdditionalTelClasses,
         null,
       );
@@ -512,7 +512,10 @@
         linksToProcess[i].classList.add(
           drupalSettings.data.extlink.extAdditionalTelClasses,
         );
-      } else if (drupalSettings.data.extlink.extAdditionalLinkClasses) {
+      } else if (
+        className === 'ext' &&
+        drupalSettings.data.extlink.extAdditionalLinkClasses
+      ) {
         // Is regular external link:
         linksToProcess[i].classList.add(
           drupalSettings.data.extlink.extAdditionalLinkClasses,
@@ -600,7 +603,10 @@
           iconElement.setAttribute('class', `fa-${className} extlink`);
           if (className === drupalSettings.data.extlink.mailtoClass) {
             if (drupalSettings.data.extlink.mailtoLabel) {
-              link.ariaLabel = drupalSettings.data.extlink.mailtoLabel;
+              iconElement.setAttribute(
+                'aria-label',
+                drupalSettings.data.extlink.mailtoLabel,
+              );
             }
             iconElement.innerHTML = Drupal.theme(
               'extlink_fa_mailto',
@@ -609,7 +615,10 @@
             );
           } else if (className === drupalSettings.data.extlink.extClass) {
             if (drupalSettings.data.extlink.extLabel) {
-              link.ariaLabel = drupalSettings.data.extlink.extLabel;
+              iconElement.setAttribute(
+                'aria-label',
+                drupalSettings.data.extlink.extLabel,
+              );
             }
             iconElement.innerHTML = Drupal.theme(
               'extlink_fa_extlink',
@@ -618,7 +627,10 @@
             );
           } else if (className === drupalSettings.data.extlink.telClass) {
             if (drupalSettings.data.extlink.telLabel) {
-              link.ariaLabel = drupalSettings.data.extlink.telLabel;
+              iconElement.setAttribute(
+                'aria-label',
+                drupalSettings.data.extlink.telLabel,
+              );
             }
             iconElement.innerHTML = Drupal.theme(
               'extlink_fa_tel',
@@ -632,19 +644,28 @@
           iconElement.setAttribute('data-extlink-placement', iconPlacement);
           if (className === drupalSettings.data.extlink.mailtoClass) {
             if (drupalSettings.data.extlink.mailtoLabel) {
-              link.ariaLabel = drupalSettings.data.extlink.mailtoLabel;
+              iconElement.setAttribute(
+                'aria-label',
+                drupalSettings.data.extlink.mailtoLabel,
+              );
             }
             iconElement.innerHTML = drupalSettings.data.extlink.extMailIcon;
             iconElement.setAttribute('data-extlink-icon-type', 'mailto');
           } else if (className === drupalSettings.data.extlink.extClass) {
             if (drupalSettings.data.extlink.extLabel) {
-              link.ariaLabel = drupalSettings.data.extlink.extLabel;
+              iconElement.setAttribute(
+                'aria-label',
+                drupalSettings.data.extlink.extLabel,
+              );
             }
             iconElement.innerHTML = drupalSettings.data.extlink.extLinkIcon;
             iconElement.setAttribute('data-extlink-icon-type', 'link');
           } else if (className === drupalSettings.data.extlink.telClass) {
             if (drupalSettings.data.extlink.telLabel) {
-              link.ariaLabel = drupalSettings.data.extlink.telLabel;
+              iconElement.setAttribute(
+                'aria-label',
+                drupalSettings.data.extlink.telLabel,
+              );
             }
             iconElement.innerHTML = drupalSettings.data.extlink.extTelIcon;
             iconElement.setAttribute('data-extlink-icon-type', 'tel');

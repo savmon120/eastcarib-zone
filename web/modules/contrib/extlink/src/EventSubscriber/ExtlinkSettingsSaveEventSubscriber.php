@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class ExtlinkSettingsSaveEventSubscriber implements EventSubscriberInterface {
 
   public function __construct(
-    #[Autowire(service: 'library.discovery.collector')]
+    #[Autowire(service: 'library.discovery')]
     protected LibraryDiscoveryCollector $libraryDiscovery,
     #[Autowire(service: 'asset.js.collection_optimizer')]
     protected AssetCollectionOptimizerInterface $jsOptimizer,
