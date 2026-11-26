@@ -6,8 +6,8 @@ name: 'East Caribbean Zone'
 mail: wixieyy@gmail.com
 slogan: ''
 page:
-  403: ''
-  404: ''
+  403: /403
+  404: /404
   front: /node/48
 admin_compact_mode: false
 weight_select_max: 100
